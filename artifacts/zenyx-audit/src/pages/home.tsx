@@ -178,39 +178,76 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#F5F5F5] font-sans pb-20">
       {/* HEADER SECTION */}
-      <header className="w-full bg-[#111111] relative overflow-hidden">
-        {/* Decorative gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-[#111111] to-[#1a0a00] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
-        {/* Orange bottom border with gradient */}
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-primary to-orange-300/50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="bg-white/8 border border-white/10 p-2.5 rounded-xl backdrop-blur-sm">
-              <img src="/zenyx-icon.png" alt="ZENYX Logo" className="h-11 w-11 object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
+      <header className="w-full bg-[#111111] relative overflow-hidden print:bg-white">
+        {/* Subtle diagonal texture overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `repeating-linear-gradient(45deg, #F97316 0px, #F97316 1px, transparent 1px, transparent 12px)`
+        }} />
+        {/* Right glow accent */}
+        <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-primary/8 to-transparent pointer-events-none" />
+        
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-0">
+          {/* Top thin orange line */}
+          <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-primary to-transparent mb-0 absolute top-0 left-0 right-0 opacity-60" />
+          
+          <div className="flex items-center justify-between gap-6 py-5">
+            {/* Logo block */}
+            <div className="flex items-center gap-5 shrink-0">
+              {/* Icon badge */}
+              <div className="relative">
+                <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md" />
+                <div className="relative border border-white/10 rounded-2xl overflow-hidden w-[52px] h-[52px] flex items-center justify-center">
+                  <img src="/zenyx-icon.png" alt="ZENYX" className="w-full h-full object-cover" onError={(e) => e.currentTarget.style.display = 'none'} />
+                </div>
+              </div>
+              {/* Wordmark */}
+              <div className="hidden md:block">
+                <img 
+                  src="/zenyx-logo-nobg.png" 
+                  alt="ZENYX IT Infra Solutions" 
+                  className="h-8 object-contain"
+                  style={{ filter: 'brightness(0) invert(1)' }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'block';
+                  }}
+                />
+                <p className="hidden text-white font-black text-2xl tracking-widest">ZENYX</p>
+                <p className="text-[10px] font-bold tracking-[0.35em] uppercase mt-1" style={{ color: '#F97316', opacity: 0.8 }}>IT Infra Solutions</p>
+              </div>
+              <span className="md:hidden text-white font-black text-2xl tracking-widest">ZENYX</span>
             </div>
-            <div className="border-l border-white/10 pl-4">
-              <img src="/zenyx-logo.png" alt="ZENYX IT Infra Solutions" className="h-7 object-contain hidden md:block brightness-0 invert" onError={(e) => e.currentTarget.style.display = 'none'} />
-              <h2 className="text-white font-black tracking-wider text-xl md:hidden">ZENYX</h2>
-              <p className="text-[10px] text-primary/70 font-bold tracking-[0.3em] uppercase mt-1">IT INFRA SOLUTIONS</p>
+
+            {/* Center divider + Title */}
+            <div className="flex-1 flex flex-col items-center text-center px-4">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="hidden sm:block h-px w-12 bg-gradient-to-r from-transparent to-primary/40" />
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-primary/60">Enterprise IT Assessment Platform</span>
+                <div className="hidden sm:block h-px w-12 bg-gradient-to-l from-transparent to-primary/40" />
+              </div>
+              <h1 className="text-xl md:text-2xl lg:text-[1.65rem] font-black text-white tracking-tight leading-tight">
+                ZENYX IT Care Assessment
+              </h1>
+              <p className="text-gray-500 text-[11px] mt-1.5 tracking-wide hidden sm:block">
+                Hospital IT Reliability · Security · Operational Risk
+              </p>
             </div>
-          </div>
-          <div className="text-center">
-            <h1 className="text-2xl md:text-[1.7rem] font-black text-white tracking-tight leading-tight">Hospital IT Health Audit Tool</h1>
-            <p className="text-primary/60 text-xs font-medium tracking-widest uppercase mt-1 md:hidden">IT Assessment Platform</p>
-          </div>
-          <div className="hidden lg:flex flex-col items-end gap-1">
-            <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-4 py-2">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <p className="text-primary text-xs font-bold tracking-wide uppercase">Live Assessment</p>
+
+            {/* Right badge */}
+            <div className="hidden lg:flex flex-col items-end gap-2 shrink-0">
+              <div className="flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-xl px-4 py-2.5">
+                <div className="w-2 h-2 rounded-full bg-primary" style={{ boxShadow: '0 0 6px #F97316', animation: 'pulse 2s infinite' }} />
+                <span className="text-primary text-[11px] font-black tracking-[0.15em] uppercase">Live Scoring</span>
+              </div>
+              <p className="text-gray-600 text-[10px] tracking-wide text-right">Real-time risk computation</p>
             </div>
-            <p className="text-gray-500 text-xs mt-1">Assessing IT Reliability, Security & Operational Risk</p>
           </div>
         </div>
-      </header>
 
-      {/* Orange accent bar */}
-      <div className="h-1 w-full bg-gradient-to-r from-primary via-orange-400 to-primary/30" />
+        {/* Bottom accent bar */}
+        <div className="h-[3px] w-full bg-gradient-to-r from-primary/40 via-primary to-orange-300/60" />
+      </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
 
@@ -786,8 +823,8 @@ export default function Home() {
               <CardHeader className="border-b bg-gray-900 text-white pb-6 p-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                   <div>
-                    <img src="/zenyx-logo.png" alt="ZENYX" className="h-8 object-contain bg-white/10 p-1 rounded mb-4" onError={(e) => e.currentTarget.style.display = 'none'} />
-                    <CardTitle className="text-2xl font-bold text-white">Executive IT Health Assessment</CardTitle>
+                    <img src="/zenyx-logo-nobg.png" alt="ZENYX" className="h-8 object-contain mb-4" style={{ filter: 'brightness(0) invert(1)' }} onError={(e) => e.currentTarget.style.display = 'none'} />
+                    <CardTitle className="text-2xl font-bold text-white">ZENYX IT Care Assessment — Executive Summary</CardTitle>
                     <p className="text-gray-400 text-sm mt-1">Preliminary findings and strategic recommendations.</p>
                   </div>
                   <div className="bg-black/50 border border-white/20 p-4 rounded-lg flex items-center gap-4">
@@ -898,11 +935,33 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="bg-[#111111] text-center py-8 mt-12 border-t border-white/10 print:hidden">
-        <p className="text-white font-medium text-sm">ZENYX IT Infra Solutions</p>
-        <p className="text-gray-500 text-xs mt-1">Reliable IT Infrastructure for Critical Environments</p>
-        <p className="text-gray-600 text-xs mt-4 max-w-xl mx-auto px-4">This assessment tool provides an indicative health score and is intended for preliminary IT evaluation purposes only.</p>
-        <p className="text-gray-700 text-xs mt-2">&copy; {new Date().getFullYear()} ZENYX. All rights reserved.</p>
+      <footer className="bg-[#0d0d0d] border-t border-white/[0.06] mt-16 print:hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Left: Logo + tagline */}
+            <div className="flex items-center gap-4">
+              <img src="/zenyx-icon.png" alt="ZENYX" className="h-9 w-9 object-contain opacity-80" onError={(e) => e.currentTarget.style.display = 'none'} />
+              <div>
+                <p className="text-white font-black text-sm tracking-widest">ZENYX IT Care Assessment</p>
+                <p className="text-gray-600 text-[10px] tracking-wide mt-0.5">Reliable IT Infrastructure for Critical Environments</p>
+              </div>
+            </div>
+            {/* Center: Disclaimer */}
+            <p className="text-gray-700 text-[10px] text-center max-w-sm leading-relaxed">
+              This assessment is indicative and intended for preliminary IT health evaluation purposes only. Results should be validated by a qualified IT consultant.
+            </p>
+            {/* Right: Copyright */}
+            <p className="text-gray-700 text-[10px] tracking-wide shrink-0">
+              &copy; {new Date().getFullYear()} ZENYX IT Infra Solutions
+            </p>
+          </div>
+          {/* Bottom bar */}
+          <div className="mt-6 pt-4 border-t border-white/[0.04] flex items-center justify-center">
+            <div className="h-0.5 w-12 bg-primary/40 rounded mr-3" />
+            <p className="text-gray-700 text-[10px] tracking-widest uppercase">Powered by ZENYX IT Infra Solutions</p>
+            <div className="h-0.5 w-12 bg-primary/40 rounded ml-3" />
+          </div>
+        </div>
       </footer>
     </div>
   );
