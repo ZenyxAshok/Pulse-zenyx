@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "ZENYX Hospital IT Health Audit Tool"
+version = "1.0.0"
+id = "artifacts/zenyx-audit"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 23482
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/zenyx-audit run dev"
+
+[services.env]
+PORT = "23482"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/zenyx-audit", "run", "build"]
+publicDir = "artifacts/zenyx-audit/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

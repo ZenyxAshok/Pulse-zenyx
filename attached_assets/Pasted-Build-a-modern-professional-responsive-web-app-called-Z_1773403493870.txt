@@ -1,0 +1,204 @@
+Build a modern, professional, responsive web app called “ZENYX Hospital IT Health Audit Tool” for my company ZENYX IT Infra Solutions.
+
+About company:
+ZENYX IT Infra Solutions is an IT infrastructure and managed services company. We provide end-to-end IT solutions like networking, firewall, Wi-Fi, servers, backup, CCTV, monitoring, security, and IT support for businesses and hospitals.
+
+Purpose of this tool:
+This tool will be used during hospital client meetings. It should help us assess the hospital’s current IT infrastructure, identify risks, and present ZENYX as an IT consultant and MSP partner, not just a vendor.
+
+Branding requirements:
+- Company name: ZENYX IT Infra Solutions
+- Theme colors:
+  - Orange: #F97316
+  - Black: #111111
+  - White: #FFFFFF
+  - Light gray background sections: #F5F5F5
+- Design should look premium, modern, clean, and corporate
+- Add a top header with company logo placeholder on left and tool title on right
+- Add a professional subtitle: “Assessing Hospital IT Reliability, Security & Operational Risk”
+- Use modern cards, rounded corners, clean icons, soft shadows, and attractive layout
+- UI should feel like a premium consulting tool used in front of hospital management
+
+Main app sections:
+1. Header
+2. Hospital Information
+3. IT Infrastructure Assessment Form
+4. Risk Score Summary
+5. Recommended Actions
+6. Estimated MSP Package Suggestion
+7. Printable / downloadable summary report section
+
+Hospital Information fields:
+- Hospital Name
+- Contact Person
+- Designation
+- Mobile Number
+- Email
+- Number of Branches
+- Location
+- Assessment Date
+- Assessed By
+
+Assessment Inputs:
+Use user-friendly form fields, dropdowns, radio buttons, toggles, and numeric inputs.
+
+Fields:
+1. Number of computers
+2. Number of servers
+3. Firewall available? (Yes / No / Don’t Know)
+4. Firewall brand
+5. Managed switches available? (Yes / No / Partial)
+6. Backup system available? (Yes / No / Partial)
+7. Backup type (NAS / External HDD / Cloud / Local Server / Not Available)
+8. Internet redundancy available? (Single ISP / Dual ISP / No clarity)
+9. Average network downtime frequency
+   - Rare
+   - Monthly
+   - Weekly
+   - Frequently
+10. Server monitoring available? (Yes / No / Don’t Know)
+11. Endpoint antivirus / security available? (Yes / No / Partial)
+12. CCTV integrated with network? (Yes / No)
+13. Wi-Fi coverage quality
+   - Good
+   - Average
+   - Poor
+14. Structured LAN cabling quality
+   - Good
+   - Average
+   - Poor
+15. Rack and patch management condition
+   - Proper
+   - Average
+   - Poor
+16. User access / password policy
+   - Properly managed
+   - Partially managed
+   - Not managed
+17. Data security awareness in hospital
+   - Strong
+   - Average
+   - Weak
+18. UPS / power backup for IT systems
+   - Available
+   - Partial
+   - Not available
+19. NAS / central storage available? (Yes / No / Planned)
+20. Existing IT support model
+   - In-house IT team
+   - Vendor on call
+   - No proper support
+21. Critical issues observed (multiline notes)
+22. Additional remarks (multiline notes)
+
+Risk Score Logic:
+Create an intelligent scoring system from 0 to 100.
+
+Guidance:
+- Higher weakness = higher risk
+- Missing firewall increases risk strongly
+- No backup increases risk strongly
+- Single ISP increases risk
+- Frequent downtime increases risk
+- No monitoring increases risk
+- Weak data security increases risk
+- Poor cabling / rack management increases risk
+- No IT support model increases risk
+
+Risk grading:
+- 0 to 25 = Low Risk
+- 26 to 50 = Moderate Risk
+- 51 to 75 = High Risk
+- 76 to 100 = Critical Risk
+
+Display risk result beautifully using:
+- Score card
+- Risk label
+- Color-coded progress bar / gauge
+- Summary text
+
+Risk summary examples:
+- Low Risk: “Hospital IT environment appears relatively stable, but proactive monitoring and structured support can improve reliability.”
+- Moderate Risk: “Hospital has some existing IT foundation, but multiple gaps may affect uptime, security, and service continuity.”
+- High Risk: “Hospital infrastructure shows significant operational and security gaps that can impact patient service systems and daily workflows.”
+- Critical Risk: “Hospital IT environment is highly vulnerable to downtime, security threats, and operational disruption. Immediate structured action is recommended.”
+
+Recommended Actions:
+Based on user inputs, dynamically generate action recommendations such as:
+- Deploy firewall / upgrade firewall
+- Set up central backup with NAS or cloud backup
+- Implement dual ISP for internet redundancy
+- Configure network monitoring
+- Improve endpoint security
+- Audit structured cabling and switch infrastructure
+- Improve Wi-Fi design and access point planning
+- Set up preventive IT support and AMC/MSP
+- Organize racks, patch panels, and documentation
+- Implement password/access control policies
+
+Estimated MSP Package Suggestion:
+Show 3 package recommendations in premium comparison cards:
+
+1. Monitoring Package
+Include:
+- Device and network monitoring
+- Internet health monitoring
+- Firewall availability alerts
+- Monthly reporting
+- Basic incident alerting
+
+2. Support Package
+Include everything in Monitoring plus:
+- Remote IT support
+- Desktop support coverage
+- Basic preventive maintenance
+- Vendor coordination
+- Asset tracking support
+
+3. Security Package
+Include everything in Support plus:
+- Security review
+- Backup review
+- Firewall policy review
+- Endpoint protection review
+- IT risk and compliance guidance
+
+Package recommendation logic:
+- Low Risk = Monitoring Package
+- Moderate Risk = Support Package
+- High Risk = Security Package
+- Critical Risk = Security Package + urgent audit recommendation
+
+Also show a short statement:
+“Recommended for this hospital based on current assessment.”
+
+Report Output:
+At the bottom generate a professional assessment summary card that includes:
+- Hospital details
+- Key observations
+- Risk score
+- Top 5 recommendations
+- Suggested package
+- Assessed by ZENYX IT Infra Solutions
+
+Add a “Print Report” button.
+Add an “Export as PDF” button if possible.
+Add a “Reset Form” button.
+
+Technical requirements:
+- Build as a clean single-page app
+- Use responsive layout for laptop and tablet
+- Use good spacing and premium typography
+- Use icons where needed
+- Keep code modular and clean
+- Add sample logo placeholder with text “ZENYX LOGO”
+- Use a polished business consulting style, not a hospital patient style
+
+Extra requirement:
+At the bottom footer add:
+“ZENYX IT Infra Solutions | Reliable IT Infrastructure for Critical Environments”
+
+Also add a small line:
+“This assessment is indicative and intended for preliminary IT health evaluation.”
+
+Please generate the full working app with frontend, scoring logic, recommendation engine, and polished UI.
