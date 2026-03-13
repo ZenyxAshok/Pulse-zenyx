@@ -1,0 +1,163 @@
+Improve the UI and user experience of the application.
+
+Tool Name (must remain everywhere):
+ZENYX Care IT Check
+
+Subtitle:
+Healthcare Infrastructure Reliability & Technology Assessment
+
+Brand:
+ZENYX IT Infra Solutions
+
+Maintain ZENYX brand theme:
+Primary Orange: #F97316
+Black: #111111
+White: #FFFFFF
+
+Design must feel like a premium consulting platform used by IT consultants when assessing hospitals, clinics, and healthcare chains.
+
+Enhancements required:
+
+1. Add a Welcome Introduction Section at the top.
+
+Title:
+Welcome to ZENYX Care IT Check
+
+Description:
+Hospitals rely heavily on technology for patient records, diagnostics, billing systems, and communication. ZENYX Care IT Check helps healthcare organizations evaluate their IT infrastructure readiness, reliability, and operational continuity.
+
+Add a small line:
+Estimated time: 3–5 minutes
+
+Include a button:
+Start Assessment
+
+The welcome section should look clean and professional with an icon or illustration.
+
+---
+
+2. Convert the assessment into a Step-Based Flow.
+
+Use a progress indicator with steps:
+
+Step 1 – Hospital Information  
+Step 2 – Network & Connectivity  
+Step 3 – Security & Backup  
+Step 4 – Infrastructure & Operations  
+Step 5 – Results & Recommendations
+
+Show the step progress visually at the top.
+
+Each step should appear like a modern card with smooth transitions.
+
+---
+
+3. Improve the Risk Dashboard.
+
+Rename it to:
+
+Infrastructure Health Score
+
+Display a large circular gauge with score out of 100.
+
+Add interpretation text below the score.
+
+Example:
+
+"Your hospital has a functional IT environment, but improvements in backup systems and monitoring will significantly enhance reliability and operational continuity."
+
+Make the dashboard visually impressive with orange highlights and dark background.
+
+---
+
+4. Rewrite Vulnerabilities Section.
+
+Rename it to:
+
+Key Infrastructure Observations
+
+Instead of error-style wording, present them like consulting insights.
+
+Examples:
+
+• Centralized backup system is not currently configured  
+• Server and network monitoring could improve operational visibility  
+• Internet redundancy would strengthen system reliability  
+
+Use warning icons instead of red error crosses.
+
+---
+
+5. Improve Package Recommendation Section.
+
+Add headline above packages:
+
+Recommended Support Model for This Hospital
+
+Add description text:
+
+Based on the ZENYX Care IT Check results, the following support model is recommended to ensure reliable IT operations and security.
+
+Keep the three packages:
+
+Monitoring  
+Support  
+Security
+
+Maintain the existing design but enhance spacing and visual hierarchy.
+
+---
+
+6. Highlight Recommended Package.
+
+Add badge above recommended package:
+
+⭐ Most Suitable for This Hospital
+
+Make the recommended card slightly larger with a soft glow or highlight border.
+
+---
+
+7. Add Final Section called:
+
+What Happens Next?
+
+Include a clean roadmap:
+
+1. Detailed IT Infrastructure Audit  
+2. Infrastructure Stabilization & Optimization  
+3. Monitoring Deployment  
+4. Preventive Maintenance Program  
+5. Security & Backup Governance  
+
+Use icons and horizontal steps layout.
+
+---
+
+8. Improve Micro-Interactions and UI Polish.
+
+Enhance the interface with:
+
+• smooth card hover effects  
+• subtle animations for transitions  
+• improved spacing and typography  
+• clean icons for each section  
+• modern dashboard feel
+
+The interface should look like a premium enterprise SaaS dashboard.
+
+---
+
+9. Footer.
+
+ZENYX IT Infra Solutions  
+Reliable IT Infrastructure for Critical Healthcare Environments
+
+Add disclaimer text:
+
+This assessment provides a preliminary overview of healthcare IT infrastructure readiness and improvement opportunities.
+
+---
+
+Important:
+Keep the tool name as **ZENYX Care IT Check** everywhere in the header, dashboard, report section, and page title.
