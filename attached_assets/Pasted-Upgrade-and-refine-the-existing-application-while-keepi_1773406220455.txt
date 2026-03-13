@@ -1,0 +1,329 @@
+Upgrade and refine the existing application while keeping the tool name exactly:
+
+ZENYX Care IT Check
+
+Subtitle:
+Healthcare Infrastructure Reliability & Technology Assessment
+
+Company:
+ZENYX IT Infra Solutions
+
+Maintain the brand colors:
+Primary Orange: #F97316
+Black: #111111
+White: #FFFFFF
+
+The application should feel like a premium consulting platform used by ZENYX consultants when assessing hospitals, clinics, and healthcare chains.
+
+The interface must remain simple enough for non-technical hospital staff while still valuable for IT professionals.
+
+---
+
+GLOBAL UX STRUCTURE
+
+Convert the application into a guided consulting workflow with sections.
+
+Sections:
+
+1. Welcome
+2. Hospital Information
+3. Network & Connectivity
+4. Security & Backup
+5. Infrastructure & Operations
+6. Operational IT Challenges
+7. Future IT Goals
+8. Infrastructure Health Score
+9. Consulting Observations
+10. Recommended Support Model
+11. What Happens Next
+
+Display a horizontal step progress bar at the top.
+
+---
+
+SECTION 1 – WELCOME SCREEN
+
+Title:
+Welcome to ZENYX Care IT Check
+
+Description:
+
+Hospitals rely heavily on technology for patient records, diagnostics, billing systems, and communication. ZENYX Care IT Check helps healthcare organizations evaluate their IT infrastructure readiness, reliability, and operational continuity.
+
+Add a small text:
+
+Estimated time: 3–5 minutes
+
+Button:
+Start Assessment
+
+Use a clean card design with healthcare-friendly icons.
+
+---
+
+SECTION 2 – HOSPITAL INFORMATION
+
+Fields:
+
+Hospital Name  
+Hospital Type  
+(Single clinic / Multi-specialty hospital / Hospital chain)
+
+Number of Branches
+
+Location
+
+Contact Person
+
+Designation
+
+Mobile Number
+
+Email
+
+Number of Computers
+
+Number of Servers
+
+Assessment Date
+
+Assessed By
+
+Use clean responsive form layout.
+
+---
+
+SECTION 3 – NETWORK & CONNECTIVITY
+
+Use structured multiple-choice questions for scoring.
+
+Questions:
+
+Managed Switches Available?
+
+Internet Redundancy?
+
+Wi-Fi Coverage Quality
+
+Network Downtime Frequency
+
+Number of Network Users
+
+Under this section add a textbox:
+
+Additional Network Observations
+
+Example placeholder text:
+
+Example: Internet downtime during peak hours, weak Wi-Fi in ICU, switch overload etc.
+
+---
+
+SECTION 4 – SECURITY & BACKUP
+
+Structured scoring questions:
+
+Firewall Protection  
+Endpoint Security  
+Backup System  
+Backup Type  
+Server Monitoring  
+User Access / Password Policy  
+Data Security Awareness
+
+Add optional textbox:
+
+Security Observations
+
+Example placeholder:
+
+Example: No centralized backup, antivirus not updated, no monitoring tools etc.
+
+---
+
+SECTION 5 – INFRASTRUCTURE & OPERATIONS
+
+Questions:
+
+CCTV Integration with Network  
+Rack and Patch Management  
+UPS / Power Backup  
+Structured LAN Cabling Quality  
+NAS / Central Storage
+
+Textbox:
+
+Infrastructure Observations
+
+---
+
+SECTION 6 – OPERATIONAL IT CHALLENGES
+
+Add large text input.
+
+Question:
+
+What IT challenges currently affect hospital operations?
+
+Example placeholder:
+
+Example: lab reports slow, billing system hangs, Wi-Fi weak in certain departments, server downtime etc.
+
+This section must allow free text.
+
+---
+
+SECTION 7 – FUTURE IT GOALS
+
+Question:
+
+What improvements would you like to see in your hospital IT infrastructure?
+
+Example placeholder:
+
+Example: faster network, stronger security, central monitoring, zero downtime etc.
+
+This will be used later to personalize recommendations.
+
+---
+
+SECTION 8 – INFRASTRUCTURE HEALTH SCORE
+
+Rename the risk dashboard to:
+
+Infrastructure Health Score
+
+Display a circular gauge with score out of 100.
+
+Score categories:
+
+0–25 Stable Infrastructure  
+26–50 Needs Optimization  
+51–75 Operational Risk Areas  
+76–100 Critical Infrastructure Gaps
+
+Below the gauge show explanation text in friendly consulting language.
+
+Example:
+
+Your hospital has a functional IT environment, but improvements in monitoring and backup systems could significantly strengthen reliability and operational continuity.
+
+Use orange and dark theme dashboard for visual impact.
+
+---
+
+SECTION 9 – CONSULTING OBSERVATIONS
+
+Rename vulnerability section to:
+
+Key Infrastructure Observations
+
+Present insights like a consultant.
+
+Examples:
+
+• Centralized backup system is not currently configured  
+• Server and network monitoring could improve operational visibility  
+• Internet redundancy would strengthen infrastructure reliability  
+• Network documentation could improve troubleshooting efficiency
+
+Avoid red error icons. Use warning or insight icons.
+
+---
+
+SECTION 10 – RECOMMENDED SUPPORT MODEL
+
+Add headline:
+
+Recommended Support Model for This Hospital
+
+Add explanation text:
+
+Based on the ZENYX Care IT Check results, the following support model is recommended to ensure reliable IT operations and security.
+
+Show three packages in cards:
+
+Monitoring
+
+Support
+
+Security
+
+Add badge on recommended package:
+
+⭐ Most Suitable for This Hospital
+
+Make the recommended card slightly larger.
+
+Keep package content clear and easy to understand.
+
+---
+
+SECTION 11 – WHAT HAPPENS NEXT
+
+Add a roadmap card.
+
+Title:
+
+What Happens Next
+
+Steps:
+
+1. Detailed IT Infrastructure Audit  
+2. Infrastructure Stabilization  
+3. Monitoring Deployment  
+4. Preventive Maintenance Program  
+5. Security & Backup Governance  
+
+Display steps using icons and horizontal timeline.
+
+---
+
+DATA INTELLIGENCE FEATURE
+
+Store all assessment answers in structured format.
+
+Include:
+
+hospital size  
+risk score  
+major observations  
+recommended package
+
+This data will help ZENYX build healthcare IT insights over time.
+
+---
+
+UI POLISH
+
+Enhance the interface with:
+
+smooth transitions between steps  
+hover effects on cards  
+modern icons  
+improved spacing  
+clean typography  
+professional enterprise dashboard appearance
+
+The interface should feel like a SaaS consulting platform.
+
+---
+
+FOOTER
+
+ZENYX IT Infra Solutions  
+Reliable IT Infrastructure for Critical Healthcare Environments
+
+Disclaimer:
+
+This assessment provides a preliminary overview of healthcare IT infrastructure readiness and improvement opportunities.
+
+---
+
+IMPORTANT
+
+The tool name must remain:
+
+ZENYX Care IT Check
+
+in the header, report, dashboard, and browser title.
