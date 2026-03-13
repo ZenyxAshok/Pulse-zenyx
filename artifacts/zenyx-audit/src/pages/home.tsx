@@ -217,19 +217,17 @@ export default function Home() {
 
   const CardShell = ({ icon: Icon, stepNum, title, desc, children }: { icon: React.ElementType; stepNum: number; title: string; desc: string; children: React.ReactNode }) => (
     <div className="animate-in slide-in-from-right-8 fade-in duration-300">
-      <Card className="shadow-md border-none rounded-xl bg-white overflow-hidden hover:shadow-lg transition-shadow">
-        <div className="h-1.5 w-full bg-gradient-to-r from-primary to-orange-300" />
-        <CardHeader className="border-b bg-gray-50/50 pb-6 px-8 pt-8">
+      <Card className="shadow-sm border border-gray-200 rounded-2xl bg-white overflow-hidden">
+        <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+        <CardHeader className="border-b border-gray-100 pb-6 px-8 pt-7">
           <div className="flex items-center gap-4">
-            <div className="bg-primary/10 p-4 rounded-xl text-primary shrink-0"><Icon className="w-7 h-7" /></div>
+            <div className="bg-primary/10 p-3.5 rounded-xl text-primary shrink-0"><Icon className="w-6 h-6" /></div>
             <div>
-              <div className="flex items-center gap-3 mb-1">
-                <span className="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-md uppercase tracking-wider">
-                  Step {stepNum} of {TOTAL_STEPS}
-                </span>
-              </div>
-              <CardTitle className="text-2xl text-gray-900 font-black">{title}</CardTitle>
-              <CardDescription className="text-base mt-1">{desc}</CardDescription>
+              <span className="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-md uppercase tracking-wider">
+                Step {stepNum} of {TOTAL_STEPS}
+              </span>
+              <CardTitle className="text-xl text-gray-900 font-black mt-1">{title}</CardTitle>
+              <CardDescription className="text-sm text-gray-500 mt-0.5">{desc}</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -241,7 +239,7 @@ export default function Home() {
   const observations = getObservations();
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] font-sans pb-20 flex flex-col">
+    <div className="min-h-screen bg-[#F8F9FC] font-sans pb-20 flex flex-col">
 
       {/* HEADER */}
       <header className="w-full bg-[#111111] relative overflow-hidden print:bg-white shrink-0">
@@ -603,57 +601,56 @@ export default function Home() {
           <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 space-y-8 pb-12 w-full">
 
             {/* Infrastructure Health Score */}
-            <Card className="shadow-2xl border-none overflow-hidden rounded-2xl bg-[#111111] text-white print-section">
-              <CardHeader className="border-b border-white/10 pb-6 pt-8 px-8 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1.5 bg-gradient-to-b from-primary to-orange-600 h-full" />
-                <div className="absolute top-0 right-0 w-96 h-full opacity-5 bg-gradient-to-l from-primary to-transparent" />
-                <div className="flex items-center justify-between relative z-10">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-primary/20 p-3.5 rounded-xl text-primary border border-primary/30 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
-                      <Activity className="w-8 h-8" />
+            <Card className="shadow-sm border border-gray-200 overflow-hidden rounded-2xl bg-white print-section">
+              <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+              <CardHeader className="border-b border-gray-100 pb-5 pt-7 px-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-primary/10 p-3 rounded-xl text-primary">
+                      <Activity className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-xs font-black text-[#111] bg-primary px-2.5 py-1 rounded uppercase tracking-widest">Results</span>
-                      <CardTitle className="text-3xl text-white font-black tracking-tight mt-1">Infrastructure Health Score</CardTitle>
+                      <span className="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-md uppercase tracking-wider">Results</span>
+                      <CardTitle className="text-2xl text-gray-900 font-black tracking-tight mt-1">Infrastructure Health Score</CardTitle>
                     </div>
                   </div>
                   <div className="hidden md:block text-right">
-                    <p className="text-gray-400 text-sm">{formData.hospitalName || "Hospital Assessment"}</p>
-                    <p className="text-gray-500 text-xs mt-1">{formData.assessmentDate}</p>
+                    <p className="text-gray-700 text-sm font-semibold">{formData.hospitalName || "Hospital Assessment"}</p>
+                    <p className="text-gray-400 text-xs mt-0.5">{formData.assessmentDate}</p>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-10">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                  <div className="flex flex-col items-center justify-center lg:border-r border-white/10 lg:pr-10">
-                    <div className="relative w-60 h-60 flex items-center justify-center">
-                      <div className="absolute inset-0 rounded-full opacity-10" style={{ boxShadow: `0 0 50px 15px ${riskColor}` }} />
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                  {/* Gauge */}
+                  <div className="flex flex-col items-center justify-start lg:border-r border-gray-100 lg:pr-8">
+                    <div className="relative w-52 h-52 flex items-center justify-center">
                       <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
-                        <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#1f2937" strokeWidth="2.5" />
+                        <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#F3F4F6" strokeWidth="2.8" />
                         <circle cx="18" cy="18" r="15.9155" fill="none" stroke={riskColor} strokeWidth="2.8"
                           strokeDasharray={`${riskScore} 100`} strokeLinecap="round"
-                          className="transition-all duration-1000 ease-out"
-                          style={{ filter: `drop-shadow(0 0 6px ${riskColor})` }} />
+                          className="transition-all duration-1000 ease-out" />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-6xl font-black tabular-nums leading-none tracking-tighter" style={{ color: riskColor }}>{riskScore}</span>
-                        <span className="text-xs text-gray-500 font-bold tracking-[0.2em] mt-2 uppercase">Score</span>
-                        <span className="text-xs text-gray-600 mt-1">out of 100</span>
+                        <span className="text-5xl font-black tabular-nums leading-none" style={{ color: riskColor }}>{riskScore}</span>
+                        <span className="text-[10px] text-gray-400 font-semibold tracking-widest mt-2 uppercase">out of 100</span>
                       </div>
                     </div>
-                    <div className="mt-6 px-8 py-2.5 rounded-full font-black text-sm tracking-widest border-2 uppercase shadow-lg text-center"
-                      style={{ borderColor: riskColor, color: riskColor, backgroundColor: `${riskColor}18`, boxShadow: `0 4px 20px -5px ${riskColor}40` }}>
+
+                    <div className="mt-4 px-6 py-2 rounded-full font-bold text-sm border uppercase tracking-wider text-center"
+                      style={{ borderColor: riskColor, color: riskColor, backgroundColor: `${riskColor}10` }}>
                       {riskGrade}
                     </div>
-                    <p className="text-sm text-center text-gray-300 mt-5 max-w-[260px] leading-relaxed">
-                      {riskGrade === "Stable Infrastructure" && "Your hospital has a strong IT foundation. A few proactive improvements in monitoring and preventive maintenance can further strengthen operational reliability."}
-                      {riskGrade === "Needs Optimization" && "Your hospital has a functional IT environment. Improvements in backup systems and monitoring would significantly enhance reliability and operational continuity."}
-                      {riskGrade === "Operational Risk Areas" && "Your hospital's IT infrastructure shows significant gaps in security and reliability. Structured intervention is recommended to prevent operational disruptions."}
-                      {riskGrade === "Critical Infrastructure Gaps" && "Your hospital's IT systems are at high risk of downtime, data loss, and security incidents. Urgent intervention by a qualified IT partner is strongly recommended."}
+
+                    <p className="text-sm text-center text-gray-500 mt-4 leading-relaxed">
+                      {riskGrade === "Stable Infrastructure" && "Your hospital has a strong IT foundation. Proactive improvements in monitoring and maintenance can further strengthen reliability."}
+                      {riskGrade === "Needs Optimization" && "Your hospital has a functional IT environment. Improvements in backup and monitoring would significantly enhance reliability."}
+                      {riskGrade === "Operational Risk Areas" && "Your hospital's IT infrastructure has significant gaps. Structured intervention is recommended to prevent operational disruptions."}
+                      {riskGrade === "Critical Infrastructure Gaps" && "Your hospital's IT systems are at high risk. Urgent intervention by a qualified IT partner is strongly recommended."}
                     </p>
 
-                    {/* Score scale legend */}
-                    <div className="mt-6 w-full space-y-1.5">
+                    <div className="mt-5 w-full space-y-2 bg-gray-50 rounded-xl p-4">
                       {[
                         { label: "0–25", name: "Stable Infrastructure", color: "#22C55E" },
                         { label: "26–50", name: "Needs Optimization", color: "#F59E0B" },
@@ -661,18 +658,19 @@ export default function Home() {
                         { label: "76–100", name: "Critical Infrastructure Gaps", color: "#DC2626" },
                       ].map(item => (
                         <div key={item.name} className="flex items-center gap-2 text-xs">
-                          <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                          <span className="text-gray-500 font-mono">{item.label}</span>
-                          <span className="text-gray-400">{item.name}</span>
+                          <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                          <span className="text-gray-400 font-mono w-10">{item.label}</span>
+                          <span className="text-gray-600">{item.name}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="lg:col-span-2 flex flex-col justify-center space-y-8">
+                  {/* Breakdown + Summary */}
+                  <div className="lg:col-span-2 space-y-8">
                     <div>
-                      <h4 className="text-sm font-black text-gray-300 uppercase tracking-[0.15em] border-b border-white/10 pb-3 mb-6">Risk Category Breakdown</h4>
-                      <div className="space-y-7">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest pb-3 mb-5 border-b border-gray-100">Category Breakdown</h4>
+                      <div className="space-y-5">
                         {[
                           { label: "Network Security", val: breakdown.network, max: 45 },
                           { label: "Backup & Recovery", val: breakdown.backup, max: 18 },
@@ -681,14 +679,14 @@ export default function Home() {
                           { label: "Support & Monitoring", val: breakdown.support, max: 20 },
                         ].map((item) => {
                           const pct = Math.min(100, Math.round((item.val / item.max) * 100)) || 0;
-                          const barColor = pct > 70 ? "#DC2626" : pct > 40 ? "#F97316" : "#F59E0B";
+                          const barColor = pct > 70 ? "#DC2626" : pct > 40 ? "#F97316" : pct > 15 ? "#F59E0B" : "#22C55E";
                           return (
-                            <div key={item.label} className="space-y-2">
+                            <div key={item.label} className="space-y-1.5">
                               <div className="flex justify-between text-sm">
-                                <span className="text-gray-200 font-bold">{item.label}</span>
-                                <span className="text-gray-400 font-mono font-medium">{pct}%</span>
+                                <span className="text-gray-700 font-semibold">{item.label}</span>
+                                <span className="text-gray-400 font-mono text-xs font-medium">{pct}%</span>
                               </div>
-                              <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
+                              <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                                 <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%`, backgroundColor: barColor }} />
                               </div>
                             </div>
@@ -697,16 +695,15 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Data Intelligence summary */}
-                    <div className="mt-4 bg-white/5 rounded-xl p-5 border border-white/10 space-y-2">
-                      <h5 className="text-xs font-black text-gray-400 uppercase tracking-wider mb-3">Assessment Summary</h5>
-                      <div className="grid grid-cols-2 gap-3 text-xs">
-                        {formData.hospitalType && <div className="text-gray-400">Type: <span className="text-gray-200 font-medium">{formData.hospitalType}</span></div>}
-                        {formData.computers && <div className="text-gray-400">Computers: <span className="text-gray-200 font-medium">{formData.computers}</span></div>}
-                        {formData.servers && <div className="text-gray-400">Servers: <span className="text-gray-200 font-medium">{formData.servers}</span></div>}
-                        {formData.networkUsers && <div className="text-gray-400">Network Users: <span className="text-gray-200 font-medium">{formData.networkUsers}</span></div>}
-                        {formData.branches && <div className="text-gray-400">Branches: <span className="text-gray-200 font-medium">{formData.branches}</span></div>}
-                        <div className="text-gray-400">Recommended: <span className="text-primary font-bold">{recommendedPackage}</span></div>
+                    <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                      <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Assessment Summary</h5>
+                      <div className="grid grid-cols-2 gap-y-2 gap-x-6 text-sm">
+                        {formData.hospitalType && <div className="text-gray-500">Type: <span className="text-gray-800 font-semibold">{formData.hospitalType}</span></div>}
+                        {formData.computers && <div className="text-gray-500">Computers: <span className="text-gray-800 font-semibold">{formData.computers}</span></div>}
+                        {formData.servers && <div className="text-gray-500">Servers: <span className="text-gray-800 font-semibold">{formData.servers}</span></div>}
+                        {formData.networkUsers && <div className="text-gray-500">Network Users: <span className="text-gray-800 font-semibold">{formData.networkUsers}</span></div>}
+                        {formData.branches && <div className="text-gray-500">Branches: <span className="text-gray-800 font-semibold">{formData.branches}</span></div>}
+                        <div className="text-gray-500">Recommended: <span className="font-bold" style={{ color: "#F97316" }}>{recommendedPackage}</span></div>
                       </div>
                     </div>
                   </div>
@@ -715,12 +712,14 @@ export default function Home() {
             </Card>
 
             {/* Consulting Observations */}
-            <Card className="shadow-lg border-none rounded-2xl bg-white overflow-hidden print-section">
-              <CardHeader className="bg-gray-50/50 border-b border-gray-100 px-8 py-6">
+            <Card className="shadow-sm border border-gray-200 rounded-2xl bg-white overflow-hidden print-section">
+              <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+              <CardHeader className="border-b border-gray-100 px-8 py-6">
                 <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-3">
-                  <Info className="w-6 h-6 text-primary" /> Key Infrastructure Observations
+                  <div className="bg-primary/10 p-2.5 rounded-lg text-primary shrink-0"><Info className="w-5 h-5" /></div>
+                  Key Infrastructure Observations
                 </CardTitle>
-                <CardDescription className="text-base text-gray-600 mt-1">
+                <CardDescription className="text-base text-gray-500 mt-1">
                   Based on your assessment responses, here are our consulting observations:
                 </CardDescription>
               </CardHeader>
@@ -770,12 +769,14 @@ export default function Home() {
 
             {/* Recommended Actions */}
             {actions.length > 0 && (
-              <Card className="shadow-lg border-none rounded-2xl bg-white overflow-hidden print-section">
-                <CardHeader className="bg-gray-50/50 border-b border-gray-100 px-8 py-6">
+              <Card className="shadow-sm border border-gray-200 rounded-2xl bg-white overflow-hidden print-section">
+                <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+                <CardHeader className="border-b border-gray-100 px-8 py-6">
                   <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-3">
-                    <Clipboard className="w-6 h-6 text-primary" /> Recommended Actions
+                    <div className="bg-primary/10 p-2.5 rounded-lg text-primary shrink-0"><Clipboard className="w-5 h-5" /></div>
+                    Recommended Actions
                   </CardTitle>
-                  <CardDescription className="text-base text-gray-600 mt-1">Prioritized steps to mitigate identified risks</CardDescription>
+                  <CardDescription className="text-base text-gray-500 mt-1">Prioritized steps to improve infrastructure reliability and security</CardDescription>
                 </CardHeader>
                 <CardContent className="p-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -800,12 +801,14 @@ export default function Home() {
 
             {/* Future Goals display */}
             {formData.futureGoals && (
-              <Card className="shadow-lg border-none rounded-2xl bg-white overflow-hidden print-section">
-                <CardHeader className="bg-gray-50/50 border-b border-gray-100 px-8 py-6">
+              <Card className="shadow-sm border border-gray-200 rounded-2xl bg-white overflow-hidden print-section">
+                <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+                <CardHeader className="border-b border-gray-100 px-8 py-6">
                   <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-3">
-                    <TrendingUp className="w-6 h-6 text-primary" /> Hospital IT Vision
+                    <div className="bg-primary/10 p-2.5 rounded-lg text-primary shrink-0"><TrendingUp className="w-5 h-5" /></div>
+                    Hospital IT Vision
                   </CardTitle>
-                  <CardDescription className="text-base text-gray-600 mt-1">
+                  <CardDescription className="text-base text-gray-500 mt-1">
                     Goals captured from the assessment — to be incorporated into the implementation roadmap
                   </CardDescription>
                 </CardHeader>
@@ -818,10 +821,11 @@ export default function Home() {
             )}
 
             {/* Recommended Support Model */}
-            <Card className="shadow-lg border-none rounded-2xl bg-white overflow-hidden print-section">
-              <CardHeader className="bg-gray-50/50 border-b border-gray-100 px-8 py-6 text-center">
-                <CardTitle className="text-2xl font-black text-gray-900">Recommended Support Model for This Hospital</CardTitle>
-                <CardDescription className="text-base text-gray-600 mt-2 max-w-2xl mx-auto">
+            <Card className="shadow-sm border border-gray-200 rounded-2xl bg-white overflow-hidden print-section">
+              <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+              <CardHeader className="border-b border-gray-100 px-8 py-6">
+                <CardTitle className="text-xl font-black text-gray-900">Recommended Support Model for This Hospital</CardTitle>
+                <CardDescription className="text-base text-gray-500 mt-1 max-w-2xl">
                   Based on the ZENYX Care IT Check results, the following support model is recommended to ensure reliable IT operations and security.
                 </CardDescription>
                 {formData.hospitalName && (
@@ -831,7 +835,7 @@ export default function Home() {
                 )}
               </CardHeader>
               <CardContent className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
                   {[
                     {
                       name: "Monitoring Package",
@@ -851,19 +855,21 @@ export default function Home() {
                   ].map((pkg) => {
                     const isRecommended = recommendedPackage === pkg.name;
                     return (
-                      <div key={pkg.name} className={`rounded-xl border-2 flex flex-col transition-all duration-300 overflow-hidden ${isRecommended ? "border-primary shadow-xl shadow-primary/15 scale-[1.03]" : "border-gray-200 opacity-65 hover:opacity-90 hover:shadow-md"}`}>
-                        {isRecommended && (
-                          <div className="bg-primary text-white text-xs font-black uppercase tracking-widest text-center py-2.5 flex items-center justify-center gap-1.5">
-                            <Star className="w-3.5 h-3.5 fill-white" /> Most Suitable for This Hospital
-                          </div>
-                        )}
-                        <div className="p-6 flex flex-col h-full">
-                          <h3 className={`text-lg font-black mb-1 ${isRecommended ? "text-primary" : "text-gray-900"}`}>{pkg.name}</h3>
-                          <p className="text-sm text-gray-500 mb-5">{pkg.desc}</p>
-                          <ul className="space-y-2.5 text-sm text-gray-700">
+                      <div key={pkg.name} className={`rounded-xl border flex flex-col transition-all duration-200 bg-white hover:shadow-md ${isRecommended ? "border-primary/50 shadow-sm ring-1 ring-primary/20" : "border-gray-200"}`}>
+                        <div className={`px-5 py-3 rounded-t-xl flex items-center gap-2 ${isRecommended ? "bg-orange-50 border-b border-primary/15" : "bg-gray-50 border-b border-gray-100"}`}>
+                          {isRecommended && <Star className="w-3.5 h-3.5 fill-primary text-primary shrink-0" />}
+                          <span className={`text-xs font-bold uppercase tracking-wider ${isRecommended ? "text-primary" : "text-gray-400"}`}>
+                            {isRecommended ? "Most Suitable for This Hospital" : pkg.name}
+                          </span>
+                        </div>
+                        <div className="p-5 flex flex-col flex-1">
+                          <h3 className="text-base font-black text-gray-900 mb-1">{pkg.name}</h3>
+                          <p className="text-sm text-gray-500 mb-4 leading-relaxed">{pkg.desc}</p>
+                          <ul className="space-y-2 text-sm text-gray-600 mt-auto">
                             {pkg.features.map(f => (
                               <li key={f} className="flex items-start gap-2">
-                                <CheckCircle2 className={`w-4 h-4 mr-1 shrink-0 mt-0.5 ${isRecommended ? "text-primary" : "text-gray-400"}`} /> {f}
+                                <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isRecommended ? "text-primary" : "text-gray-300"}`} />
+                                <span>{f}</span>
                               </li>
                             ))}
                           </ul>
@@ -876,16 +882,18 @@ export default function Home() {
             </Card>
 
             {/* What Happens Next */}
-            <Card className="shadow-lg border-none rounded-2xl overflow-hidden print-section print:hidden">
-              <CardHeader className="bg-[#111111] text-white px-8 py-8 border-b border-white/10">
-                <CardTitle className="text-2xl font-black flex items-center gap-3">
-                  <ArrowRight className="w-6 h-6 text-primary" /> What Happens Next?
+            <Card className="shadow-sm border border-gray-200 rounded-2xl overflow-hidden print-section print:hidden bg-white">
+              <div className="h-1 w-full bg-gradient-to-r from-primary to-orange-300" />
+              <CardHeader className="px-8 py-6 border-b border-gray-100">
+                <CardTitle className="text-xl font-black text-gray-900 flex items-center gap-3">
+                  <div className="bg-primary/10 p-2.5 rounded-lg text-primary"><ArrowRight className="w-5 h-5" /></div>
+                  What Happens Next?
                 </CardTitle>
-                <CardDescription className="text-gray-400 mt-2 text-base">
+                <CardDescription className="text-base text-gray-500 mt-1">
                   Partner with ZENYX IT Infra Solutions for a structured implementation journey
                 </CardDescription>
               </CardHeader>
-              <CardContent className="bg-white p-8">
+              <CardContent className="p-8">
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 lg:gap-2">
                   {[
                     { icon: "🔍", title: "Detailed IT Infrastructure Audit", desc: "Comprehensive on-site evaluation of all IT systems, documentation, and processes." },
@@ -911,12 +919,12 @@ export default function Home() {
                     </React.Fragment>
                   ))}
                 </div>
-                <div className="mt-10 bg-orange-50 rounded-xl p-7 flex flex-col md:flex-row items-center justify-between border border-orange-100 gap-4">
+                <div className="mt-10 bg-gray-50 rounded-xl p-7 flex flex-col md:flex-row items-center justify-between border border-gray-200 gap-4">
                   <div>
-                    <h4 className="text-lg font-black text-gray-900 mb-1">Ready to take the next step?</h4>
-                    <p className="text-sm text-gray-600">Secure your hospital's IT infrastructure with ZENYX's proven implementation framework.</p>
+                    <h4 className="text-base font-bold text-gray-900 mb-1">Ready to take the next step?</h4>
+                    <p className="text-sm text-gray-500">Secure your hospital's IT infrastructure with ZENYX's proven implementation framework.</p>
                   </div>
-                  <Button size="lg" className="mt-2 md:mt-0 font-bold px-8 h-12 rounded-xl hover:shadow-lg transition-all group shrink-0">
+                  <Button size="lg" className="mt-2 md:mt-0 font-bold px-8 h-11 rounded-xl hover:shadow-md transition-all group shrink-0">
                     Contact ZENYX IT Infra Solutions <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
@@ -978,14 +986,14 @@ export default function Home() {
 
       </main>
 
-      <footer className="mt-16 py-8 bg-[#111111] text-center print:hidden shrink-0 border-t border-white/10">
+      <footer className="mt-16 py-10 bg-white text-center print:hidden shrink-0 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-6">
-          <img src="/zenyx-logo-nobg.png" alt="ZENYX" className="h-7 mx-auto mb-3 opacity-70 object-contain" style={{ filter: "brightness(0) invert(1)" }}
+          <img src="/zenyx-logo-nobg.png" alt="ZENYX" className="h-7 mx-auto mb-3 opacity-60 object-contain" style={{ filter: "brightness(0)" }}
             onError={(e) => (e.currentTarget.style.display = "none")} />
-          <p className="text-gray-400 font-bold tracking-widest text-sm mb-2">ZENYX IT Infra Solutions</p>
-          <p className="text-primary text-xs uppercase tracking-widest font-semibold mb-6">Reliable IT Infrastructure for Critical Healthcare Environments</p>
-          <div className="h-px w-24 bg-white/10 mx-auto mb-6" />
-          <p className="text-xs text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-700 font-bold tracking-widest text-sm mb-1">ZENYX IT Infra Solutions</p>
+          <p className="text-primary text-xs uppercase tracking-widest font-semibold mb-5">Reliable IT Infrastructure for Critical Healthcare Environments</p>
+          <div className="h-px w-16 bg-gray-200 mx-auto mb-5" />
+          <p className="text-xs text-gray-400 max-w-2xl mx-auto leading-relaxed">
             Disclaimer: This assessment provides a preliminary overview of healthcare IT infrastructure readiness and improvement opportunities. It is not a substitute for a comprehensive technical audit.
           </p>
         </div>
