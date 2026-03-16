@@ -329,8 +329,8 @@ export default function Home() {
                 <img
                   src="/zenyx-pulse-logo-nobg.png"
                   alt="ZENYX Pulse"
-                  className="h-12 md:h-14 w-auto object-contain"
-                  style={{ maxWidth: "360px" }}
+                  className="h-16 md:h-20 w-auto object-contain"
+                  style={{ maxWidth: "480px" }}
                 />
               </div>
 
