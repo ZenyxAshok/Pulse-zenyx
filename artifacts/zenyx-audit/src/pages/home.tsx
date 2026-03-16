@@ -248,31 +248,34 @@ export default function Home() {
 
   const packages = [
     {
-      name: "Monitoring Package", tier: "Foundation",
+      name: "Monitoring Package", tier: "FOUNDATION",
       subtitle: "Visibility and early warning for hospital IT environments",
-      desc: "Ideal for facilities with a stable IT foundation. Provides continuous visibility into your network, servers, and connectivity — so issues are caught before they affect clinical staff.",
+      desc: "Continuous visibility into your hospital's core IT systems so issues can be identified before they disrupt operations.",
       price: "₹11,999/month",
       devicePricing: null,
+      securityNote: null,
       features: ["24/7 Network Monitoring", "Internet Uptime Monitoring", "Firewall Availability Monitoring", "Server Health Monitoring", "Alert Notifications", "Monthly IT Health Report", "Email Support"],
-      bestFor: "Clinics, diagnostic centres, and small hospitals looking for proactive visibility.",
+      bestFor: "Best for facilities that need proactive visibility into infrastructure health.",
     },
     {
-      name: "Support Package", tier: "Professional",
-      subtitle: "Proactive IT support and structured infrastructure upkeep",
-      desc: "For facilities where gaps exist and IT issues occasionally disrupt operations. Visibility combined with hands-on support — your team is never left waiting when something fails.",
+      name: "Support Package", tier: "PROFESSIONAL",
+      subtitle: "Monitoring plus active IT support and infrastructure upkeep",
+      desc: "Ideal for facilities where IT issues affect staff productivity or operations and need ongoing support beyond monitoring.",
       price: "₹12,999/month base",
-      devicePricing: "+ ₹300/endpoint · ₹2,500/server · ₹1,500/network device (per month)",
-      features: ["Everything in Monitoring", "Unlimited Remote Support", "User Troubleshooting", "Patch Management", "Preventive Maintenance", "Vendor Coordination", "Asset Tracking & Documentation", "1 Scheduled Onsite Visit/month", "Incident Response SLA"],
-      bestFor: "Hospitals experiencing recurring IT issues who need reliable hands-on support with defined SLAs.",
+      devicePricing: "+ ₹300 per endpoint\n+ ₹2,500 per server\n+ ₹1,500 per network / firewall device",
+      securityNote: null,
+      features: ["Everything in Monitoring", "Unlimited Remote Support", "User Troubleshooting", "Patch Management", "Preventive Maintenance", "Vendor Coordination", "Asset Tracking & Documentation", "2 Scheduled Onsite Visits / Month", "Incident Response SLA"],
+      bestFor: "Best for facilities that require active hands-on IT support along with monitoring.",
     },
     {
-      name: "Security Package", tier: "Enterprise",
-      subtitle: "Advanced protection, resilience, and IT governance",
-      desc: "For facilities with significant infrastructure gaps or recurring operational risk. A complete managed IT environment — security, backup, recovery, and strategic oversight included.",
+      name: "Security Package", tier: "ENTERPRISE",
+      subtitle: "Monitoring + support + security resilience and governance",
+      desc: "A complete managed IT environment combining infrastructure visibility, support responsiveness, and stronger security posture.",
       price: "₹43,999/month onward",
-      devicePricing: "Final pricing depends on number of systems, servers, branches, and support scope.",
-      features: ["Everything in Support", "Advanced Endpoint Security Oversight", "Managed Backup Monitoring", "Backup Recovery Verification", "Disaster Recovery Readiness Review", "Firewall Policy Review", "Vulnerability & Security Posture Review", "Staff Awareness Support", "Quarterly IT Risk Review", "Annual IT Strategy / Roadmap Review", "2 Scheduled Onsite Visits/month"],
-      bestFor: "Hospitals with critical infrastructure gaps, high downtime risk, or multi-branch environments.",
+      devicePricing: "Device / server / network support pricing applies based on infrastructure size and support scope.",
+      securityNote: "Includes Monitoring + Support + Security services",
+      features: ["Everything in Support", "Advanced Endpoint Security Oversight", "Managed Backup Monitoring", "Backup Recovery Verification", "Disaster Recovery Readiness Review", "Firewall Policy Review", "Vulnerability & Security Posture Review", "Staff Awareness Support", "Quarterly IT Risk Review", "Strategic IT Governance Review"],
+      bestFor: "Best for hospitals with recurring risk, higher compliance expectations, or a need for stronger resilience.",
     },
   ];
 
@@ -330,8 +333,8 @@ export default function Home() {
               {/* Main headline */}
               <h1 className="text-[2.75rem] md:text-[3.25rem] font-light text-gray-900 leading-[1.15] mb-5"
                 style={{ letterSpacing: "-0.025em" }}>
-                ZENYX Hospital<br />
-                <span style={{ color: "#F97316" }}>IT Health Audit</span>
+                ZENYX <span style={{ color: "#F97316" }}>Pulse</span><br />
+                <span className="text-[2rem] md:text-[2.4rem] font-light text-gray-500">Hospital IT Health Audit</span>
               </h1>
 
               {/* Supporting headline */}
@@ -902,7 +905,7 @@ export default function Home() {
                     <div className="flex items-center gap-3">
                       <div className="bg-orange-50 p-3 rounded-xl text-primary"><Activity className="w-5 h-5" /></div>
                       <div>
-                        <span className="text-xs font-medium text-primary/80 bg-orange-50 px-2.5 py-1 rounded-md uppercase tracking-wider">Results</span>
+                        <span className="text-xs font-medium text-primary/80 bg-orange-50 px-2.5 py-1 rounded-md uppercase tracking-wider">Pulse Assessment</span>
                         <CardTitle className="text-xl font-semibold text-gray-900 tracking-tight mt-1.5">Hospital IT Health Score</CardTitle>
                       </div>
                     </div>
@@ -1086,14 +1089,14 @@ export default function Home() {
               {/* Recommended Support Model */}
               <Card className="shadow-sm border border-gray-200/80 rounded-2xl bg-white overflow-hidden print-section">
                 <div className="h-[3px] w-full bg-gradient-to-r from-primary to-orange-300" />
-                <CardHeader className="border-b border-gray-100 px-8 py-6">
+                <CardHeader className="border-b border-gray-100 px-8 py-7">
                   <CardTitle className="text-xl font-semibold text-gray-900" style={{ letterSpacing: "-0.01em" }}>Recommended Support Model</CardTitle>
-                  <CardDescription className="text-sm text-gray-400 mt-1 font-normal max-w-2xl">
-                    Based on your risk profile and the infrastructure gaps identified, the following support model is recommended for {formData.hospitalName || "your facility"}.
+                  <CardDescription className="text-sm text-gray-400 mt-2 font-normal max-w-2xl leading-relaxed">
+                    Based on your facility profile, risk score, and infrastructure gaps, the following package structure is recommended.
                   </CardDescription>
-                  <div className="mt-4 inline-flex items-center gap-2 bg-orange-50 text-sm font-medium px-4 py-2 rounded-xl text-primary border border-orange-100">
-                    <Star className="w-4 h-4" />
-                    Score {riskScore}/100 — <span className="font-semibold">{recommendedPackage}</span> recommended
+                  <div className="mt-5 inline-flex items-center gap-2.5 bg-orange-50 text-sm font-normal px-4 py-2.5 rounded-xl text-gray-700 border border-orange-100/80">
+                    <Star className="w-4 h-4 text-primary shrink-0" />
+                    Based on your assessment, <span className="font-semibold text-primary ml-0.5">{recommendedPackage}</span> is the recommended next step.
                   </div>
                 </CardHeader>
                 <CardContent className="p-8">
@@ -1101,40 +1104,69 @@ export default function Home() {
                     {packages.map((pkg) => {
                       const isRec = pkg.name === recommendedPackage;
                       return (
-                        <div key={pkg.name} className={`relative flex flex-col rounded-2xl border overflow-hidden transition-all ${isRec ? "border-primary shadow-lg shadow-primary/10 ring-2 ring-primary/15" : "border-gray-200 shadow-sm"}`}>
+                        <div key={pkg.name}
+                          className={`relative flex flex-col rounded-2xl border transition-all duration-200 ease-out cursor-default
+                            hover:-translate-y-1
+                            ${isRec
+                              ? "border-primary/40 shadow-lg shadow-orange-500/8 ring-1 ring-primary/20 hover:shadow-xl hover:shadow-orange-500/10 hover:border-primary/70"
+                              : "border-gray-200 shadow-sm hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5"
+                            }`}>
                           {isRec && (
-                            <div className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-primary text-white text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide">
-                              <Star className="w-2.5 h-2.5" /> Recommended
+                            <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 bg-primary text-white text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
+                              <Star className="w-2 h-2" /> Recommended
                             </div>
                           )}
-                          <div className={`px-6 pt-6 pb-5 border-b border-gray-100 ${isRec ? "bg-orange-50/50" : "bg-gray-50/50"}`}>
-                            <span className={`text-[10px] font-semibold uppercase tracking-widest ${isRec ? "text-primary" : "text-gray-400"}`}>{pkg.tier}</span>
-                            <h3 className="text-base font-semibold text-gray-900 mt-1">{pkg.name}</h3>
-                            <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{pkg.subtitle}</p>
+
+                          {/* Card header */}
+                          <div className={`px-7 pt-7 pb-6 border-b border-gray-100 ${isRec ? "bg-gradient-to-b from-orange-50/70 to-orange-50/0" : "bg-gray-50/50"}`}>
+                            <span className={`text-[9px] font-bold uppercase tracking-[0.14em] ${isRec ? "text-primary" : "text-gray-400"}`}>{pkg.tier}</span>
+                            <h3 className="text-[1.1rem] font-semibold text-gray-900 mt-2 leading-tight" style={{ letterSpacing: "-0.015em" }}>{pkg.name}</h3>
+                            <p className="text-xs text-gray-500 mt-1.5 leading-relaxed font-normal">{pkg.subtitle}</p>
                           </div>
-                          <div className="p-6 flex flex-col flex-1">
-                            <p className="text-sm text-gray-500 leading-relaxed mb-4 font-normal">{pkg.desc}</p>
-                            <div className="mb-5">
-                              <p className={`text-xl font-semibold ${isRec ? "text-primary" : "text-gray-800"}`} style={{ letterSpacing: "-0.01em" }}>{pkg.price}</p>
-                              {pkg.devicePricing && <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">{pkg.devicePricing}</p>}
+
+                          {/* Card body */}
+                          <div className="px-7 py-6 flex flex-col flex-1">
+                            <p className="text-sm text-gray-500 leading-relaxed mb-5 font-normal">{pkg.desc}</p>
+
+                            {pkg.securityNote && (
+                              <div className="mb-5 flex items-center gap-2 text-[11px] font-medium text-gray-600 bg-orange-50/70 border border-orange-100 rounded-lg px-3 py-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                                {pkg.securityNote}
+                              </div>
+                            )}
+
+                            {/* Price */}
+                            <div className="mb-5 pb-5 border-b border-gray-100">
+                              <p className={`text-2xl font-semibold tracking-tight ${isRec ? "text-primary" : "text-gray-900"}`} style={{ letterSpacing: "-0.02em" }}>{pkg.price}</p>
+                              {pkg.devicePricing && (
+                                <p className="text-[11px] text-gray-400 mt-2 leading-relaxed whitespace-pre-line">{pkg.devicePricing}</p>
+                              )}
                             </div>
-                            <ul className="space-y-2.5 flex-1">
+
+                            {/* Features */}
+                            <ul className="space-y-3 flex-1">
                               {pkg.features.map(f => (
-                                <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
-                                  <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isRec ? "text-primary" : "text-gray-300"}`} />
-                                  <span className="font-normal">{f}</span>
+                                <li key={f} className="flex items-start gap-3">
+                                  <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${isRec ? "bg-primary/10" : "bg-gray-100"}`}>
+                                    <div className={`w-1.5 h-1.5 rounded-full ${isRec ? "bg-primary" : "bg-gray-400"}`} />
+                                  </div>
+                                  <span className={`text-sm leading-snug font-normal ${isRec ? "text-gray-700" : "text-gray-600"}`}>{f}</span>
                                 </li>
                               ))}
                             </ul>
-                            <div className="mt-5 pt-4 border-t border-gray-100">
-                              <p className="text-xs text-gray-400 leading-relaxed"><span className="font-medium text-gray-600">Best for:</span> {pkg.bestFor}</p>
+
+                            {/* Best for */}
+                            <div className="mt-6 pt-5 border-t border-gray-100">
+                              <p className="text-xs text-gray-400 leading-relaxed">
+                                <span className="font-semibold text-gray-600">Best for: </span>{pkg.bestFor}
+                              </p>
                             </div>
                           </div>
                         </div>
                       );
                     })}
                   </div>
-                  <p className="text-xs text-gray-400 text-center mt-5">Final pricing depends on number of systems, servers, branches, and support scope.</p>
+                  <p className="text-xs text-gray-400 text-center mt-6">Pricing is subject to final infrastructure assessment and support scope.</p>
                 </CardContent>
               </Card>
 
@@ -1245,7 +1277,7 @@ export default function Home() {
           <div className="flex items-center">
             <img src="/zenyx-logo.jpg" alt="ZENYX IT Infra Solutions" className="h-8 w-auto object-contain" />
           </div>
-          <p className="text-xs text-gray-400 text-center">ZENYX Hospital IT Health Audit · Hospital Infrastructure Risk, Reliability & Technology Assessment</p>
+          <p className="text-xs text-gray-400 text-center">ZENYX Pulse · Healthcare Infrastructure Intelligence Platform</p>
           <p className="text-xs text-gray-400">© {new Date().getFullYear()} ZENYX IT Infra Solutions</p>
         </div>
       </footer>

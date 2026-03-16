@@ -1,0 +1,110 @@
+We now have two official logos for the product "ZENYX Pulse".
+
+1. Dark background logo
+2. Light background logo
+
+Implement dynamic logo usage depending on the background color.
+
+LOGO RULES
+
+If the background is DARK:
+Use the light/white text logo version.
+
+Example:
+ZENYX (white)
+Pulse (white)
+Orange waveform
+
+If the background is LIGHT:
+Use the dark text logo version.
+
+Example:
+ZENYX (dark navy)
+Pulse (dark navy)
+Orange waveform
+
+IMPLEMENTATION
+
+Create two logo assets:
+
+/assets/logo-dark-bg.png
+/assets/logo-light-bg.png
+
+Then update the header/logo component so it switches automatically.
+
+Example logic:
+
+If background is dark → use logo-dark-bg.png  
+If background is light → use logo-light-bg.png
+
+HEADER LOGO
+
+The main navigation/header should detect the background and load the correct logo version.
+
+Example implementation:
+
+If header background color is dark (#0B132B or similar):
+display logo-dark-bg.png
+
+If header background is white or light:
+display logo-light-bg.png
+
+RESULT PAGE
+
+The result/report pages are mostly light backgrounds.
+Use the LIGHT background logo (dark text version).
+
+LANDING / HERO
+
+If the hero section is dark blue:
+use the DARK background logo (white text version).
+
+PDF / REPORT EXPORT
+
+Always use the LIGHT background logo version
+so it prints clearly on white documents.
+
+SPACING RULES
+
+Ensure proper spacing around the logo.
+
+Minimum spacing around logo = height of the letter "Z".
+
+Do not place other elements too close.
+
+LOGO SIZE
+
+Desktop header:
+height around 36–40px
+
+Mobile header:
+height around 28–32px
+
+Do not stretch or distort the logo.
+
+Maintain aspect ratio.
+
+BRAND CONSISTENCY
+
+The product name must always appear as:
+
+ZENYX Pulse
+
+ZENYX = primary brand  
+Pulse = platform product
+
+Never write:
+Pulse by ZENYX
+ZENYX-Pulse
+ZENYXPulse
+
+Always use the official format:
+ZENYX Pulse
+
+After implementing:
+confirm that
+
+1. the correct logo version loads on dark backgrounds
+2. the correct logo version loads on light backgrounds
+3. the PDF/export uses the light version
+4. header logo scales properly on mobile and desktop

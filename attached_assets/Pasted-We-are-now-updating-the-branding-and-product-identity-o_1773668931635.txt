@@ -1,0 +1,129 @@
+We are now updating the branding and product identity of the tool.
+
+IMPORTANT:
+- Do not rebuild the app.
+- Keep the existing premium UI and layout.
+- Update the product name and logo usage professionally.
+- The tool name must now be:
+  ZENYX Pulse
+
+BRAND NAME UPDATE
+Replace all previous product/tool names with:
+
+ZENYX Pulse
+
+Use this consistently in:
+- landing page hero
+- browser tab title
+- result/report sections
+- PDF/export title
+- footer if applicable
+- package / consultation references
+- lead capture section if product name is mentioned
+
+PRODUCT POSITIONING
+Use this as the platform/product identity:
+
+ZENYX Pulse
+Healthcare Infrastructure Intelligence Platform
+
+If needed, use this as supporting subtext:
+Hospital IT infrastructure risk, reliability, and assessment platform.
+
+LOGO USAGE RULES
+We now have two versions of the ZENYX Pulse logo:
+1. Dark background version
+2. Light background version
+
+Use them correctly.
+
+PRIMARY LOGO
+Use the dark-background logo as the primary brand logo for:
+- hero / landing page
+- login / intro areas
+- dark header sections
+- product branding visuals
+
+SECONDARY LOGO
+Use the light-background version for:
+- white background sections
+- PDFs / reports
+- document exports
+- proposal-style layouts
+
+DO NOT use both randomly.
+Apply the correct version depending on background contrast.
+
+LOGO IMPLEMENTATION RULES
+If the page background is dark:
+- use the dark version with white ZENYX and white Pulse text
+
+If the page background is light:
+- use the light version with dark/navy text and orange pulse line
+
+LOGO REFINEMENT REQUEST
+When placing the logo in the interface, ensure:
+
+1. The pulse waveform is slightly thinner and elegant if editable
+2. The spacing between “ZENYX” and the pulse is tighter so the logo feels more unified
+3. “Pulse” appears slightly smaller/lighter than “ZENYX” so brand hierarchy is clear
+4. The pulse waveform is vertically aligned perfectly with the text centerline
+5. Logo size is responsive and not oversized
+
+UI BRAND HIERARCHY
+Use this visual hierarchy in hero / main brand area:
+
+Primary:
+ZENYX Pulse
+
+Secondary:
+Healthcare Infrastructure Intelligence Platform
+
+Do not use old labels like:
+- Hospital IT Assessment Platform
+- ZENYX Hospital IT Health Audit
+unless they are being used as module/assessment names inside the platform
+
+OPTIONAL PRODUCT MODULE STRUCTURE
+If relevant in the interface, position the assessment as a module of the platform:
+
+Platform:
+ZENYX Pulse
+
+Assessment module:
+Pulse Assessment
+
+This is optional, but if useful, the main app can be branded:
+ZENYX Pulse
+and the assessment/report can be described as:
+Pulse Assessment Report
+
+PDF / REPORT TITLE UPDATE
+Update report/export naming to:
+
+ZENYX Pulse Assessment Report
+
+Or if longer version is needed:
+ZENYX Pulse Hospital IT Assessment Report
+
+Keep it premium and product-like.
+
+FOOTER / META COPY
+Use subtle brand copy such as:
+
+ZENYX Pulse — Healthcare Infrastructure Intelligence Platform
+
+DESIGN RULES
+- keep branding clean and enterprise-grade
+- do not clutter the interface with repeated logos
+- one logo placement per section is enough
+- preserve premium whitespace
+- keep orange accent restrained and elegant
+- maintain consistent typography and spacing
+
+AFTER IMPLEMENTATION
+Please summarize:
+1. where the new ZENYX Pulse branding was updated
+2. which logo version is used on dark vs light backgrounds
+3. whether report/export titles were renamed
+4. whether any old product naming still remains

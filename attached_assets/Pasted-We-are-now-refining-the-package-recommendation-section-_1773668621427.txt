@@ -1,0 +1,227 @@
+We are now refining the package recommendation section of the ZENYX Pulse / hospital audit results page.
+
+IMPORTANT:
+- Do not rebuild the whole page.
+- Keep the current premium layout and 3-card structure.
+- Make the package section look more elegant, more premium, and more enterprise-grade.
+- The package area should feel like a serious corporate pricing / support architecture section.
+
+DESIGN GOAL
+The package cards should look more polished, premium, and interactive.
+
+They should feel closer to:
+- modern SaaS pricing cards
+- enterprise service comparison blocks
+- premium Apple / Stripe / Zoho style UI
+
+PACKAGE INTERACTION
+Add hover interaction to each package card.
+
+When cursor hovers over a package card:
+- slightly elevate the card
+- add a stronger border highlight
+- increase shadow subtly
+- make the card feel active and premium
+- use smooth transition
+- if not selected, still show hover highlight elegantly
+
+Use:
+- transform translateY(-4px) or similar subtle lift
+- smooth 0.2s to 0.3s transition
+- stronger orange highlight for active/hover state, but still premium
+
+Do NOT make it flashy or loud.
+
+TYPOGRAPHY IMPROVEMENT
+Make package titles, subtitles, pricing, and feature lists sharper and more readable.
+
+Use:
+- stronger dark heading text
+- better spacing between title, subtitle, price, and features
+- slightly larger price font
+- cleaner feature line spacing
+- more premium hierarchy
+
+PACKAGE STRUCTURE CORRECTION
+
+Use these final package definitions:
+
+1. Monitoring Package
+Category label:
+FOUNDATION
+
+Title:
+Monitoring Package
+
+Subtitle:
+Visibility and early warning for hospital IT environments
+
+Description:
+Continuous visibility into your hospital’s core IT systems so issues can be identified before they disrupt operations.
+
+Price:
+₹11,999/month
+
+Features:
+- 24/7 Network Monitoring
+- Internet Uptime Monitoring
+- Firewall Availability Monitoring
+- Server Health Monitoring
+- Alert Notifications
+- Monthly IT Health Report
+- Email Support
+
+Best-for note:
+Best for facilities that need proactive visibility into infrastructure health.
+
+2. Support Package
+Category label:
+PROFESSIONAL
+
+Title:
+Support Package
+
+Subtitle:
+Monitoring plus active IT support and infrastructure upkeep
+
+Description:
+Ideal for facilities where IT issues affect staff productivity or operations and need ongoing support beyond monitoring.
+
+Price:
+₹12,999/month base
+
+Pricing note below:
++ ₹300 per endpoint
++ ₹2,500 per server
++ ₹1,500 per network/firewall device
+
+IMPORTANT:
+Add this feature clearly:
+- 2 Scheduled Onsite Visits / Month
+
+Support package includes:
+- Everything in Monitoring
+- Unlimited Remote Support
+- User Troubleshooting
+- Patch Management
+- Preventive Maintenance
+- Vendor Coordination
+- Asset Tracking & Documentation
+- 2 Scheduled Onsite Visits / Month
+- Incident Response SLA
+
+Best-for note:
+Best for facilities that require active hands-on IT support along with monitoring.
+
+3. Security Package
+Category label:
+ENTERPRISE
+
+Title:
+Security Package
+
+Subtitle:
+Monitoring + support + security resilience and governance
+
+Description:
+A complete managed IT environment combining infrastructure visibility, support responsiveness, and stronger security posture.
+
+Price:
+₹43,999/month onward
+
+IMPORTANT LOGIC:
+This package includes:
+- Monitoring
+- Support
+- Security
+
+Show a short note:
+Includes Monitoring + Support + Security services
+
+Also add pricing note:
+Device / server / network support pricing applies based on infrastructure size and support scope.
+
+Security package includes:
+- Everything in Support
+- Advanced Endpoint Security Oversight
+- Managed Backup Monitoring
+- Backup Recovery Verification
+- Disaster Recovery Readiness Review
+- Firewall Policy Review
+- Vulnerability & Security Posture Review
+- Staff Awareness Support
+- Quarterly IT Risk Review
+- Strategic IT Governance Review
+
+Best-for note:
+Best for hospitals with recurring risk, higher compliance expectations, or a need for stronger resilience.
+
+VISUAL IMPROVEMENTS
+Make the selected / recommended package feel more premium:
+- use subtle warm background tint or soft orange outline
+- recommended badge should be elegant
+- selected card should feel clearly more important
+- do not overuse orange fill backgrounds
+
+PRICE VISUAL STYLE
+Improve price presentation:
+- make price more prominent
+- use larger size
+- darker bold typography
+- pricing notes smaller and cleaner underneath
+- keep rupee symbol aligned cleanly
+
+FEATURE LIST STYLE
+Make feature list more premium:
+- use consistent spacing
+- use smaller elegant icons or check markers
+- increase readability
+- avoid cramped text
+- wrap long features cleanly
+
+SECTION HEADER IMPROVEMENT
+Improve the heading area above cards.
+
+Current area should become more polished.
+
+Use:
+Title:
+Recommended Support Model
+
+Subtext:
+Based on your facility profile, risk score, and infrastructure gaps, the following package structure is recommended.
+
+Recommendation bar text:
+Instead of:
+“Score 50/100 — Security Package recommended”
+
+Use:
+“Based on your assessment, Security Package is the recommended next step.”
+
+Make this sentence simpler and more human.
+
+CURSOR / HOVER EFFECTS
+On hover:
+- show pointer cursor
+- subtle elevation
+- stronger border
+- slightly brighter card background or shadow
+- smooth animation
+
+No aggressive scaling.
+
+DESIGN RULES
+- keep the cards elegant and expensive-looking
+- more whitespace
+- stronger contrast
+- corporate and clean
+- easy to scan
+- mobile friendly
+- premium SaaS pricing card feel
+
+After implementation:
+1. summarize all package structure updates
+2. confirm support now includes 2 onsite visits/month
+3. confirm security includes monitoring + support + security
+4. confirm hover interaction and premium UI polish were added
+5. mention if any price logic still needs business confirmation
