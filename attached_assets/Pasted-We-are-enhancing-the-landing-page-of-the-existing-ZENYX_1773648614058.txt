@@ -1,0 +1,191 @@
+We are enhancing the landing page of the existing “ZENYX Hospital IT Health Audit” app.
+
+IMPORTANT:
+- Do not rebuild the app.
+- Keep the premium Apple/Stripe/Linear-inspired layout already created.
+- Keep the elegant typography, whitespace, clean hero section, and orange accent.
+- Improve the landing page so it feels more powerful, more trustworthy, and more conversion-focused for hospitals.
+
+PRIMARY GOAL
+The landing page must increase “Start Free Audit” clicks.
+It should feel like a premium healthcare infrastructure assessment platform, not just a nice form.
+
+KEEP
+- Full-screen hero layout
+- Elegant typography
+- Minimal aesthetic
+- Premium spacing
+- Inter font
+- Orange CTA
+- Clean feature pills/cards
+
+ENHANCEMENT 1 — STRONGER HERO MESSAGING
+Keep the main product name:
+“ZENYX Hospital IT Health Audit”
+
+But improve the supporting headline/subheadline structure.
+
+Use this structure:
+
+Eyebrow / label:
+“Healthcare Infrastructure Intelligence Platform”
+
+Main headline:
+“ZENYX Hospital IT Health Audit”
+
+Supporting headline:
+“Protect your hospital from IT downtime, security risks, and system failures.”
+
+Subtext:
+“Hospital infrastructure risk, reliability, and technology assessment built for Indian healthcare environments.”
+
+This should feel stronger than the current generic subtitle.
+
+ENHANCEMENT 2 — ADD TRUST SIGNAL
+Below the subtext, add a small trust/positioning line such as:
+
+“Designed for hospitals, clinics, and diagnostic centres.”
+
+or
+
+“Built for healthcare infrastructure environments.”
+
+Use subtle grey text.
+Keep it elegant and minimal.
+
+ENHANCEMENT 3 — IMPROVE FEATURE PILLS
+Replace the current feature pill copy with stronger, more benefit-driven language.
+
+Use 4 premium feature pills such as:
+- Detect Hidden IT Risks
+- Prevent Downtime Across Critical Systems
+- Identify Security & Backup Gaps
+- Get a Hospital IT Reliability Plan
+
+These should feel outcome-driven, not generic.
+
+Keep the pills premium, subtle, and elegant.
+
+ENHANCEMENT 4 — BETTER CTA SUPPORT TEXT
+Keep the main button:
+“Start Free Audit”
+
+Under the CTA button, replace the current small text with a stronger 2-point support line like:
+
+“✓ Takes 3–5 minutes   ✓ Instant IT risk score”
+
+Keep this in subtle grey.
+Clean, not noisy.
+
+ENHANCEMENT 5 — ADD A SMALL VISUAL TRUST / METRIC CARD
+Below the hero section or just below the CTA area, add one small premium stat/info card.
+Do not overdo it.
+
+Possible example:
+Card title:
+“What this audit helps uncover”
+
+Items:
+- Network reliability risks
+- Backup & recovery gaps
+- Monitoring blind spots
+- Security weaknesses
+
+Alternative option:
+A compact metric/insight card such as:
+“Hospital IT Risk Score in Minutes”
+
+The goal is to make the page feel more alive and platform-like.
+
+ENHANCEMENT 6 — ADD A SECTION BELOW HERO
+Below the hero, add a clean section titled:
+
+“What This Audit Evaluates”
+
+Create 4 elegant cards with icons:
+
+1. Network Reliability
+Short text:
+“Internet redundancy, Wi-Fi stability, downtime exposure, and connectivity health.”
+
+2. Security Protection
+Short text:
+“Firewall, endpoint security, access control, and security readiness.”
+
+3. Backup & Recovery
+Short text:
+“Data backup coverage, recovery confidence, and resilience planning.”
+
+4. Infrastructure Health
+Short text:
+“Power backup, rack/server condition, support maturity, and monitoring readiness.”
+
+Design:
+- white cards
+- subtle shadows
+- rounded corners
+- premium spacing
+- strong typography
+- Apple-like simplicity
+
+ENHANCEMENT 7 — IMPROVE HEADER STRIP LABEL
+In the top header area, replace weaker platform wording with:
+
+“Healthcare Infrastructure Intelligence Platform”
+
+This should feel more premium than “Hospital IT Assessment Platform”.
+
+ENHANCEMENT 8 — SPACING / APPLE-STYLE POLISH
+Increase the spacing slightly between:
+- eyebrow label
+- logo
+- main heading
+- supporting headline
+- subtext
+- feature pills
+- CTA button
+
+The page should breathe more.
+Do not make it cramped.
+
+Apple-like design rule:
+More whitespace = more premium.
+
+ENHANCEMENT 9 — KEEP TEXT HIERARCHY PREMIUM
+Typography should remain elegant and restrained:
+- Main heading large and bold
+- Supporting headline slightly smaller
+- Subtext clean and soft
+- Feature pill text medium weight
+- Trust/support text subtle grey
+
+Do not overuse bold text.
+
+ENHANCEMENT 10 — POSITIONING LANGUAGE
+Throughout the landing page, slightly shift wording from “tool” or “assessment form” feeling toward:
+- platform
+- intelligence
+- hospital IT reliability
+- infrastructure risk visibility
+
+This should make ZENYX look like a serious healthcare IT consulting platform.
+
+DESIGN RULES
+- Keep the page minimal
+- No clutter
+- No excessive gradients
+- No busy graphics
+- Use clean cards and spacing
+- Orange should remain accent only
+- Layout must stay premium on desktop and mobile
+
+CONVERSION RULE
+This page is not for decoration.
+Its job is to get hospitals to click:
+“Start Free Audit”
+
+After implementation:
+1. summarize all landing page enhancements
+2. explain which wording was upgraded
+3. explain what trust/benefit sections were added
+4. mention any optional future improvements still possible

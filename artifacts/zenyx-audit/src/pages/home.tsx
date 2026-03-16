@@ -252,14 +252,14 @@ export default function Home() {
               <img
                 src="/zenyx-logo-dark.png"
                 alt="ZENYX IT Infra Solutions"
-                className="h-14 w-auto object-contain"
-                style={{ mixBlendMode: "screen", filter: "brightness(3.5)", maxWidth: "220px" }}
+                className="h-8 w-auto object-contain"
+                style={{ mixBlendMode: "screen", filter: "brightness(3.5)", maxWidth: "200px" }}
               />
             </div>
             <div className="flex-1 flex flex-col items-center text-center px-4">
               <div className="flex items-center gap-3 mb-1">
                 <div className="hidden sm:block h-px w-10 bg-gradient-to-r from-transparent to-primary/30" />
-                <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-primary/50">Hospital IT Assessment Platform</span>
+                <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-primary/50">Healthcare Infrastructure Intelligence Platform</span>
                 <div className="hidden sm:block h-px w-10 bg-gradient-to-l from-transparent to-primary/30" />
               </div>
               <h1 className="text-lg md:text-xl font-semibold text-white tracking-tight">ZENYX Hospital IT Health Audit</h1>
@@ -314,70 +314,128 @@ export default function Home() {
 
       {/* FULL-VIEWPORT HERO — landing screen */}
       {!started && (
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-24">
-          <div className="max-w-2xl mx-auto w-full">
+        <div>
+          {/* Hero */}
+          <div className="flex flex-col items-center justify-center text-center px-6 pt-20 pb-16">
+            <div className="max-w-2xl mx-auto w-full">
 
-            {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-500 text-xs font-medium px-4 py-2 rounded-full mb-10 shadow-sm">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Hospital IT Assessment Platform
+              {/* Product badge */}
+              <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-500 text-xs font-medium px-4 py-2 rounded-full mb-8 shadow-sm">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                Healthcare Infrastructure Intelligence Platform
+              </div>
+
+              {/* Main headline */}
+              <h1 className="text-[2.75rem] md:text-[3.25rem] font-semibold text-gray-900 leading-[1.15] mb-5"
+                style={{ letterSpacing: "-0.025em" }}>
+                ZENYX Hospital<br />
+                <span style={{ color: "#F97316" }}>IT Health Audit</span>
+              </h1>
+
+              {/* Supporting headline */}
+              <p className="text-xl text-gray-700 font-medium leading-snug mb-4 max-w-xl mx-auto">
+                Protect your hospital from IT downtime, security risks,<br className="hidden sm:block" /> and system failures.
+              </p>
+
+              {/* Subtext */}
+              <p className="text-base text-gray-400 leading-relaxed mb-3 max-w-lg mx-auto" style={{ fontWeight: 400 }}>
+                Hospital infrastructure risk, reliability, and technology assessment — built for Indian healthcare environments.
+              </p>
+
+              {/* Trust line */}
+              <p className="text-sm text-gray-400 mb-10">
+                Designed for hospitals, clinics, and diagnostic centres.
+              </p>
+
+              {/* Feature pills */}
+              <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+                {[
+                  { icon: Eye, text: "Detect Hidden IT Risks" },
+                  { icon: Activity, text: "Prevent Downtime Across Critical Systems" },
+                  { icon: Shield, text: "Identify Security & Backup Gaps" },
+                  { icon: Clipboard, text: "Get a Hospital IT Reliability Plan" },
+                ].map(({ icon: Icon, text }) => (
+                  <div key={text} className="flex items-center gap-2 bg-white border border-gray-200 text-gray-600 text-sm px-4 py-2.5 rounded-full shadow-sm">
+                    <Icon className="w-4 h-4 text-primary shrink-0" />
+                    <span className="font-medium">{text}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div className="flex flex-col items-center gap-3">
+                <Button onClick={startAssessment} size="lg"
+                  className="h-14 px-10 rounded-2xl text-base font-medium hover:shadow-lg hover:shadow-primary/20 transition-all group">
+                  Start Free Audit
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                </Button>
+                <p className="text-sm text-gray-400">
+                  <span className="mr-4">✓ Takes 3–5 minutes</span>
+                  <span>✓ Instant IT risk score</span>
+                </p>
+              </div>
+
+              {/* Trust bar */}
+              <div className="mt-12 pt-10 border-t border-gray-200/60 flex items-center justify-center gap-6 text-xs text-gray-400 font-medium">
+                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 3–5 minutes</span>
+                <span className="w-px h-3 bg-gray-300" />
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" /> Free assessment</span>
+                <span className="w-px h-3 bg-gray-300" />
+                <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> No commitment</span>
+              </div>
             </div>
+          </div>
 
-            {/* Logo */}
-            <div className="flex justify-center mb-10">
-              <img
-                src="/zenyx-logo.jpg"
-                alt="ZENYX IT Infra Solutions"
-                className="h-24 w-auto object-contain"
-                style={{ maxWidth: "380px", mixBlendMode: "multiply" }}
-              />
-            </div>
-
-            {/* Main headline */}
-            <h1 className="text-[2.75rem] md:text-[3.25rem] font-semibold text-gray-900 leading-[1.15] mb-5"
-              style={{ letterSpacing: "-0.025em" }}>
-              ZENYX Hospital<br />
-              <span style={{ color: "#F97316" }}>IT Health Audit</span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-lg text-gray-500 leading-relaxed mb-10 max-w-xl mx-auto" style={{ fontWeight: 400 }}>
-              Hospital Infrastructure Risk, Reliability &amp; Technology Assessment.<br />
-              Built exclusively for Indian healthcare facilities.
-            </p>
-
-            {/* Feature pills */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-              {[
-                { icon: Building2, text: "Hospital-specific assessment" },
-                { icon: Activity, text: "Live IT risk scoring" },
-                { icon: Clipboard, text: "Actionable improvement plan" },
-                { icon: Package, text: "Support model recommendation" },
-              ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-2 bg-white border border-gray-200 text-gray-600 text-sm px-4 py-2.5 rounded-full shadow-sm">
-                  <Icon className="w-4 h-4 text-primary shrink-0" />
-                  <span className="font-medium">{text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="flex flex-col items-center gap-3">
-              <Button onClick={startAssessment} size="lg"
-                className="h-14 px-10 rounded-2xl text-base font-medium hover:shadow-lg hover:shadow-primary/20 transition-all group">
-                Start Free Audit
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-              </Button>
-              <p className="text-sm text-gray-400">No registration required · Takes 3–5 minutes</p>
-            </div>
-
-            {/* Time badge */}
-            <div className="mt-12 pt-10 border-t border-gray-200/60 flex items-center justify-center gap-6 text-xs text-gray-400 font-medium">
-              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 3–5 minutes</span>
-              <span className="w-px h-3 bg-gray-300" />
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" /> Free assessment</span>
-              <span className="w-px h-3 bg-gray-300" />
-              <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> No commitment</span>
+          {/* WHAT THIS AUDIT EVALUATES */}
+          <div className="bg-white border-t border-gray-200/60 py-16 px-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <p className="text-xs font-semibold text-primary/70 uppercase tracking-widest mb-2">Assessment Coverage</p>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-3" style={{ letterSpacing: "-0.015em" }}>
+                  What This Audit Evaluates
+                </h2>
+                <p className="text-sm text-gray-400 max-w-md mx-auto">
+                  A structured review of five critical infrastructure domains — each with a live risk score and improvement recommendations.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  {
+                    icon: Wifi,
+                    title: "Network Reliability",
+                    desc: "Internet redundancy, Wi-Fi stability, downtime frequency, and connectivity resilience across departments.",
+                  },
+                  {
+                    icon: Shield,
+                    title: "Security Protection",
+                    desc: "Firewall coverage, endpoint security, access control, and overall security readiness.",
+                  },
+                  {
+                    icon: Database,
+                    title: "Backup & Recovery",
+                    desc: "Data backup coverage, recovery testing, and disaster recovery confidence.",
+                  },
+                  {
+                    icon: Server,
+                    title: "Infrastructure Health",
+                    desc: "Power backup, rack condition, server room organisation, support maturity, and monitoring readiness.",
+                  },
+                ].map(({ icon: Icon, title, desc }) => (
+                  <div key={title} className="bg-white border border-gray-200 rounded-2xl p-6 text-left hover:shadow-md transition-shadow">
+                    <div className="bg-orange-50 w-10 h-10 rounded-xl flex items-center justify-center mb-4">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-sm font-semibold text-gray-900 mb-2">{title}</h3>
+                    <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-10">
+                <Button onClick={startAssessment} variant="outline" size="lg"
+                  className="h-11 px-8 rounded-xl font-medium border-gray-200 hover:border-primary hover:text-primary transition-all">
+                  Start the Audit <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
