@@ -1,0 +1,566 @@
+We are upgrading the existing app into a smarter hospital-only dynamic assessment engine.
+
+IMPORTANT:
+- Do not rebuild from scratch.
+- Keep the existing React + Tailwind + Vite structure.
+- Keep the premium healthcare UI style already built.
+- Keep the current 7-step flow concept, but make the questions dynamic based on facility type and user role.
+- Keep PDF export, print report, scoring engine, package recommendation, and premium results layout.
+- This tool is ONLY for healthcare right now.
+
+FINAL PRODUCT NAME
+Rename the product everywhere to:
+“ZENYX Hospital IT Health Audit”
+
+Subtitle:
+“Hospital Infrastructure Risk, Reliability & Technology Assessment”
+
+MAIN UPGRADE REQUIRED
+The assessment must no longer ask the same questions to everyone.
+
+Questions must dynamically change based on:
+1. Facility Type
+2. User Role / Department
+
+This should feel intelligent, premium, and consulting-grade.
+
+FACILITY TYPES
+Create a required dropdown:
+“Facility Type”
+
+Options:
+- Multi-speciality Hospital
+- Single-speciality Hospital
+- Clinic
+- Diagnostic Centre
+
+USER ROLE / DEPARTMENT
+Create a required dropdown:
+“Your Role / Department”
+
+Options:
+- Hospital Owner / Director
+- IT Administrator
+- Operations Manager
+- Doctor / Department Head
+- Purchase / Procurement
+- Biomedical Engineer
+- Other
+
+ASSESSMENT FLOW
+STEP 1 — Basic Facility Profile
+Keep this simple and low-friction.
+Ask only:
+- Facility Name
+- Facility Type
+- Your Role / Department
+- Location
+- Number of Branches
+- Number of Beds
+- Number of Computers / Endpoints
+
+Do NOT ask phone number or email here.
+
+STEP 2 onward must become DYNAMIC.
+
+QUESTION ENGINE RULES
+Build a question engine so that:
+- Some questions are universal for all healthcare facilities
+- Some questions appear only for certain facility types
+- Some questions appear only for certain roles
+- Some questions appear only when a previous answer triggers them
+
+Use a clean configuration-based approach if possible.
+
+QUESTION STYLE RULES
+IMPORTANT:
+- Questions must be very easy to understand
+- Avoid deep technical jargon
+- Use simple business language
+- Questions should be answerable by owners, admins, managers, doctors, and procurement people
+- Keep options short and clear
+- Total visible questions should usually stay around 18 to 22 depending on path
+- Use mostly button/radio options, not long forms
+
+UNIVERSAL QUESTIONS FOR ALL FACILITIES
+These should be available across most paths:
+
+SECTION: Network Reliability
+1. Do you have backup internet connectivity?
+Options:
+- Dual ISP
+- Single ISP
+- No backup internet
+
+2. How often does IT/network downtime affect daily operations?
+Options:
+- Never
+- Rarely
+- Monthly
+- Weekly
+- Frequently
+
+3. Is Wi-Fi stable in all important working areas?
+Options:
+- Stable everywhere
+- Stable in some areas
+- Frequently unstable
+
+SECTION: Security
+4. Do all computers have antivirus or endpoint security?
+Options:
+- Yes
+- Partial
+- No
+- Not sure
+
+5. Is there a firewall protecting your internet and network?
+Options:
+- Yes
+- No
+- Not sure
+
+6. Is access to systems controlled based on staff roles/departments?
+Options:
+- Yes
+- Partial
+- No
+- Not sure
+
+SECTION: Backup
+7. Is hospital data backed up automatically?
+Options:
+- Daily
+- Partial / selected systems only
+- No
+- Not sure
+
+8. Are backups tested to make sure recovery works?
+Options:
+- Regularly tested
+- Rarely tested
+- Never tested
+- Not sure
+
+SECTION: Monitoring
+9. Do you get alerts when servers, internet, or key systems go down?
+Options:
+- Yes
+- Partial alerts
+- No
+- Not sure
+
+SECTION: Power / Infrastructure
+10. Do critical systems have power backup (UPS / generator)?
+Options:
+- Yes
+- Partial
+- No
+
+FACILITY-SPECIFIC QUESTIONS
+
+A) MULTI-SPECIALITY HOSPITAL
+Show additional advanced questions such as:
+
+1. Is Wi-Fi available and stable across wards, ICU, OPD, labs, and admin areas?
+Options:
+- Fully stable
+- Partial coverage
+- Poor coverage
+
+2. Do connectivity issues affect billing, lab, or patient record access?
+Options:
+- Never
+- Sometimes
+- Frequently
+
+3. Are servers and core network systems centrally monitored?
+Options:
+- Yes
+- Partial
+- No
+
+4. Is there a structured rack/server room setup for core IT systems?
+Options:
+- Well organized
+- Average
+- Poor / unorganized
+
+5. Are branch locations connected in a structured and secure way?
+Options:
+- Yes
+- Partial
+- No
+- Not applicable
+
+B) SINGLE-SPECIALITY HOSPITAL
+Show focused but slightly less complex questions such as:
+
+1. Do patient systems or billing systems slow down during busy hours?
+Options:
+- Never
+- Sometimes
+- Frequently
+
+2. Is Wi-Fi/internet reliable in treatment and admin areas?
+Options:
+- Reliable
+- Some weak zones
+- Frequently unstable
+
+3. Are your systems monitored before a failure happens?
+Options:
+- Yes
+- Partial
+- No
+
+4. Do you have clear IT support when something goes wrong?
+Options:
+- In-house support
+- Vendor on call
+- No proper support
+
+C) CLINIC
+Keep it simpler:
+
+1. Do consultation, billing, or patient systems ever become slow or unavailable?
+Options:
+- Never
+- Sometimes
+- Often
+
+2. Do you have backup internet if the main connection fails?
+Options:
+- Yes
+- No
+
+3. Is patient data backed up safely?
+Options:
+- Yes
+- Partial
+- No
+- Not sure
+
+4. Do you get quick support when systems or printers fail?
+Options:
+- Yes
+- Sometimes delayed
+- No
+
+5. Is Wi-Fi stable for billing and daily clinic work?
+Options:
+- Stable
+- Sometimes unstable
+- Frequently unstable
+
+D) DIAGNOSTIC CENTRE
+Focus on reporting and image/data movement:
+
+1. Do imaging/reporting systems work reliably without network delays?
+Options:
+- Reliable
+- Sometimes delayed
+- Frequently delayed
+
+2. Are large files/scans transferred smoothly between systems?
+Options:
+- Fast
+- Moderate
+- Slow
+
+3. Do network or server issues delay reports?
+Options:
+- Never
+- Sometimes
+- Frequently
+
+4. Is data backup critical systems coverage sufficient?
+Options:
+- Yes
+- Partial
+- No
+- Not sure
+
+ROLE-SPECIFIC QUESTIONS
+
+A) HOSPITAL OWNER / DIRECTOR
+Ask business-impact questions:
+1. Has IT downtime ever affected patient service, billing, or operations?
+Options:
+- Never
+- Occasionally
+- Multiple times
+
+2. Are you confident patient and operational data is secure and recoverable?
+Options:
+- Very confident
+- Some concerns
+- Not confident
+
+3. Do you receive regular visibility or reports on IT health?
+Options:
+- Yes
+- Occasionally
+- No
+
+B) IT ADMINISTRATOR
+Ask more technical operational questions:
+1. Are servers monitored for CPU, memory, storage, and downtime?
+Options:
+- Yes
+- Partial
+- No
+
+2. Are firewall, internet, and switches proactively monitored?
+Options:
+- Yes
+- Partial
+- No
+
+3. Are patches/updates applied regularly across systems?
+Options:
+- Yes
+- Some systems only
+- Irregularly
+
+4. Is backup recovery testing done regularly?
+Options:
+- Yes
+- Rarely
+- Never
+
+C) OPERATIONS MANAGER
+Ask workflow questions:
+1. Do staff face system delays during peak hours?
+Options:
+- Rarely
+- Sometimes
+- Often
+
+2. Are patient records, billing, and admin systems available without interruption?
+Options:
+- Usually yes
+- Sometimes interrupted
+- Frequently interrupted
+
+3. Do departments complain about Wi-Fi, slow systems, or downtime?
+Options:
+- Rarely
+- Sometimes
+- Frequently
+
+D) DOCTOR / DEPARTMENT HEAD
+Ask non-technical operational pain:
+1. Do IT/system issues ever delay patient care or department work?
+Options:
+- Never
+- Sometimes
+- Frequently
+
+2. Is access to reports, records, or systems smooth during working hours?
+Options:
+- Smooth
+- Sometimes slow
+- Frequently problematic
+
+3. Are there recurring issues with printers, systems, or connectivity in your department?
+Options:
+- No
+- Sometimes
+- Often
+
+E) PURCHASE / PROCUREMENT
+Ask planning and lifecycle questions:
+1. Is there a structured IT upgrade plan for the next 12–24 months?
+Options:
+- Yes
+- In discussion
+- No
+
+2. Are devices, servers, and network equipment tracked for replacement planning?
+Options:
+- Yes
+- Partial
+- No
+
+3. Do you have annual IT support / maintenance coverage?
+Options:
+- Yes
+- Partial
+- No
+
+F) BIOMEDICAL ENGINEER
+Ask integration and equipment continuity questions:
+1. Do connected medical devices face network or data-sharing issues?
+Options:
+- Never
+- Sometimes
+- Frequently
+
+2. Is there coordination between medical equipment systems and IT/network support?
+Options:
+- Strong coordination
+- Some coordination
+- Weak / no coordination
+
+3. Are critical connected devices supported by reliable power and network availability?
+Options:
+- Yes
+- Partial
+- No
+
+SMART CONDITIONAL LOGIC
+Add conditional follow-up questions where useful.
+
+Examples:
+
+If backup answer is “No” or “Not sure”
+Then ask:
+“Would backup and recovery planning be a priority for your facility?”
+Options:
+- Yes
+- Maybe
+- No
+
+If monitoring answer is “No”
+Then ask:
+“Would you like alerts when internet, server, or firewall issues happen?”
+Options:
+- Yes
+- Maybe
+- No
+
+If downtime answer is Weekly or Frequently
+Then ask:
+“Which areas are most affected?”
+Options:
+- Billing
+- Lab
+- Patient records
+- Wi-Fi
+- Branch connectivity
+- Printing / peripherals
+
+SCORING LOGIC DIRECTION
+Keep the current score engine structure, but revise scoring inputs to align with the new questions.
+
+The score should reflect risk urgency.
+
+Low maturity / weak answers should increase risk.
+Good answers should reduce risk.
+
+Visible score interpretation should remain:
+
+0–25 = Optimized Infrastructure
+26–50 = Needs Optimization
+51–75 = Operational Risk Areas
+76–100 = Critical Infrastructure Gaps
+
+Also add visible risk badge:
+- Low Risk
+- Moderate Risk
+- High Risk
+- Critical Risk
+
+RESULTS PAGE UPGRADES
+Keep the premium results page, but update the content to reflect dynamic inputs.
+
+Results must show:
+1. Hospital IT Health Score
+2. Risk Level
+3. Category Breakdown:
+- Network Reliability
+- Security Posture
+- Backup & Recovery
+- Infrastructure Readiness
+- Monitoring & Support
+
+4. Executive Interpretation
+5. Top 3 Immediate Priorities
+6. Key Observations
+7. Recommended Package
+8. “Book Free IT Health Audit” CTA
+9. Lead capture only AFTER results
+
+POST-RESULT LEAD CAPTURE
+After showing the score and value, add a premium lead section:
+Title:
+“Book Free IT Health Audit”
+Fields:
+- Name
+- Mobile Number
+- Email
+- Facility Name (prefilled if available)
+
+CTA button:
+“Book Free IT Health Audit”
+
+This should appear after the user has already seen the value.
+
+PACKAGE RECOMMENDATION
+Use:
+- Monitoring Package
+- Support Package
+- Security Package
+
+Recommendation logic:
+- Low risk → Monitoring
+- Moderate risk → Support
+- High/Critical risk → Security
+
+LANGUAGE STYLE
+Keep everything simple and understandable.
+Do not use confusing network terms unless necessary.
+Translate technical meaning into operational language.
+
+Examples of preferred question style:
+GOOD:
+- Do you get alerts when systems go down?
+- Is patient data backed up daily?
+- Do system issues affect billing or reports?
+- Is Wi-Fi stable in important working areas?
+
+BAD:
+- Do you use SNMP for monitoring?
+- Is your infrastructure HA enabled?
+- Are your ACL rules optimized?
+
+LANDING PAGE UPDATE
+Keep it premium.
+Use:
+
+Title:
+“ZENYX Hospital IT Health Audit”
+
+Description:
+“A hospital-specific assessment designed to identify downtime risks, security gaps, and IT improvement opportunities across your healthcare environment.”
+
+Highlights:
+- Hospital-specific questions
+- Live risk scoring
+- Smart recommendations
+- Audit-ready reporting
+
+Button:
+“Start Free Audit”
+
+IMPLEMENTATION REQUEST
+Please implement this cleanly in the existing app.
+Refactor the question model to support:
+- facility-based questions
+- role-based questions
+- conditional questions
+
+Do not break:
+- current premium UI
+- print report
+- export PDF
+- scoring dashboard
+- package recommendation
+- multi-step experience
+
+After implementation:
+1. summarize how the dynamic question engine works
+2. show which questions are universal vs facility-specific vs role-specific
+3. list any scoring assumptions added
+4. mention any business inputs still needed from me

@@ -1,0 +1,370 @@
+We are refining the existing app “ZENYX Care IT Check” into a premium hospital-only assessment product.
+
+IMPORTANT:
+- Do not rebuild from scratch.
+- Keep the current React + Tailwind + Vite app structure.
+- Keep the premium healthcare aesthetic, dark branded header, white/light cards, orange accent usage, and overall polished enterprise look.
+- Keep the existing 7-step flow and results architecture unless changes below require refinement.
+- Keep the existing package recommendation logic structure, PDF export, and print report support.
+- Improve the current app into a stronger hospital-focused lead generation and consulting tool.
+
+NEW PRODUCT POSITIONING
+Rename the product everywhere from:
+“ZENYX Care IT Check”
+to:
+“ZENYX Hospital IT Health Audit”
+
+Update subtitle to:
+“Hospital Infrastructure Risk, Reliability & Technology Assessment”
+
+Update CTA language to:
+“Book Free IT Health Audit”
+and
+“Book Free Consultation”
+where appropriate.
+
+PRIMARY GOAL
+This tool is only for healthcare facilities right now.
+It is not a generic MSP tool.
+It should feel like a premium consulting-grade hospital IT audit platform.
+
+TARGET FACILITY TYPES
+Add a dropdown for Facility Type with:
+- Multi-speciality Hospital
+- Single-speciality Hospital
+- Clinic
+- Diagnostic Centre
+- Daycare Centre
+- Medical College Hospital
+- Other Healthcare Facility
+
+ROLE-BASED ASSESSMENT
+Add a required dropdown near the beginning:
+“Your Role”
+
+Options:
+- Hospital Owner / Director
+- IT Administrator
+- Operations Manager
+- Doctor / Department Head
+- Purchase / Procurement
+- Biomedical Engineer
+- Other
+
+This role must influence:
+1. tone of observations
+2. recommendations shown on results page
+3. CTA copy where relevant
+
+For example:
+- Owners/Directors should see business continuity, downtime risk, ROI, patient service impact
+- IT Admins should see monitoring, security, backup, patching, infrastructure gaps
+- Procurement should see upgrade priorities, standardization, lifecycle planning
+- Doctors/operations should see speed, uptime, system availability, workflow continuity
+
+STEP 1 RESTRUCTURE
+Current first screen asks for too much too early.
+Reduce friction.
+
+Step 1 should capture only:
+- Facility Name
+- Facility Type
+- Your Role
+- Location
+- Number of Branches
+- Number of Beds
+- Number of Computers / Endpoints
+
+Move these fields out of Step 1 and ask later only if needed, or make optional:
+- Mobile Number
+- Email
+- Contact Person
+- Designation
+- Number of Servers
+- Assessed By
+
+VERY IMPORTANT:
+Do NOT force phone number or email at the first step.
+Lead capture should happen after value is shown.
+
+LEAD CAPTURE FLOW
+After results are shown, and before PDF export or full consultation CTA, show a premium lead capture block:
+Title:
+“Unlock Full Audit Support”
+Fields:
+- Name
+- Mobile Number
+- Email
+- Hospital / Facility Name (prefilled if available)
+
+CTA button:
+“Book Free IT Health Audit”
+
+This should feel like a premium consultation invite, not a cheap form.
+
+SCORING FIX (VERY IMPORTANT)
+Current scoring presentation is misleading.
+A score of 0 should never show as “Stable Infrastructure.”
+
+Rework the visible scoring interpretation so higher risk is clearly urgent.
+
+Use this visible interpretation:
+
+Score 0–25:
+“Optimized Infrastructure”
+Green
+Message: Strong IT foundation with proactive maturity. Continue monitoring and governance.
+
+Score 26–50:
+“Needs Optimization”
+Yellow/Amber
+Message: Core systems are functioning, but there are improvement areas that may affect efficiency and resilience.
+
+Score 51–75:
+“Operational Risk Areas”
+Orange
+Message: Multiple infrastructure and process gaps are increasing downtime and security risk.
+
+Score 76–100:
+“Critical Infrastructure Gaps”
+Red
+Message: Immediate action is recommended to reduce business disruption, patient workflow impact, and cyber exposure.
+
+IMPORTANT:
+The final risk view must create urgency.
+Hospitals should clearly feel where they stand.
+
+RESULTS PAGE IMPROVEMENTS
+Keep the current results structure, but improve it.
+
+1. Rename main score section to:
+“Hospital IT Health Score”
+
+2. Add a clear risk badge near the score:
+- Low Risk
+- Moderate Risk
+- High Risk
+- Critical Risk
+
+3. Add a short executive interpretation:
+Examples:
+- “Your hospital shows strong IT maturity with room for preventive optimization.”
+- “Your hospital is exposed to recurring downtime and security risk in key infrastructure areas.”
+- “Immediate stabilization and proactive monitoring are recommended.”
+
+4. Category breakdown should feel hospital-relevant.
+Use these categories:
+- Network Reliability
+- Security Posture
+- Backup & Recovery
+- Infrastructure Readiness
+- Monitoring & Support
+
+5. Add a section:
+“Top 3 Immediate Priorities”
+Generate 3 short action cards based on weak areas.
+Examples:
+- Deploy proactive 24/7 monitoring for firewall, servers, and WAN
+- Strengthen backup verification and recovery readiness
+- Improve rack, cabling, and power resilience for core systems
+
+6. Improve “Key Infrastructure Observations”
+Make the language more premium, consulting-like, and role-aware.
+
+7. Keep package recommendations, but make them smarter.
+
+PACKAGE POSITIONING
+Current package block is good, but improve the labels and copy.
+
+Use:
+1. Monitoring Package
+Subtitle: “Visibility and early warning for hospital IT environments”
+Features:
+- 24/7 Network Monitoring
+- Firewall & Internet Health Monitoring
+- Server Health Monitoring
+- Monthly Health Reports
+- Basic Remote Support
+
+2. Support Package
+Subtitle: “Proactive IT support and infrastructure upkeep”
+Features:
+- Everything in Monitoring
+- Unlimited Remote Support
+- Patch Management
+- Scheduled On-site Visits
+- Incident Response SLA
+
+3. Security Package
+Subtitle: “Advanced resilience, protection, and governance”
+Features:
+- Everything in Support
+- Advanced Endpoint Security
+- Managed Backup & DR
+- Security Awareness Support
+- IT Strategy Reviews / vCIO-style guidance
+
+Recommendation logic:
+- Low risk / optimized → Monitoring Package
+- Moderate risk → Support Package
+- High risk / critical → Security Package
+
+Also add one short line under the recommended package:
+“Recommended based on your current risk profile, infrastructure maturity, and operational needs.”
+
+STEP QUESTIONS REFINEMENT
+Keep the 7-step model, but refine healthcare relevance.
+
+STEP 2 — Network & Connectivity
+Keep:
+- Managed switches
+- Internet redundancy
+- Wi-Fi coverage
+- Downtime frequency
+- Number of network users
+- observations
+
+Add or refine labels for hospital context:
+- “Is Wi-Fi stable across all departments?”
+- “Is internet redundancy available for critical operations?”
+- “How often does connectivity impact billing / lab / admin workflows?”
+
+STEP 3 — Security & Backup
+Keep and refine:
+- Firewall
+- Endpoint security
+- Backup system
+- Backup type
+- Server monitoring
+- Password/access policy
+- Data security awareness
+
+Add:
+- “Are backups tested for successful recovery?”
+Options:
+  - Regularly tested
+  - Rarely tested
+  - Never tested
+  - Not sure
+
+- “Is access control separated by staff role/department?”
+Options:
+  - Yes
+  - Partial
+  - No
+  - Not sure
+
+STEP 4 — Infrastructure & Operations
+Keep:
+- CCTV integration
+- Rack management
+- UPS / power backup
+- Structured cabling quality
+- NAS / storage
+- IT support model
+- observations
+
+Improve labels:
+- “Server room / network rack condition”
+- “Power backup readiness for critical systems”
+- “LAN cabling health and organization”
+
+STEP 5 — Operational IT Challenges
+Keep free-text, but make prompt stronger:
+“What day-to-day IT issues are affecting hospital operations?”
+Placeholder examples:
+- Slow lab systems
+- Billing interruptions
+- Weak Wi-Fi in wards/ICU
+- HIS/EMR slowness
+- Server downtime
+- Printer/network issues
+- Internet disruptions during peak hours
+
+STEP 6 — Future IT Goals
+Keep free-text, but improve prompt:
+“What improvements would you like to achieve in your hospital IT infrastructure in the next 6–12 months?”
+Placeholder examples:
+- Zero downtime for critical systems
+- Better Wi-Fi coverage
+- Stronger data security
+- Centralized monitoring
+- Better backup readiness
+- Scalable branch connectivity
+- Structured support model
+
+PREMIUM UX IMPROVEMENTS
+- Keep the interface premium and minimal
+- Improve spacing and alignment where needed
+- Keep orange as accent, not dominant
+- Make the role selector and facility type selector feel polished
+- Add subtle “Estimated time: 3–5 minutes” on landing / opening card
+- Add “hospital-only” tone throughout the product
+- Ensure the progress bar feels smooth and premium
+
+LANDING SCREEN IMPROVEMENT
+Make the first screen stronger and more outcome-driven.
+
+Suggested hero copy:
+Title:
+“ZENYX Hospital IT Health Audit”
+
+Description:
+“A premium hospital infrastructure assessment designed to identify downtime risks, security gaps, and improvement opportunities across your healthcare IT environment.”
+
+Feature highlights:
+- Hospital-specific assessment
+- Live risk scoring
+- Action recommendations
+- Support model guidance
+
+Button:
+“Start Free Audit”
+
+CTA / NEXT STEP SECTION
+On the final screen, keep the roadmap but strengthen the CTA.
+
+Replace generic closing language with:
+“Ready to strengthen your hospital IT environment?”
+
+Button:
+“Book Free IT Health Audit”
+
+Supporting line:
+“Speak with ZENYX IT Infra Solutions for a structured infrastructure review, risk reduction plan, and proactive support strategy.”
+
+PDF / PRINT REPORT
+Keep export and print.
+Ensure PDF/report title becomes:
+“ZENYX Hospital IT Health Audit Report”
+
+Report should clearly show:
+- Facility details
+- Role
+- Risk score
+- Risk level
+- Category scores
+- Key observations
+- Top 3 priorities
+- Recommended package
+- Next-step CTA
+
+IMPORTANT DESIGN RULES
+- Do not make the UI look generic SaaS
+- It should feel like a premium healthcare consulting platform
+- Use strong typography, clean card layout, subtle shadows, high trust layout
+- Avoid clutter
+- Keep mobile responsiveness clean
+
+IMPLEMENTATION NOTE
+Please update the existing app cleanly and maintainably.
+Do not break existing print/PDF/report functionality.
+Do not remove the 7-step assessment flow.
+Refactor only where needed to support the new hospital-only premium positioning and post-results lead capture.
+
+Also review the current scoring and visible messaging carefully so the final report creates urgency instead of false comfort.
+
+After implementation:
+1. summarize all changes made
+2. list any scoring assumptions added
+3. point out any sections that still need manual business input from me
