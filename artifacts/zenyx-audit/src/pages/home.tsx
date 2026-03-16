@@ -248,20 +248,13 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `repeating-linear-gradient(45deg, #F97316 0px, #F97316 1px, transparent 1px, transparent 12px)` }} />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex items-center justify-between gap-6 py-5">
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-xl bg-primary/20 blur-md" />
-                <div className="relative border border-white/10 rounded-xl overflow-hidden w-[46px] h-[46px] flex items-center justify-center">
-                  <img src="/zenyx-icon.png" alt="ZENYX" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = "none")} />
-                </div>
-              </div>
-              <div className="hidden md:block">
-                <img src="/zenyx-logo-nobg.png" alt="ZENYX IT Infra Solutions" className="h-7 object-contain" style={{ filter: "brightness(0) invert(1)" }}
-                  onError={(e) => { e.currentTarget.style.display = "none"; const fb = e.currentTarget.nextElementSibling as HTMLElement; if (fb) fb.style.display = "block"; }} />
-                <p className="hidden text-white font-semibold text-xl tracking-widest">ZENYX</p>
-                <p className="text-[10px] font-medium tracking-[0.3em] uppercase mt-0.5" style={{ color: "#F97316", opacity: 0.75 }}>IT Infra Solutions</p>
-              </div>
-              <span className="md:hidden text-white font-semibold text-xl tracking-widest">ZENYX</span>
+            <div className="flex items-center shrink-0">
+              <img
+                src="/zenyx-logo-dark.png"
+                alt="ZENYX IT Infra Solutions"
+                className="h-14 w-auto object-contain"
+                style={{ mixBlendMode: "screen", filter: "brightness(3.5)", maxWidth: "220px" }}
+              />
             </div>
             <div className="flex-1 flex flex-col items-center text-center px-4">
               <div className="flex items-center gap-3 mb-1">
@@ -330,15 +323,14 @@ export default function Home() {
               Hospital IT Assessment Platform
             </div>
 
-            {/* Logo mark */}
-            <div className="flex justify-center mb-8">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-2xl bg-primary/15 blur-xl" />
-                <div className="relative bg-[#111111] rounded-2xl p-4 shadow-xl border border-white/10">
-                  <img src="/zenyx-icon.png" alt="ZENYX" className="w-14 h-14 object-contain"
-                    onError={(e) => { e.currentTarget.style.display = "none"; }} />
-                </div>
-              </div>
+            {/* Logo */}
+            <div className="flex justify-center mb-10">
+              <img
+                src="/zenyx-logo.jpg"
+                alt="ZENYX IT Infra Solutions"
+                className="h-24 w-auto object-contain"
+                style={{ maxWidth: "380px", mixBlendMode: "multiply" }}
+              />
             </div>
 
             {/* Main headline */}
@@ -1173,9 +1165,8 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="border-t border-gray-200/60 bg-white print:hidden mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <img src="/zenyx-icon.png" alt="ZENYX" className="w-5 h-5 rounded" onError={(e) => (e.currentTarget.style.display = "none")} />
-            <span className="text-sm font-medium text-gray-600">ZENYX IT Infra Solutions</span>
+          <div className="flex items-center">
+            <img src="/zenyx-logo.jpg" alt="ZENYX IT Infra Solutions" className="h-8 w-auto object-contain" />
           </div>
           <p className="text-xs text-gray-400 text-center">ZENYX Hospital IT Health Audit · Hospital Infrastructure Risk, Reliability & Technology Assessment</p>
           <p className="text-xs text-gray-400">© {new Date().getFullYear()} ZENYX IT Infra Solutions</p>
