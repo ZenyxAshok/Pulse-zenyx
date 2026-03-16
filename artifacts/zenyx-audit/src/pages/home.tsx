@@ -17,6 +17,8 @@ export default function Home() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [step1Error, setStep1Error] = useState(false);
+  const [step2Errors, setStep2Errors] = useState<string[]>([]);
+  const [step3Errors, setStep3Errors] = useState<string[]>([]);
   const [leadData, setLeadData] = useState({ name: "", mobile: "", email: "" });
 
   const [formData, setFormData] = useState({
@@ -37,8 +39,11 @@ export default function Home() {
     infrastructureObservations: "", assessmentDate: new Date().toISOString().split("T")[0],
   });
 
-  const updateForm = (field: string, value: string) =>
+  const updateForm = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    setStep2Errors(prev => prev.filter(f => f !== field));
+    setStep3Errors(prev => prev.filter(f => f !== field));
+  };
   const fd = formData as Record<string, string>;
 
   const LARGE_HOSPITAL_TYPES = ["Multi-speciality Hospital", "Super Speciality Hospital", "Medical College Hospital"];
@@ -149,13 +154,33 @@ export default function Home() {
   const startNew = () => { setStarted(false); setCurrentStep(0); window.scrollTo(0, 0); };
   const handleStep1Next = () => { if (!step1Valid) { setStep1Error(true); return; } setStep1Error(false); nextStep(); };
 
-  const RadioGroup = ({ label, helperText, icon: Icon, options, value, onChange, vertical = false }: {
-    label: string; helperText?: string; icon: React.ElementType; options: string[]; value: string; onChange: (v: string) => void; vertical?: boolean;
+  const handleStep2Next = () => {
+    const missing: string[] = [];
+    if (!formData.internetRedundancy) missing.push("internetRedundancy");
+    if (!formData.downtime) missing.push("downtime");
+    if (missing.length > 0) { setStep2Errors(missing); window.scrollTo(0, 0); return; }
+    setStep2Errors([]);
+    nextStep();
+  };
+
+  const handleStep3Next = () => {
+    const missing: string[] = [];
+    if (!formData.endpointSecurity) missing.push("endpointSecurity");
+    if (!formData.backupSystem) missing.push("backupSystem");
+    if (!formData.serverMonitoring) missing.push("serverMonitoring");
+    if (missing.length > 0) { setStep3Errors(missing); window.scrollTo(0, 0); return; }
+    setStep3Errors([]);
+    nextStep();
+  };
+
+  const RadioGroup = ({ label, helperText, icon: Icon, options, value, onChange, vertical = false, error = false }: {
+    label: string; helperText?: string; icon: React.ElementType; options: string[]; value: string; onChange: (v: string) => void; vertical?: boolean; error?: boolean;
   }) => (
-    <div className="space-y-3">
+    <div className={`space-y-3 ${error ? "rounded-xl border border-red-200 bg-red-50/40 p-4 -mx-4" : ""}`}>
       <div>
         <Label className="flex items-start text-sm font-medium text-gray-800">
           <Icon className="w-4 h-4 mr-2 text-primary shrink-0 mt-0.5" /> {label}
+          {error && <span className="ml-1 text-red-400">*</span>}
         </Label>
         {helperText && <p className="text-xs text-gray-400 mt-1 ml-6 leading-relaxed">{helperText}</p>}
       </div>
@@ -166,11 +191,19 @@ export default function Home() {
               ${vertical ? "text-left" : "text-center"}
               ${value === opt
                 ? "border-primary bg-orange-50 text-primary shadow-sm"
-                : "border-gray-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"}`}>
+                : error
+                  ? "border-red-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"
+                  : "border-gray-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"}`}>
             {opt}
           </div>
         ))}
       </div>
+      {error && (
+        <p className="flex items-center gap-1.5 text-xs text-red-500 font-medium mt-1">
+          <AlertTriangle className="w-3 h-3 shrink-0" />
+          Please answer this question to continue.
+        </p>
+      )}
     </div>
   );
 
@@ -250,10 +283,10 @@ export default function Home() {
           <div className="flex items-center justify-between gap-6 py-5">
             <div className="flex items-center shrink-0">
               <img
-                src="/zenyx-logo.jpg"
+                src="/zenyx-logo-dark.png"
                 alt="ZENYX IT Infra Solutions"
-                className="h-9 w-auto object-contain"
-                style={{ filter: "invert(1) hue-rotate(180deg)", maxWidth: "180px" }}
+                className="h-12 w-auto object-contain"
+                style={{ mixBlendMode: "screen", filter: "brightness(8) contrast(2) saturate(0.8)", maxWidth: "240px" }}
               />
             </div>
             <div className="flex-1 flex flex-col items-center text-center px-4">
@@ -551,10 +584,12 @@ export default function Home() {
               <div className="space-y-10">
                 <div className="space-y-8">
                   <RadioGroup label="Do you have backup internet connectivity?" helperText="A second internet connection keeps your hospital online when the primary provider fails." icon={Network}
-                    options={["Dual ISP", "Single ISP", "No backup internet", "Don't know"]} value={formData.internetRedundancy} onChange={v => updateForm("internetRedundancy", v)} vertical />
+                    options={["Dual ISP", "Single ISP", "No backup internet", "Don't know"]} value={formData.internetRedundancy} onChange={v => updateForm("internetRedundancy", v)} vertical
+                    error={step2Errors.includes("internetRedundancy")} />
                   <div className="pt-2 border-t border-gray-100">
                     <RadioGroup label="How often does IT or network downtime affect daily work?" helperText="This helps us understand how current infrastructure gaps are impacting operations." icon={Clock}
-                      options={["Never", "Rarely", "Monthly", "Weekly", "Frequently"]} value={formData.downtime} onChange={v => updateForm("downtime", v)} />
+                      options={["Never", "Rarely", "Monthly", "Weekly", "Frequently"]} value={formData.downtime} onChange={v => updateForm("downtime", v)}
+                      error={step2Errors.includes("downtime")} />
                   </div>
                   {showFrequentDowntimeFollowUp && (
                     <div className="bg-orange-50/50 border border-orange-100 rounded-xl p-5">
@@ -642,7 +677,13 @@ export default function Home() {
                     placeholder="e.g. Internet goes down in the afternoon, Wi-Fi not reaching ICU, billing system hangs during peak hours..."
                     className="bg-gray-50 border-gray-200 min-h-[80px] text-sm" />
                 </div>
-                <SectionNav onBack={prevStep} onNext={nextStep} nextLabel="Next: Security & Backup" />
+                {step2Errors.length > 0 && (
+                  <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600 font-medium">
+                    <AlertTriangle className="w-4 h-4 shrink-0" />
+                    Please answer all required questions above before continuing.
+                  </div>
+                )}
+                <SectionNav onBack={prevStep} onNext={handleStep2Next} nextLabel="Next: Security & Backup" />
               </div>
             </CardShell>
           )}
@@ -653,7 +694,8 @@ export default function Home() {
               <div className="space-y-10">
                 <div className="space-y-8">
                   <RadioGroup label="Do all computers have antivirus or endpoint security installed?" helperText="Unprotected workstations are the most common entry point for ransomware in hospitals." icon={Shield}
-                    options={["Yes", "Partial", "No", "Not sure"]} value={formData.endpointSecurity} onChange={v => updateForm("endpointSecurity", v)} />
+                    options={["Yes", "Partial", "No", "Not sure"]} value={formData.endpointSecurity} onChange={v => updateForm("endpointSecurity", v)}
+                    error={step3Errors.includes("endpointSecurity")} />
                   <div className="pt-2 border-t border-gray-100">
                     <RadioGroup label="Is there a firewall protecting your network and internet connection?" helperText="A firewall is the primary defence between your hospital network and external threats." icon={Lock}
                       options={["Yes", "No", "Don't know"]} value={formData.firewall} onChange={v => updateForm("firewall", v)} />
@@ -667,7 +709,8 @@ export default function Home() {
                 <div className="pt-6 border-t border-gray-100 space-y-8">
                   <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Backup & Recovery</h4>
                   <RadioGroup label="Is hospital data backed up automatically and regularly?" helperText="Data backups protect against server failure, ransomware, and accidental deletion." icon={Database}
-                    options={["Daily automatic", "Partial / selected systems", "No", "Not sure"]} value={formData.backupSystem} onChange={v => updateForm("backupSystem", v)} vertical />
+                    options={["Daily automatic", "Partial / selected systems", "No", "Not sure"]} value={formData.backupSystem} onChange={v => updateForm("backupSystem", v)} vertical
+                    error={step3Errors.includes("backupSystem")} />
                   {showBackupPriority && (
                     <div className="bg-orange-50/50 border border-orange-100 rounded-xl p-5">
                       <RadioGroup label="Would backup and recovery planning be a priority for your facility?" icon={Target}
@@ -683,7 +726,8 @@ export default function Home() {
                 <div className="pt-6 border-t border-gray-100 space-y-8">
                   <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Monitoring & Alerting</h4>
                   <RadioGroup label="Do you get alerts when internet, firewall, or server issues happen?" helperText="Early alerts help prevent downtime from affecting billing, records, and daily operations." icon={Activity}
-                    options={["Yes", "Partial alerts", "No", "Don't know"]} value={formData.serverMonitoring} onChange={v => updateForm("serverMonitoring", v)} />
+                    options={["Yes", "Partial alerts", "No", "Don't know"]} value={formData.serverMonitoring} onChange={v => updateForm("serverMonitoring", v)}
+                    error={step3Errors.includes("serverMonitoring")} />
                   {showMonitoringWanted && (
                     <div className="bg-orange-50/50 border border-orange-100 rounded-xl p-5">
                       <RadioGroup label="Would you like proactive alerts when internet, servers, or firewall issues happen?" icon={Activity}
@@ -753,7 +797,13 @@ export default function Home() {
                     placeholder="e.g. No centralised backup, antivirus not updated on all systems, no monitoring tools..."
                     className="bg-gray-50 border-gray-200 min-h-[80px] text-sm" />
                 </div>
-                <SectionNav onBack={prevStep} onNext={nextStep} nextLabel="Next: Physical Infrastructure" />
+                {step3Errors.length > 0 && (
+                  <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600 font-medium">
+                    <AlertTriangle className="w-4 h-4 shrink-0" />
+                    Please answer all required questions above before continuing.
+                  </div>
+                )}
+                <SectionNav onBack={prevStep} onNext={handleStep3Next} nextLabel="Next: Physical Infrastructure" />
               </div>
             </CardShell>
           )}
