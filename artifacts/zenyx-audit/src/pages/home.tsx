@@ -325,12 +325,12 @@ export default function Home() {
             <div className="max-w-2xl mx-auto w-full">
 
               {/* Logo */}
-              <div className="flex justify-center mb-7">
+              <div className="flex justify-center mb-6">
                 <img
                   src="/zenyx-pulse-logo-nobg.png"
                   alt="ZENYX Pulse"
-                  className="h-16 md:h-20 w-auto object-contain"
-                  style={{ maxWidth: "480px" }}
+                  className="h-10 sm:h-14 md:h-16 w-auto object-contain"
+                  style={{ maxWidth: "220px" }}
                 />
               </div>
 
