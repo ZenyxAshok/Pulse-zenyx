@@ -178,7 +178,7 @@ export default function Home() {
   }) => (
     <div className={`space-y-3 ${error ? "rounded-xl border border-red-200 bg-red-50/40 p-4 -mx-4" : ""}`}>
       <div>
-        <Label className="flex items-start text-sm font-medium text-gray-800">
+        <Label className="flex items-start text-sm font-normal text-gray-700">
           <Icon className="w-4 h-4 mr-2 text-primary shrink-0 mt-0.5" /> {label}
           {error && <span className="ml-1 text-red-400">*</span>}
         </Label>
@@ -231,7 +231,7 @@ export default function Home() {
               <span className="text-xs font-medium text-primary/80 bg-orange-50 px-2.5 py-1 rounded-md uppercase tracking-wider">
                 Step {stepNum} of {TOTAL_STEPS}
               </span>
-              <CardTitle className="text-lg font-semibold text-gray-900 mt-1.5" style={{ letterSpacing: "-0.01em" }}>{title}</CardTitle>
+              <CardTitle className="text-lg font-medium text-gray-900 mt-1.5" style={{ letterSpacing: "-0.01em" }}>{title}</CardTitle>
               <CardDescription className="text-sm text-gray-400 mt-0.5 font-normal">{desc}</CardDescription>
             </div>
           </div>
@@ -276,40 +276,6 @@ export default function Home() {
   return (
     <div className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: "#F5F5F7", fontFamily: "'Inter', sans-serif" }}>
 
-      {/* HEADER */}
-      <header className="w-full bg-[#111111] relative overflow-hidden print:bg-white shrink-0">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `repeating-linear-gradient(45deg, #F97316 0px, #F97316 1px, transparent 1px, transparent 12px)` }} />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between gap-6 py-5">
-            <div className="flex items-center shrink-0">
-              <img
-                src="/zenyx-logo-dark.png"
-                alt="ZENYX IT Infra Solutions"
-                className="h-12 w-auto object-contain"
-                style={{ mixBlendMode: "screen", filter: "brightness(8) contrast(2) saturate(0.8)", maxWidth: "240px" }}
-              />
-            </div>
-            <div className="flex-1 flex flex-col items-center text-center px-4">
-              <div className="flex items-center gap-3 mb-1">
-                <div className="hidden sm:block h-px w-10 bg-gradient-to-r from-transparent to-primary/30" />
-                <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-primary/50">Healthcare Infrastructure Intelligence Platform</span>
-                <div className="hidden sm:block h-px w-10 bg-gradient-to-l from-transparent to-primary/30" />
-              </div>
-              <h1 className="text-lg md:text-xl font-semibold text-white tracking-tight">ZENYX Hospital IT Health Audit</h1>
-              <p className="text-gray-500 text-[11px] mt-1 tracking-wide hidden sm:block">Hospital Infrastructure Risk, Reliability & Technology Assessment</p>
-            </div>
-            <div className="hidden lg:flex flex-col items-end gap-1.5 shrink-0">
-              <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-xl px-4 py-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-primary text-[11px] font-medium tracking-[0.1em] uppercase">Live Scoring</span>
-              </div>
-              <p className="text-gray-600 text-[10px] tracking-wide">Real-time risk computation</p>
-            </div>
-          </div>
-        </div>
-        <div className="h-[2px] w-full bg-gradient-to-r from-primary/30 via-primary to-orange-300/50" />
-      </header>
-
       {/* PROGRESS BAR — wizard only */}
       {started && currentStep >= 1 && currentStep <= TOTAL_STEPS && (
         <div className="bg-white border-b border-gray-200/80 print:hidden shadow-sm sticky top-0 z-10">
@@ -353,20 +319,20 @@ export default function Home() {
             <div className="max-w-2xl mx-auto w-full">
 
               {/* Product badge */}
-              <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-500 text-xs font-medium px-4 py-2 rounded-full mb-8 shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-400 text-xs font-normal px-4 py-2 rounded-full mb-8 shadow-sm">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                 Healthcare Infrastructure Intelligence Platform
               </div>
 
               {/* Main headline */}
-              <h1 className="text-[2.75rem] md:text-[3.25rem] font-semibold text-gray-900 leading-[1.15] mb-5"
+              <h1 className="text-[2.75rem] md:text-[3.25rem] font-light text-gray-900 leading-[1.15] mb-5"
                 style={{ letterSpacing: "-0.025em" }}>
                 ZENYX Hospital<br />
                 <span style={{ color: "#F97316" }}>IT Health Audit</span>
               </h1>
 
               {/* Supporting headline */}
-              <p className="text-xl text-gray-700 font-medium leading-snug mb-4 max-w-xl mx-auto">
+              <p className="text-xl text-gray-600 font-normal leading-snug mb-4 max-w-xl mx-auto">
                 Protect your hospital from IT downtime, security risks,<br className="hidden sm:block" /> and system failures.
               </p>
 
@@ -390,7 +356,7 @@ export default function Home() {
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-2 bg-white border border-gray-200 text-gray-600 text-sm px-4 py-2.5 rounded-full shadow-sm">
                     <Icon className="w-4 h-4 text-primary shrink-0" />
-                    <span className="font-medium">{text}</span>
+                    <span className="font-normal">{text}</span>
                   </div>
                 ))}
               </div>
@@ -409,7 +375,7 @@ export default function Home() {
               </div>
 
               {/* Trust bar */}
-              <div className="mt-12 pt-10 border-t border-gray-200/60 flex items-center justify-center gap-6 text-xs text-gray-400 font-medium">
+              <div className="mt-12 pt-10 border-t border-gray-200/60 flex items-center justify-center gap-6 text-xs text-gray-400 font-normal">
                 <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 3–5 minutes</span>
                 <span className="w-px h-3 bg-gray-300" />
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" /> Free assessment</span>
@@ -423,8 +389,8 @@ export default function Home() {
           <div className="bg-white border-t border-gray-200/60 py-16 px-6">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <p className="text-xs font-semibold text-primary/70 uppercase tracking-widest mb-2">Assessment Coverage</p>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-3" style={{ letterSpacing: "-0.015em" }}>
+                <p className="text-xs font-normal text-primary/70 uppercase tracking-widest mb-2">Assessment Coverage</p>
+                <h2 className="text-2xl font-light text-gray-900 mb-3" style={{ letterSpacing: "-0.015em" }}>
                   What This Audit Evaluates
                 </h2>
                 <p className="text-sm text-gray-400 max-w-md mx-auto">
@@ -458,7 +424,7 @@ export default function Home() {
                     <div className="bg-orange-50 w-10 h-10 rounded-xl flex items-center justify-center mb-4">
                       <Icon className="w-5 h-5 text-primary" />
                     </div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-2">{title}</h3>
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">{title}</h3>
                     <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
                   </div>
                 ))}
@@ -483,17 +449,17 @@ export default function Home() {
             <CardShell icon={Building2} stepNum={1} title="Facility Profile" desc="Basic information about your healthcare facility — used to personalise your assessment and report">
               <div className="space-y-8">
                 <div>
-                  <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5">Required Information</h4>
+                  <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest mb-5">Required Information</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
                     <div className="space-y-2 lg:col-span-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <Building2 className="w-4 h-4 mr-2 text-primary" /> Hospital / Facility Name <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <Input value={formData.hospitalName} onChange={e => updateForm("hospitalName", e.target.value)} placeholder="e.g. City General Hospital"
                         className={`bg-gray-50 focus-visible:ring-primary h-11 text-sm ${step1Error && !formData.hospitalName.trim() ? "border-red-300" : ""}`} />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <Layers className="w-4 h-4 mr-2 text-primary" /> Facility Type <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <select value={formData.hospitalType} onChange={e => updateForm("hospitalType", e.target.value)}
@@ -508,7 +474,7 @@ export default function Home() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <MessageSquare className="w-4 h-4 mr-2 text-primary" /> Designation / Role <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <select value={formData.designation} onChange={e => updateForm("designation", e.target.value)}
@@ -525,21 +491,21 @@ export default function Home() {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <Phone className="w-4 h-4 mr-2 text-primary" /> Mobile Number <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <Input value={formData.mobileNumber} onChange={e => updateForm("mobileNumber", e.target.value)} placeholder="e.g. 9876543210" type="tel"
                         className={`bg-gray-50 focus-visible:ring-primary h-11 text-sm ${step1Error && !formData.mobileNumber.trim() ? "border-red-300" : ""}`} />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <Mail className="w-4 h-4 mr-2 text-primary" /> Email Address <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <Input value={formData.email} onChange={e => updateForm("email", e.target.value)} placeholder="e.g. it@hospital.com" type="email"
                         className={`bg-gray-50 focus-visible:ring-primary h-11 text-sm ${step1Error && !formData.email.trim() ? "border-red-300" : ""}`} />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm">
+                      <Label className="flex items-center text-gray-700 font-normal text-sm">
                         <Monitor className="w-4 h-4 mr-2 text-primary" /> Computers / Endpoints <span className="text-red-400 ml-1">*</span>
                       </Label>
                       <Input value={formData.computers} onChange={e => updateForm("computers", e.target.value)} placeholder="e.g. 45" type="number"
@@ -553,22 +519,22 @@ export default function Home() {
                   )}
                 </div>
                 <div className="pt-6 border-t border-gray-100">
-                  <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5">Additional Details <span className="font-normal lowercase">(optional)</span></h4>
+                  <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest mb-5">Additional Details <span className="font-normal lowercase">(optional)</span></h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6">
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm"><MapPin className="w-4 h-4 mr-2 text-primary" /> Location / City</Label>
+                      <Label className="flex items-center text-gray-700 font-normal text-sm"><MapPin className="w-4 h-4 mr-2 text-primary" /> Location / City</Label>
                       <Input value={formData.location} onChange={e => updateForm("location", e.target.value)} placeholder="e.g. Hyderabad" className="bg-gray-50 h-11 text-sm" />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm"><Layers className="w-4 h-4 mr-2 text-primary" /> Branches</Label>
+                      <Label className="flex items-center text-gray-700 font-normal text-sm"><Layers className="w-4 h-4 mr-2 text-primary" /> Branches</Label>
                       <Input value={formData.branches} onChange={e => updateForm("branches", e.target.value)} placeholder="e.g. 3" type="number" className="bg-gray-50 h-11 text-sm" />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm"><Server className="w-4 h-4 mr-2 text-primary" /> Servers</Label>
+                      <Label className="flex items-center text-gray-700 font-normal text-sm"><Server className="w-4 h-4 mr-2 text-primary" /> Servers</Label>
                       <Input value={formData.servers} onChange={e => updateForm("servers", e.target.value)} placeholder="e.g. 4" type="number" className="bg-gray-50 h-11 text-sm" />
                     </div>
                     <div className="space-y-2">
-                      <Label className="flex items-center text-gray-700 font-medium text-sm"><Users className="w-4 h-4 mr-2 text-primary" /> Beds</Label>
+                      <Label className="flex items-center text-gray-700 font-normal text-sm"><Users className="w-4 h-4 mr-2 text-primary" /> Beds</Label>
                       <Input value={formData.beds} onChange={e => updateForm("beds", e.target.value)} placeholder="e.g. 100" type="number" className="bg-gray-50 h-11 text-sm" />
                     </div>
                   </div>
@@ -606,7 +572,7 @@ export default function Home() {
 
                 {isLargeHospital && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Large Hospital — Network</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Large Hospital — Network</h4>
                     <RadioGroup label="Is Wi-Fi stable across wards, ICU, OPD, labs, and admin areas?" helperText="Coverage gaps in clinical areas can directly impact patient care and staff productivity." icon={Wifi}
                       options={["Fully stable", "Partial coverage", "Poor coverage"]} value={formData.wifiAcrossDepts} onChange={v => updateForm("wifiAcrossDepts", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -618,7 +584,7 @@ export default function Home() {
 
                 {isDiagnostic && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Diagnostic Centre — Network</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Diagnostic Centre — Network</h4>
                     <RadioGroup label="Do imaging or reporting systems face network delays?" helperText="Network bottlenecks frequently cause delays in PACS, RIS, and report delivery." icon={Monitor}
                       options={["Reliable", "Sometimes delayed", "Frequently delayed"]} value={formData.imagingReliability} onChange={v => updateForm("imagingReliability", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -634,7 +600,7 @@ export default function Home() {
 
                 {isClinic && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Clinic — Network</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Clinic — Network</h4>
                     <RadioGroup label="Do consultation or billing systems ever become slow or unavailable?" icon={Monitor}
                       options={["Never", "Sometimes", "Often"]} value={formData.systemSlowdown} onChange={v => updateForm("systemSlowdown", v)} />
                   </div>
@@ -642,7 +608,7 @@ export default function Home() {
 
                 {isOperations && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Operations</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Operations</h4>
                     <RadioGroup label="Do staff face system delays during peak operational hours?" icon={Clock}
                       options={["Rarely", "Sometimes", "Often"]} value={formData.staffDelays} onChange={v => updateForm("staffDelays", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -658,7 +624,7 @@ export default function Home() {
 
                 {isDoctor && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Clinical</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Clinical</h4>
                     <RadioGroup label="Do IT or system issues ever delay patient care or department work?" icon={AlertTriangle}
                       options={["Never", "Sometimes", "Frequently"]} value={formData.itDelaysPatientCare} onChange={v => updateForm("itDelaysPatientCare", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -707,7 +673,7 @@ export default function Home() {
                 </div>
 
                 <div className="pt-6 border-t border-gray-100 space-y-8">
-                  <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Backup & Recovery</h4>
+                  <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Backup & Recovery</h4>
                   <RadioGroup label="Is hospital data backed up automatically and regularly?" helperText="Data backups protect against server failure, ransomware, and accidental deletion." icon={Database}
                     options={["Daily automatic", "Partial / selected systems", "No", "Not sure"]} value={formData.backupSystem} onChange={v => updateForm("backupSystem", v)} vertical
                     error={step3Errors.includes("backupSystem")} />
@@ -724,7 +690,7 @@ export default function Home() {
                 </div>
 
                 <div className="pt-6 border-t border-gray-100 space-y-8">
-                  <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Monitoring & Alerting</h4>
+                  <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Monitoring & Alerting</h4>
                   <RadioGroup label="Do you get alerts when internet, firewall, or server issues happen?" helperText="Early alerts help prevent downtime from affecting billing, records, and daily operations." icon={Activity}
                     options={["Yes", "Partial alerts", "No", "Don't know"]} value={formData.serverMonitoring} onChange={v => updateForm("serverMonitoring", v)}
                     error={step3Errors.includes("serverMonitoring")} />
@@ -738,7 +704,7 @@ export default function Home() {
 
                 {isOwner && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Leadership Perspective</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Leadership Perspective</h4>
                     <RadioGroup label="Has IT downtime affected patient service, billing, or operations in the past year?" icon={AlertTriangle}
                       options={["Never", "Occasionally", "Multiple times"]} value={formData.downtimeImpact} onChange={v => updateForm("downtimeImpact", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -754,7 +720,7 @@ export default function Home() {
 
                 {isITHead && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">IT Operations</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">IT Operations</h4>
                     <RadioGroup label="Are servers monitored for CPU, memory, storage, and downtime metrics?" icon={Server}
                       options={["Yes", "Partial", "No"]} value={formData.serverMonitoringDepth} onChange={v => updateForm("serverMonitoringDepth", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -774,7 +740,7 @@ export default function Home() {
 
                 {isProcurement && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Procurement & Planning</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Procurement & Planning</h4>
                     <RadioGroup label="Is there a structured IT upgrade roadmap for the next 12–24 months?" icon={TrendingUp}
                       options={["Yes", "In discussion", "No"]} value={formData.upgradeRoadmap} onChange={v => updateForm("upgradeRoadmap", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -831,7 +797,7 @@ export default function Home() {
 
                 {isLargeHospital && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Server Room & Rack Infrastructure</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Server Room & Rack Infrastructure</h4>
                     <RadioGroup label="What is the condition of your server room and network rack setup?" helperText="A well-organised server room reduces failure risk and speeds up troubleshooting." icon={Server}
                       options={["Well organised", "Average", "Poor / disorganised", "Don't know"]} value={formData.rackManagement} onChange={v => updateForm("rackManagement", v)} vertical />
                     <div className="pt-2 border-t border-gray-100">
@@ -843,7 +809,7 @@ export default function Home() {
 
                 {isBiomedical && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Medical Equipment & IT Integration</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Medical Equipment & IT Integration</h4>
                     <RadioGroup label="Do connected medical devices face network or data-sharing issues?" icon={Activity}
                       options={["Never", "Sometimes", "Frequently"]} value={formData.medicalDeviceIssues} onChange={v => updateForm("medicalDeviceIssues", v)} />
                     <div className="pt-2 border-t border-gray-100">
@@ -859,7 +825,7 @@ export default function Home() {
 
                 {isDoctor && (
                   <div className="pt-6 border-t border-gray-100 space-y-8">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Clinical Operations</h4>
+                    <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest">Clinical Operations</h4>
                     <RadioGroup label="Are there recurring issues with printers, systems, or connectivity in your department?" icon={AlertTriangle}
                       options={["No", "Sometimes", "Often"]} value={formData.recurringIssues} onChange={v => updateForm("recurringIssues", v)} />
                   </div>
@@ -985,7 +951,7 @@ export default function Home() {
 
                     <div className="lg:col-span-2 space-y-8">
                       <div>
-                        <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest pb-3 mb-5 border-b border-gray-100">Infrastructure Category Breakdown</h4>
+                        <h4 className="text-xs font-normal text-gray-400 uppercase tracking-widest pb-3 mb-5 border-b border-gray-100">Infrastructure Category Breakdown</h4>
                         <div className="space-y-4">
                           {[
                             { label: "Network Reliability", val: breakdown.network, max: 57 },
