@@ -324,17 +324,20 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center text-center px-6 pt-20 pb-16">
             <div className="max-w-2xl mx-auto w-full">
 
-              {/* Product badge */}
-              <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-400 text-xs font-normal px-4 py-2 rounded-full mb-8 shadow-sm">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                Healthcare Infrastructure Intelligence Platform
+              {/* Logo */}
+              <div className="flex justify-center mb-7">
+                <img
+                  src="/zenyx-pulse-logo-nobg.png"
+                  alt="ZENYX Pulse"
+                  className="h-12 md:h-14 w-auto object-contain"
+                  style={{ maxWidth: "360px" }}
+                />
               </div>
 
               {/* Main headline */}
-              <h1 className="text-[2.75rem] md:text-[3.25rem] font-light text-gray-900 leading-[1.15] mb-5"
-                style={{ letterSpacing: "-0.025em" }}>
-                ZENYX <span style={{ color: "#F97316" }}>Pulse</span><br />
-                <span className="text-[2rem] md:text-[2.4rem] font-light text-gray-500">Hospital IT Health Audit</span>
+              <h1 className="text-[2.5rem] md:text-[3rem] font-light text-gray-800 leading-[1.2] mb-5"
+                style={{ letterSpacing: "-0.02em" }}>
+                Hospital IT Health Audit
               </h1>
 
               {/* Supporting headline */}
@@ -1275,7 +1278,7 @@ export default function Home() {
       <footer className="border-t border-gray-200/60 bg-white print:hidden mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center">
-            <img src="/zenyx-logo.jpg" alt="ZENYX IT Infra Solutions" className="h-8 w-auto object-contain" />
+            <img src="/zenyx-pulse-logo-nobg.png" alt="ZENYX Pulse" className="h-7 w-auto object-contain" style={{ maxWidth: "180px" }} />
           </div>
           <p className="text-xs text-gray-400 text-center">ZENYX Pulse · Healthcare Infrastructure Intelligence Platform</p>
           <p className="text-xs text-gray-400">© {new Date().getFullYear()} ZENYX IT Infra Solutions</p>
