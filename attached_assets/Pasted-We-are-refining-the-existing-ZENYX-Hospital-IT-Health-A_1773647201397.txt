@@ -1,0 +1,155 @@
+We are refining the existing ZENYX Hospital IT Health Audit tool.
+
+IMPORTANT:
+- Do not rebuild from scratch.
+- Keep the existing React + Tailwind + Vite structure.
+- Keep the premium hospital UI, scoring dashboard, report export, and package recommendation flow.
+- Refine pricing presentation, question quality, and role/facility intelligence.
+
+PRICING UPDATE
+Update package pricing to the following:
+
+1. Monitoring Package
+Price: ₹11,999 / month
+Best for: clinics, diagnostic centres, small hospitals
+Include:
+- 24/7 Network Monitoring
+- Internet Uptime Monitoring
+- Firewall Availability Monitoring
+- Server Health Monitoring
+- Alert Notifications
+- Monthly IT Health Report
+- Email Support
+
+2. Support Package
+Price: ₹12,999 / month base + device pricing
+Device pricing:
+- Computers / Endpoints: ₹300 per device / month
+- Servers: ₹2,500 per server / month
+- Firewall / Network devices: ₹1,500 per device / month
+Include:
+- Everything in Monitoring
+- Unlimited Remote Support
+- User Troubleshooting
+- Patch Management
+- Preventive Maintenance
+- Vendor Coordination
+- Asset Tracking & Documentation
+- 1 Scheduled Onsite Visit per Month
+- Incident Response SLA
+
+3. Security Package
+Price: ₹43,999 / month onward
+Include:
+- Everything in Support
+- Advanced Endpoint Security Oversight
+- Managed Backup Monitoring
+- Backup Recovery Verification
+- Disaster Recovery Readiness Review
+- Firewall Policy Review
+- Vulnerability / Security Posture Review
+- Staff Awareness Support
+- Quarterly IT Risk Review
+- Annual IT Strategy / Roadmap Review
+- 2 Scheduled Onsite Visits per Month
+
+Add note under package section:
+“Final pricing depends on number of systems, servers, branches, and support scope.”
+
+QUESTION QUALITY UPGRADE
+Refine all questions to use this format:
+1. short plain-English main question
+2. one-line helper text where needed
+3. simple answer buttons
+4. “Don’t know” option for technical questions
+5. optional comment boxes only in selected sections
+
+QUESTION STYLE RULES
+- Avoid technical jargon in the main question
+- Make questions understandable for owners, managers, doctors, and IT staff
+- Keep helper text short and useful
+- Questions should feel more human, engaging, and premium
+
+EXAMPLE STYLE TO FOLLOW
+Good:
+“Do you get alerts when internet, firewall, or server issues happen?”
+Helper:
+“Early alerts help prevent downtime from affecting billing, records, and daily operations.”
+
+UNIVERSAL QUESTIONS TO KEEP / IMPROVE
+Use these improved plain-English questions:
+- Do you have backup internet connectivity?
+- How often does IT or network downtime affect daily work?
+- Is Wi-Fi stable in important working areas?
+- Do all computers have antivirus or endpoint security?
+- Is there a firewall protecting your network?
+- Is system access controlled by staff role or department?
+- Is hospital data backed up automatically?
+- Are backups tested to confirm recovery works?
+- Do you get alerts when important systems go down?
+- Do critical systems have UPS or generator backup?
+
+ROLE-BASED QUESTIONING
+Keep role-based dynamic questions for:
+- Owner / Director
+- IT Head / IT Manager
+- System Administrator
+- Operations Manager
+- Doctor / Department Head
+- Procurement
+- Biomedical Engineer
+
+HOSPITAL-TYPE QUESTIONING
+Keep hospital-type dynamic logic for:
+- Multi-speciality Hospital
+- Single-speciality Hospital
+- Super Speciality Hospital
+- Clinic
+- Diagnostic Centre
+- Daycare / Small Hospital
+- Nursing Home
+- Medical College Hospital
+- IVF / Fertility Centre
+- Dental Hospital / Clinic
+- Eye Hospital / Clinic
+- Other
+
+LAYOUT RULES FOR ANSWERS
+- Use side-by-side layout only for short options with 2 to 4 choices
+- Use vertical stacked layout for longer options or 5+ options
+- Preserve clean mobile experience
+
+KEEP THESE OPEN TEXT SECTIONS
+1. IT Challenges
+Prompt:
+“What day-to-day IT issues are affecting hospital operations?”
+
+2. Future Goals
+Prompt:
+“What improvements would you like to achieve in the next 6–12 months?”
+
+3. Optional Additional Comments where useful
+
+SCORING / RISK LOGIC
+- Treat “Don’t know” as a visibility gap and slight risk increase
+- Keep the visible result ranges:
+  0–25 = Optimized Infrastructure
+  26–50 = Needs Optimization
+  51–75 = Operational Risk Areas
+  76–100 = Critical Infrastructure Gaps
+
+RESULTS PAGE
+Make sure results reflect:
+- selected hospital type
+- selected role
+- package recommendation
+- updated package pricing
+- top 3 priorities
+- executive interpretation
+- Book Free IT Health Audit CTA
+
+After implementation:
+1. summarize pricing changes
+2. summarize question quality improvements
+3. list where “Don’t know” was added
+4. mention any areas that still need business confirmation
