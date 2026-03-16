@@ -23,7 +23,7 @@ artifacts-monorepo/
 ├── artifacts/              # Deployable applications
 │   ├── api-server/         # Express API server
 │   ├── mockup-sandbox/     # Component preview server
-│   └── zenyx-audit/        # ZENYX Care IT Check — main app
+│   └── zenyx-audit/        # ZENYX Hospital IT Health Audit — main app
 ├── lib/                    # Shared libraries
 │   ├── api-spec/           # OpenAPI spec + Orval codegen config
 │   ├── api-client-react/   # Generated React Query hooks

@@ -1,0 +1,363 @@
+We are refining the existing “ZENYX Hospital IT Health Audit” app into a smarter and more premium hospital consulting tool.
+
+IMPORTANT:
+- Do not rebuild from scratch.
+- Keep the existing React + Tailwind + Vite app structure.
+- Keep the premium healthcare UI and current report/results architecture.
+- Keep print/PDF export and package recommendation sections.
+- Upgrade the assessment flow, question engine, form quality, and package UI.
+
+CORE PRODUCT RULE
+This tool is only for healthcare.
+Questions must dynamically change based on:
+1. Hospital / facility type
+2. User designation / role
+
+This means:
+- different hospital types should not see the same questions
+- different roles should not see the same questions
+- technical users can see deeper questions
+- non-technical users should see simpler business-language questions
+
+PRODUCT NAME
+Use:
+“ZENYX Hospital IT Health Audit”
+
+Subtitle:
+“Hospital Infrastructure Risk, Reliability & Technology Assessment”
+
+FORM DESIGN UPDATES
+
+STEP 1 should include these mandatory fields:
+- Hospital / Facility Name (required)
+- Hospital Type (required)
+- Designation / Role (required)
+- Mobile Number (required)
+- Email Address (required)
+- Number of Computers / Endpoints (required)
+
+Optional / conditional fields:
+- Number of Beds
+- Number of Branches
+- Location
+- Number of Servers
+
+HOSPITAL TYPE DROPDOWN
+Use:
+- Multi-speciality Hospital
+- Single-speciality Hospital
+- Super Speciality Hospital
+- Clinic
+- Diagnostic Centre
+- Daycare / Small Hospital
+- Nursing Home
+- Medical College Hospital
+- IVF / Fertility Centre
+- Dental Hospital / Clinic
+- Eye Hospital / Clinic
+- Other
+
+DESIGNATION / ROLE DROPDOWN
+Make designation a dropdown, not free text.
+
+Use:
+- Hospital Owner / Director
+- IT Head / IT Manager
+- System Administrator
+- Operations Manager
+- Doctor / Department Head
+- Purchase / Procurement
+- Biomedical Engineer
+- Admin Manager
+- Other
+
+If “Other” is selected, show a small text field:
+“Please specify your role”
+
+DYNAMIC QUESTION ENGINE
+Refactor the questions so they are driven by:
+- universal questions
+- hospital-type-specific questions
+- role-specific questions
+- conditional follow-up questions
+
+QUESTION DISPLAY LOGIC
+Questions should not all be shown to all users.
+
+For example:
+- Multi-speciality hospitals should see more complex infra, uptime, branch, and monitoring questions
+- Clinics should see simpler operational and continuity questions
+- Diagnostic centres should see imaging/reporting/data-flow questions
+
+Role examples:
+- IT Head / System Admin → deeper technical questions
+- Owner / Director → business continuity, downtime, reporting, confidence questions
+- Doctor / Department Head → patient workflow continuity, report access, printer/system issues
+- Procurement → lifecycle planning, maintenance, replacement planning
+- Operations Manager → delays, billing, patient records availability, department complaints
+
+QUESTION STYLE RULES
+Use simple, understandable questions.
+Avoid technical jargon in the main question.
+
+Use this structure:
+1. Short main question
+2. One line helper text below when needed
+3. Optional “Why this matters” or tooltip for complex questions
+
+Example:
+Main question:
+“Do you get alerts when servers, internet, or key systems go down?”
+Helper:
+“This helps your team respond before downtime affects hospital work.”
+
+Do NOT make every question long and overloaded.
+Keep main questions short.
+
+ANSWER UI RULES
+Use side-by-side button options only when the options are short (2 to 4 options max).
+Use vertical stacked options when:
+- there are 5 or more options
+- answers are longer
+- questions are more technical
+- mobile usability would suffer
+
+So:
+- Yes / No / Partial / Don’t know = side by side is fine
+- longer descriptive choices = vertical stacked
+
+ADD “DON’T KNOW”
+Yes, add “Don’t know” to technical questions where many non-technical users may not know.
+This is important.
+
+Examples where “Don’t know” should appear:
+- firewall
+- backup testing
+- server monitoring
+- access control
+- structured cabling
+- rack setup
+- recovery readiness
+
+SCORING NOTE:
+“Don’t know” should not be treated as a good answer.
+It should slightly increase risk or indicate visibility gap.
+
+ADD “WRITE YOUR ANSWER” / COMMENTS
+Add optional text areas in selected places to capture richer data and support future AI learning.
+
+Use these:
+1. IT Challenges (keep this section)
+2. Future Goals (keep this section)
+3. Additional comments under some sections if useful
+
+IMPORTANT:
+Do not add a write-your-own-answer box under every question.
+Use it selectively.
+
+KEEP IT CHALLENGES
+Yes, keep “IT Challenges”.
+This is important because it captures real pain in their own words.
+
+Prompt:
+“What day-to-day IT issues are affecting your hospital operations?”
+Placeholder:
+Examples: HIS slow, billing interruptions, weak Wi-Fi in wards, lab/report delays, server downtime, branch disconnections, printer/network issues.
+
+KEEP FUTURE GOALS
+Yes, keep “Future Goals”.
+This helps shape recommendations.
+
+Prompt:
+“What improvements would you like to achieve in your hospital IT environment over the next 6–12 months?”
+Placeholder:
+Examples: zero downtime for critical systems, better Wi-Fi coverage, stronger backup readiness, centralized monitoring, branch connectivity, stronger security.
+
+UNIVERSAL QUESTIONS
+Keep a core set of universal questions for everyone, such as:
+- backup internet availability
+- downtime frequency
+- Wi-Fi stability
+- endpoint security
+- firewall presence
+- backups
+- backup testing
+- monitoring alerts
+- power backup
+- IT support model
+
+ROLE-SPECIFIC QUESTIONS
+Add role-specific questions using the selected designation dropdown.
+
+Examples:
+Owner / Director:
+- Has IT downtime affected patient service, billing, or operations?
+- Do you receive regular visibility into IT health?
+- Are you confident your data is secure and recoverable?
+
+IT Head / System Admin:
+- Are servers monitored for CPU, RAM, storage, and downtime?
+- Are firewall/internet/switches proactively monitored?
+- Are patches applied regularly?
+- Is recovery testing done regularly?
+
+Operations Manager:
+- Do staff face delays during peak hours?
+- Are patient records and billing available without interruption?
+- Do departments complain about Wi-Fi or downtime?
+
+Doctor / Department Head:
+- Do IT/system issues delay patient care or department work?
+- Is access to reports and records smooth?
+- Are there recurring connectivity or printing issues?
+
+Procurement:
+- Is there a structured IT upgrade roadmap?
+- Are devices tracked for replacement planning?
+- Do you have annual support/maintenance coverage?
+
+Biomedical Engineer:
+- Do connected medical devices face network or data-sharing issues?
+- Is there coordination between biomedical equipment and IT/network teams?
+- Are critical connected devices supported by stable power and network availability?
+
+HOSPITAL-TYPE-SPECIFIC QUESTIONS
+Add hospital-type-specific question groups.
+
+Examples:
+
+Multi-speciality / Super Speciality:
+- Is Wi-Fi stable across wards, ICU, OPD, labs, and admin blocks?
+- Do connectivity issues affect billing, labs, or patient record access?
+- Are branch or department systems centrally monitored?
+- Is there a structured rack/server room setup?
+
+Clinic:
+- Do consultation or billing systems become slow or unavailable?
+- Is Wi-Fi stable for daily clinic work?
+- Do you get quick support when systems or printers fail?
+
+Diagnostic Centre:
+- Do imaging/reporting systems face network delays?
+- Are scan/report files transferred smoothly?
+- Do server or network issues delay reports?
+
+MANDATORY FIELD VALIDATION
+Make these clearly required and validate before moving ahead:
+- Hospital Name
+- Hospital Type
+- Designation / Role
+- Mobile Number
+- Email
+- Number of Computers / Endpoints
+
+PACKAGE UI UPGRADE
+Redesign the package cards to feel more premium and closer to a polished SaaS/Zoho-style comparison layout.
+
+Use three cards:
+1. Monitoring
+2. Support
+3. Security
+
+Each card should show:
+- tier label
+- subtitle
+- short description
+- included features
+- best-for note
+- pricing / starting price
+
+PACKAGE PRICING LOGIC
+Use this pricing structure in the UI:
+
+Monitoring Package
+Subtitle:
+“Visibility and early warning for hospital IT environments”
+Starting price:
+“Starting from ₹15,000/month”
+Features:
+- 24/7 Network Monitoring
+- Firewall & Internet Health Monitoring
+- Server Health Monitoring
+- Alerts & Escalation
+- Monthly Health Reports
+
+Support Package
+Subtitle:
+“Proactive IT support and infrastructure upkeep”
+Pricing:
+“Base ₹15,000/month + device-based support”
+Show device pricing:
+- Computers / Endpoints: ₹300 per device / month
+- Servers: ₹1,500 to ₹3,000 per server / month
+- Firewall / Network devices: ₹1,500 to ₹2,500 per device / month
+Features:
+- Everything in Monitoring
+- Unlimited Remote Support
+- Patch Management
+- Scheduled On-site Visits
+- Incident Response SLA
+- Asset Tracking & Documentation
+
+Security Package
+Subtitle:
+“Advanced resilience, protection, and governance”
+Starting price:
+“Starting from ₹45,000/month”
+Features:
+- Everything in Support
+- Advanced Endpoint Security
+- Backup & DR Governance
+- Security Awareness Support
+- Firewall Policy Review
+- IT Risk & Governance Advisory
+
+Also add a short note:
+“Final pricing depends on number of systems, servers, branches, and support scope.”
+
+RESULTS PAGE IMPROVEMENTS
+Keep the premium results page.
+Results should reflect:
+- selected hospital type
+- selected designation
+- risk level
+- category scores
+- key observations
+- top 3 priorities
+- recommended package
+- package pricing context
+- CTA
+
+CTA
+Final CTA:
+“Book Free IT Health Audit”
+
+POST-RESULT LEAD BLOCK
+Keep the lead block after value is shown.
+Use:
+- Name
+- Mobile Number
+- Email
+- Hospital / Facility Name (prefilled)
+
+PDF / REPORT
+Keep report export and print support.
+Use updated name everywhere:
+“ZENYX Hospital IT Health Audit Report”
+
+IMPLEMENTATION STYLE
+Use a clean question configuration approach.
+Questions should be tagged like:
+- universal
+- facilityTypes
+- roles
+- conditionalOn
+
+Do not break current app structure, scoring, PDF, or premium UI.
+
+After implementation:
+1. summarize the new dynamic engine
+2. list mandatory fields
+3. explain side-by-side vs vertical answer layout logic
+4. list package pricing assumptions added
+5. mention anything that still needs business confirmation from me
