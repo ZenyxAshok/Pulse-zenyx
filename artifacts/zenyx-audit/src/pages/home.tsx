@@ -250,10 +250,10 @@ export default function Home() {
           <div className="flex items-center justify-between gap-6 py-5">
             <div className="flex items-center shrink-0">
               <img
-                src="/zenyx-logo-dark.png"
+                src="/zenyx-logo.jpg"
                 alt="ZENYX IT Infra Solutions"
-                className="h-8 w-auto object-contain"
-                style={{ mixBlendMode: "screen", filter: "brightness(3.5)", maxWidth: "200px" }}
+                className="h-9 w-auto object-contain"
+                style={{ filter: "invert(1) hue-rotate(180deg)", maxWidth: "180px" }}
               />
             </div>
             <div className="flex-1 flex flex-col items-center text-center px-4">
