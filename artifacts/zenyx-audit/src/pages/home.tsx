@@ -92,52 +92,55 @@ export default function Home() {
     addScore("endpointSecurity", "data"); addScore("accessControl", "data");
     addScore("cablingQuality", "infrastructure"); addScore("rackManagement", "infrastructure"); addScore("ups", "infrastructure");
 
-    const ns = Math.min(100, Math.round((score / 140) * 100));
-    let grade = "Optimised Infrastructure", color = "#22C55E", badge = "Low Risk";
-    let message = "Your hospital IT environment is well-managed. Continue with proactive monitoring and governance to maintain this standard.";
-    if (ns > 25) { grade = "Needs Optimisation"; color = "#F59E0B"; badge = "Moderate Risk"; message = "Core systems are functional, but gaps in backup, monitoring, or security may quietly increase risk over time."; }
-    if (ns > 50) { grade = "Operational Risk Areas"; color = "#F97316"; badge = "High Risk"; message = "Multiple infrastructure and process gaps are raising the risk of downtime, data loss, and disrupted patient workflows."; }
-    if (ns > 75) { grade = "Critical Infrastructure Gaps"; color = "#DC2626"; badge = "Critical Risk"; message = "Immediate action is required. Your hospital is exposed to significant risk of downtime, data loss, and operational disruption."; }
+    const rawRisk = Math.min(100, Math.round((score / 140) * 100));
+    const hs = 100 - rawRisk; // health score: higher = better
+
+    // Traffic-light thresholds (applied to health score)
+    let grade = "Critical Infrastructure Risk", color = "#6B7280", badge = "Critical";
+    let message = "Your facility's IT setup has serious gaps that put daily operations at risk. Systems may fail without warning, patient data may not be protected, and restoring normal service after a failure could take days.";
+    if (hs >= 40) { grade = "High Infrastructure Risk"; color = "#DC2626"; badge = "High Risk"; message = "There are significant problems in your IT setup that are already likely affecting billing, patient records, and daily staff work. These issues need to be addressed soon — before a failure causes a longer disruption."; }
+    if (hs >= 60) { grade = "Needs Improvement"; color = "#F59E0B"; badge = "Moderate"; message = "Your systems are running, but there are gaps in backup coverage, security, or monitoring that could cause disruptions when something goes wrong. Addressing these now will prevent bigger problems later."; }
+    if (hs >= 80) { grade = "Excellent Infrastructure"; color = "#22C55E"; badge = "Excellent"; message = "Your hospital's IT foundation is in good shape. Systems appear to be protected, monitored, and supported. Keep up regular maintenance and periodic reviews to stay ahead of any new risks."; }
 
     const acts: { title: string; priority: string; desc: string }[] = [];
-    if (formData.firewall === "No") acts.push({ title: "Deploy an Enterprise-Grade Firewall", priority: "CRITICAL", desc: "Your hospital network is currently unprotected from external threats. A managed firewall is the first line of defence for patient data, billing systems, and clinical applications." });
-    if (formData.backupSystem === "No") acts.push({ title: "Implement a Centralised Backup System", priority: "CRITICAL", desc: "Without a reliable backup, a single hardware failure or ransomware incident could result in permanent loss of patient records and operational data." });
-    if (formData.itSupport === "No proper support") acts.push({ title: "Engage a Structured Managed IT Support Partner", priority: "CRITICAL", desc: "Without defined support, IT issues accumulate and downtime extends. A structured MSP partnership ensures predictable response times and proactive maintenance." });
-    if (["Single ISP", "No backup internet", "Don't know"].includes(formData.internetRedundancy)) acts.push({ title: "Add a Secondary Internet Connection", priority: "HIGH", desc: "Single-ISP environments are a single point of failure. A secondary link ensures billing, labs, and administrative systems stay connected when the primary fails." });
-    if (["Frequently", "Weekly"].includes(formData.downtime)) acts.push({ title: "Deploy 24/7 Network Monitoring & Alerting", priority: "HIGH", desc: "Frequent downtime indicates your infrastructure needs active monitoring. Real-time alerts allow issues to be resolved before they impact clinical workflows." });
-    if (["No", "Don't know"].includes(formData.serverMonitoring)) acts.push({ title: "Enable Proactive Server & Network Monitoring", priority: "HIGH", desc: "Your servers and network devices are operating without visibility. Proactive monitoring allows issues to be addressed before they escalate into outages." });
-    if (["No", "Not sure"].includes(formData.endpointSecurity)) acts.push({ title: "Roll Out Managed Endpoint Protection", priority: "HIGH", desc: "Every unprotected workstation is a potential entry point for malware and ransomware. Managed endpoint security ensures all computers are consistently protected." });
-    if (formData.ups === "No") acts.push({ title: "Install UPS and Power Backup for Critical Systems", priority: "HIGH", desc: "Power-related failures can corrupt data and damage servers. UPS coverage for core IT systems is a foundational investment in operational continuity." });
-    if (["No", "Not sure"].includes(formData.accessControl)) acts.push({ title: "Establish Role-Based Access Control", priority: "MEDIUM", desc: "Unmanaged access increases the risk of internal data exposure and makes incident investigation far more difficult." });
-    if (["Never tested", "Not sure"].includes(formData.backupTesting)) acts.push({ title: "Implement Regular Backup Recovery Testing", priority: "MEDIUM", desc: "Untested backups frequently fail when needed most. A regular recovery testing schedule ensures your backup investment is actually reliable." });
-    if (formData.cablingQuality === "Poor") acts.push({ title: "Structured Cabling Audit & Remediation", priority: "MEDIUM", desc: "Poor cabling contributes to intermittent network faults and slows troubleshooting. Structured remediation improves network stability." });
-    if (formData.wifiQuality === "Frequently unstable") acts.push({ title: "Redesign Wi-Fi Coverage Across All Departments", priority: "MEDIUM", desc: "Reliable wireless connectivity is essential for clinical mobility, device integration, and staff productivity across wards, OPD, and labs." });
-    if (["Poor", "Don't know"].includes(formData.rackManagement)) acts.push({ title: "Organise Server Room, Racks & Patch Documentation", priority: "LOW", desc: "Disorganised racks slow every maintenance task and increase the risk of accidental disconnections." });
+    if (formData.firewall === "No") acts.push({ title: "Add a Firewall to Protect Your Hospital Network", priority: "CRITICAL", desc: "Right now, there is nothing blocking outside threats from reaching your systems. A firewall acts as a security gate between the internet and your hospital's patient records, billing tools, and clinical applications." });
+    if (formData.backupSystem === "No") acts.push({ title: "Set Up Automatic Backups for All Hospital Data", priority: "CRITICAL", desc: "Your hospital data is not being backed up. If a server fails, files are deleted, or a virus strikes, that data may be gone permanently. Automatic daily backups ensure you can always recover." });
+    if (formData.itSupport === "No proper support") acts.push({ title: "Get Dedicated IT Support with a Clear Response Plan", priority: "CRITICAL", desc: "When systems go down today, there is no structured process to fix them quickly. This means staff wait, billing stops, and patient care is affected while the problem gets sorted out informally." });
+    if (["Single ISP", "No backup internet", "Don't know"].includes(formData.internetRedundancy)) acts.push({ title: "Add a Backup Internet Line for Your Facility", priority: "HIGH", desc: "Your facility runs on a single internet connection. If that connection goes down, billing, lab results, and patient records become inaccessible until the provider restores service." });
+    if (["Frequently", "Weekly"].includes(formData.downtime)) acts.push({ title: "Start Monitoring Your Network Around the Clock", priority: "HIGH", desc: "Your facility experiences outages regularly. Without monitoring, problems are only discovered after they have already stopped billing, records access, or ward systems from working." });
+    if (["No", "Don't know"].includes(formData.serverMonitoring)) acts.push({ title: "Start Monitoring Your Servers and Network", priority: "HIGH", desc: "Your servers and network devices are not being watched. Without monitoring, the first sign of a problem is usually a complete outage — by which time the disruption is already affecting your teams." });
+    if (["No", "Not sure"].includes(formData.endpointSecurity)) acts.push({ title: "Install Security Software on Every Computer", priority: "HIGH", desc: "Computers without security software are an open door for viruses and ransomware. A single infected machine in your hospital network can spread to patient records, billing, and clinical tools." });
+    if (formData.ups === "No") acts.push({ title: "Protect Your Servers from Power Failures", priority: "HIGH", desc: "A sudden power cut or surge can instantly damage servers and corrupt databases. Power backup equipment (UPS) keeps critical systems running during outages and prevents data loss." });
+    if (["No", "Not sure"].includes(formData.accessControl)) acts.push({ title: "Control Who Can Access Which Systems", priority: "MEDIUM", desc: "Currently, staff may be able to access systems and data they don't need. Limiting access by role prevents accidental changes, data leaks, and makes it easier to investigate any issues." });
+    if (["Never tested", "Not sure"].includes(formData.backupTesting)) acts.push({ title: "Test Your Backups to Make Sure They Actually Work", priority: "MEDIUM", desc: "Many backup systems appear to be running but fail when recovery is attempted. Regular testing confirms that when you actually need to restore data, it will be there." });
+    if (formData.cablingQuality === "Poor") acts.push({ title: "Fix and Organise Your Network Cabling", priority: "MEDIUM", desc: "Messy or poorly installed cabling causes random connection drops and makes problems much harder to diagnose. Organised, structured cabling improves reliability and speeds up any maintenance work." });
+    if (formData.wifiQuality === "Frequently unstable") acts.push({ title: "Improve Wi-Fi Coverage Across All Areas", priority: "MEDIUM", desc: "Unreliable Wi-Fi interrupts staff who depend on it for patient records, ward updates, and lab communication. A proper wireless coverage plan eliminates dead zones and improves daily workflows." });
+    if (["Poor", "Don't know"].includes(formData.rackManagement)) acts.push({ title: "Organise Your Server Room and Cabling", priority: "LOW", desc: "A disorganised server room makes every maintenance visit slower and riskier. Labelled, tidy racks and cabling reduce the chance of accidental disconnections and cut troubleshooting time." });
 
-    return { riskScore: ns, riskGrade: grade, riskColor: color, riskBadge: badge, riskMessage: message, actions: acts.slice(0, 10), breakdown: breakdownScores };
+    return { riskScore: hs, riskGrade: grade, riskColor: color, riskBadge: badge, riskMessage: message, actions: acts.slice(0, 10), breakdown: breakdownScores };
   }, [formData]);
 
   const recommendedPackage = useMemo(() => {
-    if (riskScore <= 25) return "Monitoring Package";
-    if (riskScore <= 55) return "Support Package";
+    if (riskScore >= 80) return "Monitoring Package";
+    if (riskScore >= 60) return "Support Package";
     return "Security Package";
   }, [riskScore]);
 
   const getObservations = () => {
     const obs: string[] = [];
-    if (formData.firewall === "No") obs.push("No firewall is protecting your hospital's internet connection. This exposes all connected systems — including patient data, billing, and clinical networks — to external threats.");
-    if (formData.backupSystem === "No") obs.push("No centralised backup system is in place. In the event of server failure, ransomware, or accidental deletion, your hospital data may not be recoverable.");
-    if (["No", "Don't know"].includes(formData.serverMonitoring)) obs.push("Servers and network devices are not being proactively monitored. Issues are likely being discovered after they have already impacted operations — rather than before.");
-    if (formData.internetRedundancy === "Single ISP") obs.push("Your facility is operating on a single internet connection with no redundancy. A single ISP failure can immediately halt billing, lab systems, and patient record access.");
-    if (["No backup internet", "Don't know"].includes(formData.internetRedundancy)) obs.push("Internet connectivity setup and redundancy status are unclear. Without documented connectivity architecture, planning for reliability or failover becomes difficult.");
-    if (["No", "Not sure"].includes(formData.endpointSecurity)) obs.push("Workstations do not have reliable endpoint protection. Unprotected computers in a hospital environment are a common entry point for ransomware and data theft.");
-    if (["No", "Not sure"].includes(formData.accessControl)) obs.push("User access and system permissions are not structured by role or department. Unmanaged access increases the risk of internal data exposure and complicates incident response.");
-    if (["Never tested", "Not sure"].includes(formData.backupTesting)) obs.push("Backups have not been tested for successful recovery. Untested backups frequently fail when needed most — making the backup investment unreliable in a real incident.");
-    if (formData.ups === "No") obs.push("Critical IT systems are not protected by UPS or power backup. A power fluctuation or outage can damage servers, corrupt databases, and immediately halt hospital operations.");
-    if (formData.itSupport === "No proper support") obs.push("There is no structured IT support model in place. When systems fail, unresolved downtime directly impacts billing, clinical staff, and patient care.");
-    if (formData.wifiQuality === "Frequently unstable") obs.push("Wi-Fi coverage is unreliable across facility areas. Poor wireless connectivity affects clinical mobility, EMR access, lab communication, and staff productivity.");
-    if (formData.cablingQuality === "Poor") obs.push("Network cabling is unstructured and poorly organised. Disorganised cabling is a frequent source of physical network faults and makes troubleshooting slower.");
-    if (["Frequently", "Weekly"].includes(formData.downtime)) obs.push("Frequent or weekly connectivity disruptions are directly impacting hospital operations. Recurring downtime at this frequency typically signals underlying issues with hardware or ISP configuration.");
+    if (formData.firewall === "No") obs.push("Your internet connection has no firewall. Without this basic protection, outside threats can reach your patient records, billing systems, and clinical tools directly.");
+    if (formData.backupSystem === "No") obs.push("Your hospital data is not being backed up. If a server fails, a virus strikes, or files are accidentally deleted, that data could be permanently lost with no way to recover it.");
+    if (["No", "Don't know"].includes(formData.serverMonitoring)) obs.push("Your servers and network are not monitored continuously. Problems may only be noticed after systems have already stopped working — by which point billing, records, or ward tools may already be down.");
+    if (formData.internetRedundancy === "Single ISP") obs.push("You have only one internet connection. If it goes down, your billing software, lab reports, and patient records all become inaccessible until the provider restores the line.");
+    if (["No backup internet", "Don't know"].includes(formData.internetRedundancy)) obs.push("It's not clear how your internet connection is set up or whether a backup exists. Without this information, there is no plan for what happens when the connection fails.");
+    if (["No", "Not sure"].includes(formData.endpointSecurity)) obs.push("Many computers in your facility don't have proper security software installed. These unprotected machines are a common entry point for viruses and ransomware that can spread to your entire network.");
+    if (["No", "Not sure"].includes(formData.accessControl)) obs.push("Staff may be able to access systems and patient data they don't need for their work. Without access restrictions, sensitive records are harder to protect and incidents are harder to investigate.");
+    if (["Never tested", "Not sure"].includes(formData.backupTesting)) obs.push("Your backups have never been tested to confirm they actually work. Many backup systems appear to be running but fail when recovery is attempted — and you won't find out until it's too late.");
+    if (formData.ups === "No") obs.push("Your servers and IT equipment are not protected from sudden power failures or surges. A single power cut can instantly corrupt databases and bring hospital operations to a halt.");
+    if (formData.itSupport === "No proper support") obs.push("There is no dedicated IT support in place. When a system goes down, there's no clear process to fix it quickly — meaning staff wait, billing stops, and patient care is disrupted while the issue gets resolved informally.");
+    if (formData.wifiQuality === "Frequently unstable") obs.push("Wi-Fi is unreliable in parts of your facility. Staff who depend on it for patient records, ward updates, or lab results regularly face interruptions during their work.");
+    if (formData.cablingQuality === "Poor") obs.push("Your network cabling is poorly organised. Messy or unsecured cables are a common cause of random connection drops and make it much harder and slower to fix problems when they occur.");
+    if (["Frequently", "Weekly"].includes(formData.downtime)) obs.push("Your facility experiences system or network outages on a regular basis. This level of disruption is affecting billing, patient record access, and staff workflows right now — and points to underlying problems that won't resolve on their own.");
     return obs;
   };
 
@@ -935,15 +938,15 @@ export default function Home() {
                       <p className="text-sm text-center text-gray-500 mt-4 leading-relaxed">{riskMessage}</p>
                       <div className="mt-5 w-full space-y-2 bg-gray-50 rounded-xl p-4">
                         {[
-                          { label: "0–25", name: "Optimised Infrastructure", color: "#22C55E" },
-                          { label: "26–50", name: "Needs Optimisation", color: "#F59E0B" },
-                          { label: "51–75", name: "Operational Risk Areas", color: "#F97316" },
-                          { label: "76–100", name: "Critical Infrastructure Gaps", color: "#DC2626" },
+                          { label: "80–100", name: "Excellent Infrastructure", color: "#22C55E" },
+                          { label: "60–79",  name: "Needs Improvement",        color: "#F59E0B" },
+                          { label: "40–59",  name: "High Infrastructure Risk", color: "#DC2626" },
+                          { label: "0–39",   name: "Critical Infrastructure Risk", color: "#6B7280" },
                         ].map(item => (
-                          <div key={item.name} className="flex items-center gap-2 text-xs">
+                          <div key={item.name} className={`flex items-center gap-2 text-xs rounded-lg px-2 py-1 transition-colors ${riskScore >= parseInt(item.label) && riskScore <= parseInt(item.label.split("–")[1]) ? "bg-white shadow-sm" : ""}`}>
                             <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                            <span className="text-gray-400 font-mono w-12">{item.label}</span>
-                            <span className="text-gray-500">{item.name}</span>
+                            <span className="text-gray-400 font-mono w-14">{item.label}</span>
+                            <span className="text-gray-600">{item.name}</span>
                           </div>
                         ))}
                       </div>
@@ -1000,9 +1003,9 @@ export default function Home() {
                 <CardHeader className="border-b border-gray-100 px-8 py-6">
                   <CardTitle className="text-lg font-semibold text-gray-900 flex items-center gap-3" style={{ letterSpacing: "-0.01em" }}>
                     <div className="bg-orange-50 p-2.5 rounded-lg text-primary shrink-0"><Info className="w-4 h-4" /></div>
-                    Key Infrastructure Observations
+                    What We Found in Your Hospital IT Setup
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-400 mt-1 font-normal">Based on your assessment responses, here are the consulting observations for your facility.</CardDescription>
+                  <CardDescription className="text-sm text-gray-400 mt-1 font-normal">These are the specific gaps and issues identified based on your answers. Each one has a direct impact on your daily operations.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-8">
                   {observations.length > 0 ? (
@@ -1017,12 +1020,12 @@ export default function Home() {
                   ) : (
                     <div className="flex items-center gap-4 p-6 rounded-xl bg-green-50 border border-green-100">
                       <CheckCircle2 className="w-7 h-7 text-green-500 shrink-0" />
-                      <p className="text-green-800 font-medium text-sm">Your hospital IT environment shows a strong foundation. No significant risk areas were identified. We recommend continuing with regular monitoring and structured IT governance.</p>
+                      <p className="text-green-800 font-medium text-sm">No major issues were found based on your answers. Your hospital's IT setup appears to be in good shape. Keep doing regular maintenance and check in periodically to make sure things stay that way.</p>
                     </div>
                   )}
                   {(formData.networkObservations || formData.securityObservations || formData.infrastructureObservations) && (
                     <div className="mt-6 pt-6 border-t border-gray-100 space-y-4">
-                      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Consultant Field Notes</h4>
+                      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Your Additional Notes</h4>
                       {formData.networkObservations && <div className="p-4 bg-gray-50 rounded-xl border border-gray-100"><p className="text-xs font-semibold text-gray-400 uppercase mb-2">Network</p><p className="text-sm text-gray-600 leading-relaxed">{formData.networkObservations}</p></div>}
                       {formData.securityObservations && <div className="p-4 bg-gray-50 rounded-xl border border-gray-100"><p className="text-xs font-semibold text-gray-400 uppercase mb-2">Security</p><p className="text-sm text-gray-600 leading-relaxed">{formData.securityObservations}</p></div>}
                       {formData.infrastructureObservations && <div className="p-4 bg-gray-50 rounded-xl border border-gray-100"><p className="text-xs font-semibold text-gray-400 uppercase mb-2">Infrastructure</p><p className="text-sm text-gray-600 leading-relaxed">{formData.infrastructureObservations}</p></div>}
@@ -1038,9 +1041,9 @@ export default function Home() {
                   <CardHeader className="border-b border-gray-100 px-8 py-6">
                     <CardTitle className="text-lg font-semibold text-gray-900 flex items-center gap-3" style={{ letterSpacing: "-0.01em" }}>
                       <div className="bg-orange-50 p-2.5 rounded-lg text-primary shrink-0"><Clipboard className="w-4 h-4" /></div>
-                      Prioritised Improvement Actions
+                      What Your Facility Needs to Fix
                     </CardTitle>
-                    <CardDescription className="text-sm text-gray-400 mt-1 font-normal">Structured steps to reduce infrastructure risk and strengthen hospital IT reliability</CardDescription>
+                    <CardDescription className="text-sm text-gray-400 mt-1 font-normal">These are the most important improvements for your hospital, listed in order of priority.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
