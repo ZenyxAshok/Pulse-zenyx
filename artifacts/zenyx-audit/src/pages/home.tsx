@@ -13,6 +13,79 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+// ─── Module-level constants ────────────────────────────────────────────────
+const TOTAL_STEPS = 7;
+
+// ─── Sub-components defined OUTSIDE Home so React never remounts them ───────
+const RadioGroup = ({ label, helperText, icon: Icon, options, value, onChange, vertical = false, error = false }: {
+  label: string; helperText?: string; icon: React.ElementType; options: string[]; value: string; onChange: (v: string) => void; vertical?: boolean; error?: boolean;
+}) => (
+  <div className={`space-y-3 ${error ? "rounded-xl border border-red-200 bg-red-50/40 p-4 -mx-4" : ""}`}>
+    <div>
+      <Label className="flex items-start text-sm font-normal text-gray-700">
+        <Icon className="w-4 h-4 mr-2 text-primary shrink-0 mt-0.5" /> {label}
+        {error && <span className="ml-1 text-red-400">*</span>}
+      </Label>
+      {helperText && <p className="text-xs text-gray-400 mt-1 ml-6 leading-relaxed">{helperText}</p>}
+    </div>
+    <div className={vertical ? "flex flex-col gap-2" : "grid grid-cols-2 md:grid-cols-4 gap-2"}>
+      {options.map((opt) => (
+        <div key={opt} onClick={() => onChange(opt)}
+          className={`cursor-pointer border rounded-xl px-4 py-3 text-sm font-medium transition-all duration-150 select-none
+            ${vertical ? "text-left" : "text-center"}
+            ${value === opt
+              ? "border-primary bg-orange-50 text-primary shadow-sm"
+              : error
+                ? "border-red-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"
+                : "border-gray-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"}`}>
+          {opt}
+        </div>
+      ))}
+    </div>
+    {error && (
+      <p className="flex items-center gap-1.5 text-xs text-red-500 font-medium mt-1">
+        <AlertTriangle className="w-3 h-3 shrink-0" />
+        Please answer this question to continue.
+      </p>
+    )}
+  </div>
+);
+
+const SectionNav = ({ onBack, onNext, nextLabel, isFirst = false }: { onBack?: () => void; onNext: () => void; nextLabel: string; isFirst?: boolean }) => (
+  <div className="mt-10 flex items-center justify-between pt-6 border-t border-gray-100">
+    {!isFirst ? (
+      <Button type="button" onClick={onBack} variant="ghost" size="lg" className="h-11 px-6 rounded-xl font-medium text-gray-600">
+        <ArrowLeft className="mr-2 w-4 h-4" /> Back
+      </Button>
+    ) : <div />}
+    <Button type="button" onClick={onNext} size="lg" className="h-11 px-8 rounded-xl font-medium hover:shadow-md transition-all group">
+      {nextLabel} <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+    </Button>
+  </div>
+);
+
+const CardShell = ({ icon: Icon, stepNum, title, desc, children }: { icon: React.ElementType; stepNum: number; title: string; desc: string; children: React.ReactNode }) => (
+  <div className="animate-in slide-in-from-right-4 fade-in duration-300">
+    <Card className="shadow-sm border border-gray-200/80 rounded-2xl bg-white overflow-hidden">
+      <div className="h-[3px] w-full bg-gradient-to-r from-primary to-orange-300" />
+      <CardHeader className="border-b border-gray-100 pb-6 px-8 pt-7">
+        <div className="flex items-center gap-4">
+          <div className="bg-orange-50 p-3 rounded-xl text-primary shrink-0"><Icon className="w-5 h-5" /></div>
+          <div>
+            <span className="text-xs font-medium text-primary/80 bg-orange-50 px-2.5 py-1 rounded-md uppercase tracking-wider">
+              Step {stepNum} of {TOTAL_STEPS}
+            </span>
+            <CardTitle className="text-lg font-medium text-gray-900 mt-1.5" style={{ letterSpacing: "-0.01em" }}>{title}</CardTitle>
+            <CardDescription className="text-sm text-gray-400 mt-0.5 font-normal">{desc}</CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="p-8">{children}</CardContent>
+    </Card>
+  </div>
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
 export default function Home() {
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -144,7 +217,6 @@ export default function Home() {
     return obs;
   };
 
-  const TOTAL_STEPS = 7;
   const steps = [
     { num: 1, title: "Facility Profile" }, { num: 2, title: "Network" },
     { num: 3, title: "Security & Backup" }, { num: 4, title: "Infrastructure" },
@@ -175,74 +247,6 @@ export default function Home() {
     setStep3Errors([]);
     nextStep();
   };
-
-  const RadioGroup = ({ label, helperText, icon: Icon, options, value, onChange, vertical = false, error = false }: {
-    label: string; helperText?: string; icon: React.ElementType; options: string[]; value: string; onChange: (v: string) => void; vertical?: boolean; error?: boolean;
-  }) => (
-    <div className={`space-y-3 ${error ? "rounded-xl border border-red-200 bg-red-50/40 p-4 -mx-4" : ""}`}>
-      <div>
-        <Label className="flex items-start text-sm font-normal text-gray-700">
-          <Icon className="w-4 h-4 mr-2 text-primary shrink-0 mt-0.5" /> {label}
-          {error && <span className="ml-1 text-red-400">*</span>}
-        </Label>
-        {helperText && <p className="text-xs text-gray-400 mt-1 ml-6 leading-relaxed">{helperText}</p>}
-      </div>
-      <div className={vertical ? "flex flex-col gap-2" : "grid grid-cols-2 md:grid-cols-4 gap-2"}>
-        {options.map((opt) => (
-          <div key={opt} onClick={() => onChange(opt)}
-            className={`cursor-pointer border rounded-xl px-4 py-3 text-sm font-medium transition-all duration-150 select-none
-              ${vertical ? "text-left" : "text-center"}
-              ${value === opt
-                ? "border-primary bg-orange-50 text-primary shadow-sm"
-                : error
-                  ? "border-red-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"
-                  : "border-gray-200 bg-white text-gray-600 hover:border-orange-200 hover:bg-orange-50/40"}`}>
-            {opt}
-          </div>
-        ))}
-      </div>
-      {error && (
-        <p className="flex items-center gap-1.5 text-xs text-red-500 font-medium mt-1">
-          <AlertTriangle className="w-3 h-3 shrink-0" />
-          Please answer this question to continue.
-        </p>
-      )}
-    </div>
-  );
-
-  const SectionNav = ({ onBack, onNext, nextLabel, isFirst = false }: { onBack?: () => void; onNext: () => void; nextLabel: string; isFirst?: boolean }) => (
-    <div className="mt-10 flex items-center justify-between pt-6 border-t border-gray-100">
-      {!isFirst ? (
-        <Button onClick={onBack} variant="ghost" size="lg" className="h-11 px-6 rounded-xl font-medium text-gray-600">
-          <ArrowLeft className="mr-2 w-4 h-4" /> Back
-        </Button>
-      ) : <div />}
-      <Button onClick={onNext} size="lg" className="h-11 px-8 rounded-xl font-medium hover:shadow-md transition-all group">
-        {nextLabel} <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-      </Button>
-    </div>
-  );
-
-  const CardShell = ({ icon: Icon, stepNum, title, desc, children }: { icon: React.ElementType; stepNum: number; title: string; desc: string; children: React.ReactNode }) => (
-    <div className="animate-in slide-in-from-right-4 fade-in duration-300">
-      <Card className="shadow-sm border border-gray-200/80 rounded-2xl bg-white overflow-hidden">
-        <div className="h-[3px] w-full bg-gradient-to-r from-primary to-orange-300" />
-        <CardHeader className="border-b border-gray-100 pb-6 px-8 pt-7">
-          <div className="flex items-center gap-4">
-            <div className="bg-orange-50 p-3 rounded-xl text-primary shrink-0"><Icon className="w-5 h-5" /></div>
-            <div>
-              <span className="text-xs font-medium text-primary/80 bg-orange-50 px-2.5 py-1 rounded-md uppercase tracking-wider">
-                Step {stepNum} of {TOTAL_STEPS}
-              </span>
-              <CardTitle className="text-lg font-medium text-gray-900 mt-1.5" style={{ letterSpacing: "-0.01em" }}>{title}</CardTitle>
-              <CardDescription className="text-sm text-gray-400 mt-0.5 font-normal">{desc}</CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-8">{children}</CardContent>
-      </Card>
-    </div>
-  );
 
   const observations = getObservations();
 
