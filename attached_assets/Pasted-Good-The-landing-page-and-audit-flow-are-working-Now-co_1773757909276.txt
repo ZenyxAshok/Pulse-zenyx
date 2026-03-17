@@ -1,0 +1,144 @@
+Good. The landing page and audit flow are working.
+
+Now convert this into a real lead capture and conversion system.
+
+Do not redesign the UI unless needed.
+Keep the current design, audit flow, styling, and scoring logic intact.
+Only add the missing backend/business functionality.
+
+I need the following features added:
+
+1. REAL LEAD CAPTURE
+When the user submits details in the “Get Your Report” step:
+- capture Name
+- Email
+- Phone
+- Hospital Name
+- Role
+- Facility Type
+- All answers
+- Final risk score
+- Risk label
+- Submission date/time
+
+2. STORE LEADS
+Store all submitted leads in a proper backend.
+Preferred options:
+- Google Sheets for simple lead tracking
+OR
+- a lightweight database if Sheets is harder initially
+
+If using Google Sheets, create the integration-ready code and clearly tell me:
+- what sheet columns are required
+- what credentials are needed
+- where I should paste them
+
+Required columns:
+Date
+Name
+Email
+Phone
+Hospital Name
+Role
+Facility Type
+Risk Score
+Risk Label
+Package Interest
+Lead Source
+Status
+Notes
+
+Default values:
+Package Interest = "Assessment Completed"
+Lead Source = "ZENYX Pulse"
+Status = "New Lead"
+Notes = blank
+
+3. EMAIL NOTIFICATION TO ME
+When a user submits the report form, send a notification email to my email address with:
+- Name
+- Phone
+- Email
+- Hospital
+- Role
+- Facility Type
+- Risk Score
+- Risk Label
+
+Make email integration production-ready using environment variables.
+Use a simple reliable option suitable for Replit.
+
+4. CLIENT CONFIRMATION EMAIL
+After submission, send a confirmation email to the client saying:
+- thank you for completing the ZENYX Pulse assessment
+- their report/request has been received
+- our team may contact them shortly
+Keep it professional and short.
+
+5. PACKAGE ENQUIRY POPUP
+In the package section and results section, when the user clicks:
+- Start with Monitoring
+- Start Audit to Get Quote
+- Enquire Now
+- Book a Free 20-min Hospital IT Review
+
+Do not just show a fake success message.
+
+Instead:
+open a popup/modal form asking for:
+- Name
+- Hospital Name
+- Phone
+- Email
+- Package Interested
+- Number of systems/endpoints (optional)
+- Message / Requirement
+
+Then save this enquiry also to backend / Google Sheets.
+
+For package enquiry rows, use:
+Lead Source = "Package Enquiry"
+Status = "Hot Lead"
+
+6. PACKAGE BUTTON LOGIC
+Each package button should pass the selected package automatically into the popup:
+- Monitoring
+- Support + Monitoring
+- Security Package
+- IT Review Call
+
+7. ADMIN-READY STRUCTURE
+Create clean backend routes/endpoints for:
+- submitting audit lead
+- submitting package enquiry
+
+Example:
+POST /api/submit-audit
+POST /api/package-enquiry
+
+8. KEEP RESULTS FLOW WORKING
+After successful report form submission:
+- keep showing the result page
+- do not break the existing score/result flow
+- submit real data in background
+- show proper success message
+
+9. TECH SETUP
+Use the simplest production-friendly setup for Replit:
+- existing frontend HTML/CSS/JS
+- backend with Express if needed
+- environment variables for secrets
+- clear file structure
+
+10. FINAL OUTPUT I NEED FROM YOU
+After making changes, clearly tell me:
+- which files were created or edited
+- where I need to paste my email / API keys / Google Sheet credentials
+- how to test audit submission
+- how to test package enquiry submission
+
+Important:
+- do not break the existing design
+- do not replace the UI unless necessary
+- keep this as a clean business-ready MVP
+- make it practical, simple, and working
