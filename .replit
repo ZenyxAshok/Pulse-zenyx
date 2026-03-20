@@ -1,26 +1,21 @@
-modules = ["nodejs-24"]
+run = "node backend/server.js"
+language = "nodejs"
+modules = ["nodejs-20"]
 
-[[artifacts]]
-id = "artifacts/api-server"
-
-[[artifacts]]
-id = "artifacts/mockup-sandbox"
+[nix]
+channel = "stable-23_11"
 
 [deployment]
-router = "application"
-deploymentTarget = "autoscale"
+run = ["sh", "-c", "node backend/server.js"]
+deploymentTarget = "cloudrun"
 
-[deployment.postBuild]
-args = ["pnpm", "store", "prune"]
-env = { "CI" = "true" }
+[[ports]]
+localPort = 3000
+externalPort = 80
 
-[workflows]
-runButton = "Project"
+[[ports]]
+localPort = 23482
+externalPort = 3000
 
 [agent]
-stack = "PNPM_WORKSPACE"
 expertMode = true
-
-[postMerge]
-path = "scripts/post-merge.sh"
-timeoutMs = 20000
