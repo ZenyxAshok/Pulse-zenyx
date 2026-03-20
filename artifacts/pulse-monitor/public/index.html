@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse by ZENYX — Hospital IT Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>window.__PULSE_BASE__ = '/pulse-monitor';</script>
+<link rel="stylesheet" href="/pulse-monitor/css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LOGIN
+═══════════════════════════════════════════ -->
+<div id="login">
+
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="login-logo">P</div>
+      <div class="login-brand-text">
+        <div class="product-name">Pulse</div>
+        <div class="product-by">by ZENYX</div>
+      </div>
+    </div>
+
+    <h1 class="login-headline">
+      Your hospital IT,<br><em>always visible.</em>
+    </h1>
+
+    <p class="login-sub">
+      Pulse gives hospital administrators a real-time command center
+      for their IT infrastructure — no complexity, no clutter.
+      Know the status before it becomes a crisis.
+    </p>
+
+    <div class="login-metrics">
+      <div>
+        <div class="lm-val">99.7%</div>
+        <div class="lm-label">Avg Uptime</div>
+      </div>
+      <div>
+        <div class="lm-val">&lt;4 min</div>
+        <div class="lm-label">Alert Response</div>
+      </div>
+      <div>
+        <div class="lm-val">24×7</div>
+        <div class="lm-label">NOC Monitoring</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-form-wrap">
+      <div class="lf-heading">Welcome back</div>
+      <div class="lf-sub">Sign in to your hospital IT monitoring portal</div>
+
+      <div id="login-error" class="login-error"></div>
+
+      <div class="lf-field">
+        <label class="lf-label" for="lf-email">Email Address</label>
+        <input id="lf-email" class="lf-input" type="email"
+               placeholder="it.admin@hospital.com"
+               autocomplete="email"
+               onkeydown="if(event.key==='Enter') document.getElementById('lf-password').focus()">
+      </div>
+
+      <div class="lf-field">
+        <label class="lf-label" for="lf-password">Password</label>
+        <input id="lf-password" class="lf-input" type="password"
+               placeholder="••••••••"
+               autocomplete="current-password"
+               onkeydown="if(event.key==='Enter') handleLogin()">
+      </div>
+
+      <button id="login-btn" class="login-btn" onclick="handleLogin()">
+        Access Portal →
+      </button>
+
+      <p class="lf-note">
+        Demo credentials:<br>
+        <strong style="color:var(--orange)">it.admin@apollo.com</strong> &nbsp;/&nbsp; <strong style="color:var(--orange)">demo1234</strong><br>
+        <strong style="color:var(--orange)">ashok@zenyx.in</strong> &nbsp;/&nbsp; <strong style="color:var(--orange)">demo1234</strong> (Super Admin)
+      </p>
+
+      <div class="lf-trust">
+        <div class="trust-pill"><div class="trust-dot"></div> TLS Encrypted</div>
+        <div class="trust-pill"><div class="trust-dot"></div> DPDP Ready</div>
+        <div class="trust-pill"><div class="trust-dot"></div> CERT-In Compliant</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /login -->
+
+
+<!-- ═══════════════════════════════════════════
+     APP SHELL
+═══════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <div class="sb-header">
+      <div class="sb-logo">P</div>
+      <div>
+        <div class="sb-product-name">Pulse</div>
+        <div class="sb-product-by">by ZENYX</div>
+      </div>
+    </div>
+
+    <div class="sb-hosp-pill">
+      <div class="sbhp-label">Monitoring</div>
+      <div class="sbhp-name" id="sb-hosp-name">—</div>
+      <div class="sbhp-status">
+        <div class="pulse-dot" id="sb-status-dot"></div>
+        <span class="sbhp-status-text" id="sb-status-text">Loading…</span>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+
+      <div class="sb-nav-section">Overview</div>
+      <div class="nav-link active" data-page="dashboard" onclick="navTo('dashboard')">
+        <span class="nav-icon">⚡</span> Dashboard
+      </div>
+
+      <div class="sb-nav-section">Monitoring</div>
+      <div class="nav-link" data-page="assets" onclick="navTo('assets')">
+        <span class="nav-icon">🖥️</span> Assets
+      </div>
+      <div class="nav-link" data-page="alerts" onclick="navTo('alerts')">
+        <span class="nav-icon">🔔</span> Alerts
+        <span class="nav-badge" id="alerts-badge"></span>
+      </div>
+      <div class="nav-link" data-page="uptime" onclick="navTo('uptime')">
+        <span class="nav-icon">📊</span> Uptime &amp; Reports
+      </div>
+
+      <div class="sb-nav-section">Intelligence</div>
+      <div class="nav-link" data-page="recommendations" onclick="navTo('recommendations')">
+        <span class="nav-icon">🛡️</span> Recommendations
+      </div>
+
+      <div class="sb-nav-section">Support</div>
+      <div class="nav-link" data-page="support" onclick="navTo('support')">
+        <span class="nav-icon">🎧</span> Support
+      </div>
+
+      <!-- ZENYX admin — shown only to super_admin / zenyx_admin -->
+      <div id="admin-section" style="display:none;">
+        <div class="sb-nav-section">ZENYX Admin</div>
+        <div class="nav-link" onclick="PULSE.ui.toast('Admin panel — Sprint 2')">
+          <span class="nav-icon">🏥</span> All Hospitals
+        </div>
+        <div class="nav-link" onclick="PULSE.ui.toast('Zabbix status — Sprint 2')">
+          <span class="nav-icon">🔧</span> Zabbix Status
+        </div>
+      </div>
+
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="avatar" id="sb-user-avatar">—</div>
+        <div style="flex:1;min-width:0;">
+          <div class="sb-user-name" id="sb-user-name">Loading…</div>
+          <div class="sb-user-role" id="sb-user-role">—</div>
+        </div>
+        <div class="logout-btn" title="Sign out" onclick="handleLogout()">↩</div>
+      </div>
+    </div>
+
+  </aside><!-- /sidebar -->
+
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div style="flex:1;">
+        <div class="tb-title" id="tb-title">Loading…</div>
+        <div class="tb-sub"   id="tb-sub">Pulse by ZENYX</div>
+      </div>
+      <div class="tb-actions">
+        <div class="tb-clock" id="tb-clock">—</div>
+        <div class="noc-pill">
+          <div class="pulse-dot"></div>
+          ZENYX NOC Active
+        </div>
+        <div class="tb-bell" onclick="navTo('alerts')">
+          🔔
+          <div class="bell-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page area -->
+    <div class="page-wrap">
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="page active" id="page-dashboard">
+
+  <!-- NOC Banner -->
+  <div class="noc-banner">
+    <div class="noc-banner-icon">🛰️</div>
+    <div class="noc-banner-body">
+      <div class="noc-banner-title">ZENYX NOC is actively monitoring your hospital 24 × 7</div>
+      <div class="noc-banner-desc" id="noc-desc">Loading monitoring status…</div>
+    </div>
+    <div class="noc-banner-action" onclick="navTo('support')">Contact NOC →</div>
+  </div>
+
+  <!-- Health Hero -->
+  <div class="health-hero">
+    <div class="score-ring">
+      <svg viewBox="0 0 96 96">
+        <circle class="track" cx="48" cy="48" r="42"/>
+        <circle class="fill"  cx="48" cy="48" r="42" id="score-fill"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-num"   id="score-num">—</div>
+        <div class="score-denom">/100</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="health-status-title" id="health-title">Loading…</div>
+      <div class="health-status-msg"   id="health-msg"></div>
+      <div class="health-pills"        id="health-pills"></div>
+    </div>
+
+    <div class="health-meta">
+      <div class="hm-item">
+        <div class="hm-val" id="meta-uptime">—</div>
+        <div class="hm-label">Month Uptime</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-val" id="meta-devices">—</div>
+        <div class="hm-label">Monitored</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-val" id="meta-alerts">—</div>
+        <div class="hm-label">Active Alerts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metric Strip -->
+  <div class="g5" style="margin-bottom:18px;">
+    <div class="metric-card" id="mc-internet">
+      <div class="mc-icon mc-g">🌐</div>
+      <div class="mc-val">—</div>
+      <div class="mc-label">Internet Links</div>
+      <div class="mc-trend">—</div>
+    </div>
+    <div class="metric-card" id="mc-firewall">
+      <div class="mc-icon mc-o">🔥</div>
+      <div class="mc-val">—</div>
+      <div class="mc-label">Firewalls</div>
+      <div class="mc-trend">—</div>
+    </div>
+    <div class="metric-card" id="mc-servers">
+      <div class="mc-icon mc-b">🗄️</div>
+      <div class="mc-val">—</div>
+      <div class="mc-label">Servers</div>
+      <div class="mc-trend">—</div>
+    </div>
+    <div class="metric-card" id="mc-wifi">
+      <div class="mc-icon mc-y">📡</div>
+      <div class="mc-val">—</div>
+      <div class="mc-label">Wi-Fi APs</div>
+      <div class="mc-trend">—</div>
+    </div>
+    <div class="metric-card" id="mc-backup">
+      <div class="mc-icon mc-r">💾</div>
+      <div class="mc-val">—</div>
+      <div class="mc-label">Last Backup</div>
+      <div class="mc-trend">—</div>
+    </div>
+  </div>
+
+  <!-- Service Status + Recent Alerts -->
+  <div class="g2" style="margin-bottom:18px;">
+
+    <div class="card card-pad">
+      <div class="card-title">
+        Service Status
+        <span class="ct-action" onclick="navTo('assets')">View All →</span>
+      </div>
+      <div class="svc-list" id="svc-list">
+        <div style="color:var(--t3);font-size:13px;">Loading…</div>
+      </div>
+    </div>
+
+    <div class="card card-pad">
+      <div class="card-title">
+        Recent Alerts
+        <span class="ct-action" onclick="navTo('alerts')">View All →</span>
+      </div>
+      <div class="alert-list" id="dash-alerts">
+        <div style="color:var(--t3);font-size:13px;">Loading…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Support Strip -->
+  <div class="card card-pad" style="display:flex;align-items:center;gap:20px;">
+    <div style="font-size:28px;">🎧</div>
+    <div style="flex:1;">
+      <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px;">
+        Need to escalate? ZENYX NOC is standing by.
+      </div>
+      <div style="font-size:12px;color:var(--t2);">
+        Available 24 × 7 for all hospital IT emergencies. Call or raise a support ticket.
+      </div>
+    </div>
+    <button class="btn btn-ghost" onclick="navTo('support')">Open Support</button>
+    <div style="padding-left:16px;border-left:1px solid var(--gb);text-align:center;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--t1);">+91 89771 00000</div>
+      <div style="font-size:10px;color:var(--t3);margin-top:2px;">Emergency NOC Line</div>
+    </div>
+  </div>
+
+</div><!-- /dashboard -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: ASSETS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-assets">
+
+  <div class="page-header">
+    <div>
+      <div class="ph-title">Monitored Assets</div>
+      <div class="ph-sub">All departments · Firewall, Servers, Wi-Fi, Storage, Computers</div>
+    </div>
+    <div class="ph-actions">
+      <button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Export coming in next sprint')">
+        ↓ Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Count strip -->
+  <div class="asset-counts">
+    <div class="ac-item">
+      <div class="ac-val" id="asset-total">—</div>
+      <div class="ac-lbl">Total Devices</div>
+    </div>
+    <div class="ac-item" style="border-color:rgba(30,217,123,.2);">
+      <div class="ac-val" id="asset-online"  style="color:var(--green);">—</div>
+      <div class="ac-lbl">Online</div>
+    </div>
+    <div class="ac-item" style="border-color:rgba(255,64,96,.2);">
+      <div class="ac-val" id="asset-offline" style="color:var(--red);">—</div>
+      <div class="ac-lbl">Offline</div>
+    </div>
+    <div class="ac-item" style="border-color:rgba(245,200,66,.2);">
+      <div class="ac-val" id="asset-warning" style="color:var(--yellow);">—</div>
+      <div class="ac-lbl">Degraded</div>
+    </div>
+  </div>
+
+  <!-- Filter chips -->
+  <div class="filter-strip">
+    <button class="fchip active" data-group="assets" data-filter=""
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('')">
+      All
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Firewall"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Firewall')">
+      Firewalls
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Server"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Server')">
+      Servers
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Switch"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Switch')">
+      Switches
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Wi-Fi AP"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Wi-Fi AP')">
+      Wi-Fi APs
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Computer"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Computer')">
+      Computers
+    </button>
+    <button class="fchip" data-group="assets" data-filter="Storage"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Storage')">
+      Storage
+    </button>
+    <button class="fchip" data-group="assets" data-filter="CCTV"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('CCTV')">
+      CCTV
+    </button>
+    <button class="fchip" data-group="assets" data-filter="UPS"
+            onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('UPS')">
+      UPS
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Device</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>IP Address</th>
+          <th>Status</th>
+          <th>Availability</th>
+          <th>Last Seen</th>
+        </tr>
+      </thead>
+      <tbody id="assets-tbody">
+        <tr><td colspan="7" class="td-empty">Loading assets…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /assets -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: ALERTS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-alerts">
+
+  <div class="page-header">
+    <div>
+      <div class="ph-title">Alerts &amp; Incidents</div>
+      <div class="ph-sub">Active and resolved — last 30 days</div>
+    </div>
+    <div class="ph-actions">
+      <button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Export coming in next sprint')">
+        ↓ Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Count strip -->
+  <div class="g4" style="margin-bottom:20px;">
+    <div class="metric-card">
+      <div class="mc-icon mc-r">🔴</div>
+      <div class="mc-val" id="alert-critical" style="color:var(--red);">—</div>
+      <div class="mc-label">Critical Active</div>
+    </div>
+    <div class="metric-card">
+      <div class="mc-icon mc-y">🟡</div>
+      <div class="mc-val" id="alert-warning"  style="color:var(--yellow);">—</div>
+      <div class="mc-label">Warnings Active</div>
+    </div>
+    <div class="metric-card">
+      <div class="mc-icon" style="background:var(--green-soft);">✅</div>
+      <div class="mc-val" id="alert-resolved" style="color:var(--green);">—</div>
+      <div class="mc-label">Resolved (30d)</div>
+    </div>
+    <div class="metric-card">
+      <div class="mc-icon mc-b">⏱️</div>
+      <div class="mc-val">18m</div>
+      <div class="mc-label">Avg Resolution</div>
+    </div>
+  </div>
+
+  <div class="card card-pad" style="margin-bottom:18px;">
+    <div class="card-title">Active Alerts</div>
+    <div class="alert-list" id="alerts-active">
+      <div style="color:var(--t3);font-size:13px;">Loading…</div>
+    </div>
+  </div>
+
+  <div class="card card-pad">
+    <div class="card-title">Resolved Incidents — Last 30 Days</div>
+    <div class="alert-list" id="alerts-resolved">
+      <div style="color:var(--t3);font-size:13px;">Loading…</div>
+    </div>
+  </div>
+
+</div><!-- /alerts -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: UPTIME
+══════════════════════════════════════════════ -->
+<div class="page" id="page-uptime">
+
+  <div class="page-header">
+    <div>
+      <div class="ph-title">Uptime &amp; Reports</div>
+      <div class="ph-sub">30-day service availability</div>
+    </div>
+    <div class="ph-actions">
+      <button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Generating report PDF…')">
+        ↓ Download Report
+      </button>
+    </div>
+  </div>
+
+  <!-- Service rings — rendered by JS -->
+  <div class="uptime-rings" id="uptime-rings">
+    <div style="grid-column:1/-1;color:var(--t3);font-size:13px;">Loading uptime…</div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="card card-pad" style="margin-bottom:20px;">
+    <div class="card-title">30-Day Availability Calendar</div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;
+                font-size:10px;color:var(--t3);margin:6px 0 10px;">
+      <span>Day 1</span><span>Day 10</span><span>Day 20</span><span>Today</span>
+    </div>
+    <div class="cal-legend">
+      <span><span class="leg-dot" style="background:var(--green)"></span>100% Online</span>
+      <span><span class="leg-dot" style="background:var(--yellow)"></span>Partial Outage</span>
+      <span><span class="leg-dot" style="background:var(--red)"></span>Major Outage</span>
+      <span><span class="leg-dot" style="background:var(--s3)"></span>Future</span>
+    </div>
+  </div>
+
+  <!-- Reports -->
+  <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;
+              letter-spacing:1px;margin-bottom:14px;">Available Reports</div>
+
+  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating Monthly IT Health Report…')">
+    <div class="report-icon">📋</div>
+    <div style="flex:1;">
+      <div class="report-name">Monthly IT Health Report</div>
+      <div class="report-desc">Full uptime, incidents, resolutions, SLA performance — ready for hospital management</div>
+    </div>
+    <button class="btn btn-ghost">Download PDF</button>
+  </div>
+
+  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating Quarterly Performance Report…')">
+    <div class="report-icon">📊</div>
+    <div style="flex:1;">
+      <div class="report-name">Quarterly IT Performance Report</div>
+      <div class="report-desc">Uptime trends, NOC response times, SLA achievement, incident analysis</div>
+    </div>
+    <button class="btn btn-ghost">Download PDF</button>
+  </div>
+
+  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating CERT-In / DPDP Compliance Report…')">
+    <div class="report-icon">🔐</div>
+    <div style="flex:1;">
+      <div class="report-name">Security &amp; Compliance — CERT-In / DPDP Act</div>
+      <div class="report-desc">Firewall threat logs, security events, compliance posture for hospital audit purposes</div>
+    </div>
+    <button class="btn btn-ghost">Download PDF</button>
+  </div>
+
+</div><!-- /uptime -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: RECOMMENDATIONS
+══════════════════════════════════════════════ -->
+<div class="page" id="page-recommendations">
+
+  <div class="page-header">
+    <div>
+      <div class="ph-title">Recommendations</div>
+      <div class="ph-sub">Reviewed and approved by your ZENYX account engineer</div>
+    </div>
+  </div>
+
+  <div class="noc-banner" style="margin-bottom:22px;">
+    <div class="noc-banner-icon">🧠</div>
+    <div class="noc-banner-body">
+      <div class="noc-banner-title">ZENYX Intelligence — Proactive Risk Review</div>
+      <div class="noc-banner-desc">
+        Our engineers review your IT environment weekly. Every item below is verified by your
+        assigned ZENYX account engineer before being surfaced to you.
+      </div>
+    </div>
+  </div>
+
+  <!-- Rendered by JS -->
+  <div id="recs-list">
+    <div style="color:var(--t3);font-size:13px;">Loading recommendations…</div>
+  </div>
+
+</div><!-- /recommendations -->
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SUPPORT
+══════════════════════════════════════════════ -->
+<div class="page" id="page-support">
+
+  <div class="page-header">
+    <div>
+      <div class="ph-title">Support</div>
+      <div class="ph-sub">ZENYX NOC · 24 × 7 · SLA-backed response</div>
+    </div>
+  </div>
+
+  <!-- Action cards -->
+  <div class="support-actions">
+
+    <div class="support-card emergency"
+         onclick="PULSE.ui.toast('📞 Calling ZENYX Emergency NOC: +91 89771 00000', 'warn')">
+      <div class="support-icon">🚨</div>
+      <div class="support-card-title">Emergency NOC Call</div>
+      <div class="support-card-desc">
+        System down, ransomware, server failure, internet outage. Call immediately.
+      </div>
+      <div class="support-phone">+91 89771 00000</div>
+    </div>
+
+    <div class="support-card"
+         onclick="document.getElementById('new-ticket-form').style.display='block';
+                  document.getElementById('ticket-title').focus();">
+      <div class="support-icon">🎫</div>
+      <div class="support-card-title">Raise a Ticket</div>
+      <div class="support-card-desc">
+        Non-critical issues, planned changes, new device requests, configuration queries.
+      </div>
+      <button class="btn btn-primary" style="margin-top:16px;width:100%;">
+        New Support Ticket
+      </button>
+    </div>
+
+    <div class="support-card"
+         onclick="PULSE.ui.toast('💬 Opening ZENYX NOC WhatsApp…')">
+      <div class="support-icon">💬</div>
+      <div class="support-card-title">WhatsApp NOC</div>
+      <div class="support-card-desc">
+        Quick messages, status updates, non-critical queries to the ZENYX NOC team.
+      </div>
+      <button class="btn btn-ghost" style="margin-top:16px;width:100%;">
+        Open WhatsApp
+      </button>
+    </div>
+
+  </div>
+
+  <!-- New ticket form -->
+  <div id="new-ticket-form" class="new-ticket-form" style="display:none;">
+    <div class="ntf-title">Raise a New Support Ticket</div>
+    <input id="ticket-title" class="ntf-field"
+           placeholder="Issue title — e.g. Internet slow in OPD block">
+    <select id="ticket-priority" class="ntf-field">
+      <option value="low">Low Priority — General request</option>
+      <option value="medium" selected>Medium Priority — Service impacted</option>
+      <option value="high">High Priority — Affecting patient care</option>
+    </select>
+    <textarea id="ticket-desc" class="ntf-field" rows="3"
+              placeholder="Describe the issue in detail…"></textarea>
+    <div class="ntf-actions">
+      <button class="btn btn-primary" onclick="submitTicket()">Submit Ticket</button>
+      <button class="btn btn-ghost"
+              onclick="document.getElementById('new-ticket-form').style.display='none'">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Tickets list -->
+  <div class="card" style="margin-bottom:18px;">
+    <div class="card-pad" style="padding-bottom:0;">
+      <div class="card-title">
+        Your Support Tickets
+        <span class="ct-action" onclick="PULSE.ui.toast('Full ticket portal — Sprint 2')">
+          View All →
+        </span>
+      </div>
+    </div>
+    <div id="tickets-list">
+      <div style="color:var(--t3);font-size:13px;padding:20px;">Loading tickets…</div>
+    </div>
+  </div>
+
+  <!-- Account info -->
+  <div class="card card-pad">
+    <div class="card-title" style="margin-bottom:20px;">Your ZENYX Account</div>
+    <div class="acct-grid">
+      <div>
+        <div class="acct-label">Account Manager</div>
+        <div class="acct-val">Ashok Chappidi</div>
+        <div class="acct-sub">Founder, ZENYX IT Infra Solutions</div>
+        <div class="acct-tag" style="color:var(--orange);">ashok@zenyx.in</div>
+      </div>
+      <div>
+        <div class="acct-label">Current Plan</div>
+        <div class="acct-val" id="acct-plan">—</div>
+        <div class="acct-sub" id="acct-price">—</div>
+        <div class="acct-tag">✓ Renews <span id="acct-renewal">—</span></div>
+      </div>
+      <div>
+        <div class="acct-label">SLA Commitment</div>
+        <div class="acct-val" id="acct-sla">—</div>
+        <div class="acct-sub">ZENYX NOC — 24 × 7</div>
+        <div class="acct-tag">✓ SLA Met this month: 100%</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /support -->
+
+
+    </div><!-- /page-wrap -->
+  </div><!-- /main -->
+
+</div><!-- /app -->
+
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toast-icon">ℹ️</div>
+  <div id="toast-msg">—</div>
+</div>
+
+
+<!-- ── SCRIPTS — load order matters ── -->
+<script src="/pulse-monitor/js/constants.js"></script>
+<script src="/pulse-monitor/js/api.js"></script>
+<script src="/pulse-monitor/js/ui.js"></script>
+<script src="/pulse-monitor/js/render.js"></script>
+<script src="/pulse-monitor/js/app.js"></script>
+
+<script>
+// ── Wire dashboard recent alerts from cached alert data ──────────────────────
+// Called after dashboard loads, re-uses already-fetched alert data
+// so we don't need an extra API round-trip just for the recent-alerts panel.
+(function() {
+  const _origDash = PULSE.render.dashboard;
+  PULSE.render.dashboard = function(d) {
+    _origDash(d);
+    // Also update noc-desc which is on the dashboard page but uses noc-banner-desc id
+    const nd = document.getElementById('noc-desc');
+    if (nd) nd.textContent = d.nocMsg || '';
+    // Fetch alert preview for dashboard panel
+    PULSE.api.alerts().then(function(a) {
+      const rows = [...(a.active || []), ...(a.resolved || [])].slice(0, 4);
+      PULSE.ui.html('dash-alerts', rows.length
+        ? rows.map(function(r) {
+            var s = PULSE.SEV[r.sev] || PULSE.SEV.info;
+            var since = r.since ? new Date(r.since).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+            var tkt = r.ticketId ? ' · #' + r.ticketId : '';
+            return '<div class="alert-row ' + s.cls + '" onclick="navTo(\'alerts\')">' +
+              '<div class="ar-icon">' + s.icon + '</div>' +
+              '<div class="ar-body">' +
+                '<div class="ar-title">' + PULSE.ui.esc(r.title) + '</div>' +
+                '<div class="ar-desc">'  + PULSE.ui.esc(r.desc)  + '</div>' +
+                '<div class="ar-time">'  + since + tkt + '</div>' +
+              '</div>' +
+              '<span class="badge ' + s.badgeCls + '">' + s.label + '</span>' +
+            '</div>';
+          }).join('')
+        : '<p class="empty-msg">No recent alerts — all clear ✓</p>'
+      );
+    }).catch(function(){});
+  };
+})();
+</script>
+
+</body>
+</html>

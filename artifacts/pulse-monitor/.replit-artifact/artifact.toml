@@ -1,0 +1,18 @@
+kind = "web"
+previewPath = "/pulse-monitor"
+title = "Pulse by ZENYX — Hospital IT Monitoring"
+version = "1.0.0"
+id = "artifacts/pulse-monitor"
+router = "path"
+
+[[services]]
+localPort = 23483
+name = "web"
+paths = ["/pulse-monitor"]
+
+[services.development]
+run = "pnpm --filter @workspace/pulse-monitor run dev"
+
+[services.env]
+PORT = "23483"
+BASE_PATH = "/pulse-monitor"
