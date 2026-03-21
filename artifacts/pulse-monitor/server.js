@@ -26,12 +26,66 @@ app.use(express.urlencoded({ extended: true }));
 app.use(BASE + '/svc/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 30 }));
 app.use(BASE + '/svc',      rateLimit({ windowMs: 60 * 1000, max: 300 }));
 
-// Debug route — Zabbix connection diagnostics
+// Debug route — full Zabbix connection diagnostics (auth test)
 app.get('/api/debug/zabbix', async (req, res) => {
-  const zabbix = require('./services/zabbixAdapter');
+  const zabbix  = require('./services/zabbixAdapter');
+  const url      = process.env.ZABBIX_URL  || null;
+  const user     = process.env.ZABBIX_USER || null;
+  const pass     = process.env.ZABBIX_PASS || null;
   const connected = zabbix.isConnected();
-  const url = process.env.ZABBIX_URL;
-  res.json({ connected, url });
+
+  const report = {
+    connected,
+    url,
+    user_env_set:  !!user,
+    pass_env_set:  !!pass,
+    auth_new_field: null,   // uses { username: ... }  (Zabbix ≥ 5.4)
+    auth_old_field: null,   // uses { user: ... }      (Zabbix < 5.4)
+    api_version:    null,
+    error:          null,
+  };
+
+  if (!url) { return res.json({ ...report, error: 'ZABBIX_URL not set' }); }
+
+  // Helper: raw JSON-RPC call (no auth)
+  const rpcRaw = async (method, params, auth = undefined) => {
+    try {
+      const body = { jsonrpc: '2.0', method, params, id: 1 };
+      if (auth) body.auth = auth;
+      const r = await fetch(url, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body),
+        signal:  AbortSignal.timeout(12000),
+      });
+      return await r.json();
+    } catch (e) {
+      return { error: e.message };
+    }
+  };
+
+  // 1. Get API version (no auth needed)
+  const verResp = await rpcRaw('apiinfo.version', {});
+  report.api_version = verResp.result || verResp.error || verResp;
+
+  // 2. Try Zabbix ≥ 5.4 style login ({ username })
+  const newResp = await rpcRaw('user.login', { username: user, password: pass });
+  if (newResp.result) {
+    report.auth_new_field = 'SUCCESS — token: ' + newResp.result.slice(0, 8) + '…';
+  } else {
+    report.auth_new_field = 'FAILED — ' + JSON.stringify(newResp.error || newResp);
+  }
+
+  // 3. Try Zabbix < 5.4 style login ({ user })
+  const oldResp = await rpcRaw('user.login', { user, password: pass });
+  if (oldResp.result) {
+    report.auth_old_field = 'SUCCESS — token: ' + oldResp.result.slice(0, 8) + '…';
+  } else {
+    report.auth_old_field = 'FAILED — ' + JSON.stringify(oldResp.error || oldResp);
+  }
+
+  console.log('[DEBUG /api/debug/zabbix]', JSON.stringify(report, null, 2));
+  res.json(report);
 });
 
 // Health check
