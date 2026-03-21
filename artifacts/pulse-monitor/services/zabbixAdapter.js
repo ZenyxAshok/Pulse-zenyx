@@ -301,7 +301,11 @@ function calcHealthScore(triggers) {
 // PUBLIC: CONNECTION UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
 
-const isConnected = () => !!ZABBIX_URL;
+const isConnected = () => {
+  const result = !!ZABBIX_URL;
+  console.log('[ZabbixAdapter] isConnected() →', result, '| ZABBIX_URL:', ZABBIX_URL || '(not set)');
+  return result;
+};
 
 /** Test Zabbix connectivity — used by admin status endpoint. */
 async function testConnection() {

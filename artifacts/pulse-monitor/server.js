@@ -26,6 +26,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(BASE + '/svc/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 30 }));
 app.use(BASE + '/svc',      rateLimit({ windowMs: 60 * 1000, max: 300 }));
 
+// Debug route — Zabbix connection diagnostics
+app.get('/api/debug/zabbix', async (req, res) => {
+  const zabbix = require('./services/zabbixAdapter');
+  const connected = zabbix.isConnected();
+  const url = process.env.ZABBIX_URL;
+  res.json({ connected, url });
+});
+
 // Health check
 app.get(BASE + '/svc/health', (_req, res) => res.json({
   ok: true, product: 'Pulse by ZENYX', version: '2.0.0',
