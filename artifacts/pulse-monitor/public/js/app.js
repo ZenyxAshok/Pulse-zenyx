@@ -1,4 +1,4 @@
-// frontend/public/js/app.js
+// frontend/public/js/app.js — Pulse by ZENYX v3
 'use strict';
 
 PULSE.app = (() => {
@@ -7,7 +7,12 @@ PULSE.app = (() => {
     user:        null,
     currentPage: null,
     cache:       {},
+    pollInterval: null,
+    lastUpdated:  null,
+    tickInterval: null,
   };
+
+  const POLL_MS = 5000; // 5-second live polling for dashboard
 
   // ── Page metadata ──
   const META = {
@@ -26,9 +31,15 @@ PULSE.app = (() => {
       S.cache.dashboard = d;
       PULSE.render.dashboard(d);
       _updateSidebarHealth(d.healthScore);
-      // Update alert badge
+      _updateLiveModeBadge(d.dataSource);
+      // Alert badge
       const b = document.getElementById('alerts-badge');
-      if (b && d.activeAlerts > 0) { b.textContent = d.activeAlerts; b.style.display='inline'; }
+      if (b) {
+        if (d.activeAlerts > 0) { b.textContent = d.activeAlerts; b.style.display = 'inline'; }
+        else { b.style.display = 'none'; }
+      }
+      // Record last updated
+      S.lastUpdated = Date.now();
     },
     assets: async () => {
       const d = await PULSE.api.assets();
@@ -76,6 +87,9 @@ PULSE.app = (() => {
     const allowed = PULSE.PERMISSIONS[S.user?.role] || [];
     if (!allowed.includes(pageId)) { PULSE.ui.toast('Access denied for this page.', 'error'); return; }
 
+    // Stop live polling when leaving dashboard
+    _stopPolling();
+
     S.currentPage = pageId;
 
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -83,7 +97,11 @@ PULSE.app = (() => {
 
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const pageEl = document.getElementById('page-' + pageId);
-    if (pageEl) { pageEl.classList.add('active'); pageEl.style.opacity='0'; setTimeout(()=>{ pageEl.style.transition='opacity .2s'; pageEl.style.opacity='1'; },10); }
+    if (pageEl) {
+      pageEl.classList.add('active');
+      pageEl.style.opacity = '0';
+      setTimeout(() => { pageEl.style.transition = 'opacity .2s'; pageEl.style.opacity = '1'; }, 10);
+    }
 
     const m = META[pageId] || {};
     PULSE.ui.set('tb-title', m.title || pageId);
@@ -93,10 +111,72 @@ PULSE.app = (() => {
     try   { await LOADERS[pageId]?.(); }
     catch (e) { PULSE.ui.showError(pageId, e.message); }
     finally   { PULSE.ui.hideLoader(pageId); }
+
+    // Start live polling when on dashboard
+    if (pageId === 'dashboard') _startPolling();
   }
 
   // Reload current page
   function reload() { if (S.currentPage) navigate(S.currentPage); }
+
+  // ── Live Polling ──
+  function _startPolling() {
+    _stopPolling();
+    S.pollInterval = setInterval(_pollDashboard, POLL_MS);
+    _startLastUpdatedTick();
+  }
+
+  function _stopPolling() {
+    if (S.pollInterval)  { clearInterval(S.pollInterval);  S.pollInterval  = null; }
+    if (S.tickInterval)  { clearInterval(S.tickInterval);  S.tickInterval  = null; }
+  }
+
+  async function _pollDashboard() {
+    if (S.currentPage !== 'dashboard') { _stopPolling(); return; }
+    const spinner = document.getElementById('refresh-spinner');
+    if (spinner) spinner.classList.add('active');
+    try {
+      const d = await PULSE.api.dashboard();
+      S.cache.dashboard = d;
+      PULSE.render.dashboard(d);
+      _updateSidebarHealth(d.healthScore);
+      _updateLiveModeBadge(d.dataSource);
+      S.lastUpdated = Date.now();
+      const b = document.getElementById('alerts-badge');
+      if (b) {
+        if (d.activeAlerts > 0) { b.textContent = d.activeAlerts; b.style.display = 'inline'; }
+        else { b.style.display = 'none'; }
+      }
+    } catch {
+      // Silent fail on background poll — don't disrupt the UI
+    } finally {
+      if (spinner) spinner.classList.remove('active');
+    }
+  }
+
+  function _startLastUpdatedTick() {
+    if (S.tickInterval) clearInterval(S.tickInterval);
+    S.tickInterval = setInterval(() => {
+      if (!S.lastUpdated) return;
+      const sec = Math.round((Date.now() - S.lastUpdated) / 1000);
+      const el  = document.getElementById('last-updated');
+      if (el) {
+        el.textContent = sec <= 1 ? 'just now' : sec + 's ago';
+      }
+    }, 1000);
+  }
+
+  function _updateLiveModeBadge(source) {
+    const el = document.getElementById('live-mode-badge');
+    if (!el) return;
+    if (source === 'live' || source === 'zabbix') {
+      el.textContent = 'Live · Zabbix';
+      el.className = 'live-mode-badge';
+    } else {
+      el.textContent = 'Demo Data';
+      el.className = 'live-mode-badge mock';
+    }
+  }
 
   // ── Login ──
   async function handleLogin() {
@@ -106,7 +186,7 @@ PULSE.app = (() => {
     const btn   = document.getElementById('login-btn');
 
     errEl.style.display = 'none';
-    if (!email || !pass) { errEl.textContent='Email and password required.'; errEl.style.display='block'; return; }
+    if (!email || !pass) { errEl.textContent = 'Email and password required.'; errEl.style.display = 'block'; return; }
 
     btn.disabled = true; btn.textContent = 'Signing in…';
 
@@ -130,13 +210,13 @@ PULSE.app = (() => {
     const pri   = document.getElementById('ticket-priority')?.value || 'medium';
     if (!title) { PULSE.ui.toast('Ticket title is required.', 'warn'); return; }
     try {
-      const t = await PULSE.api.tickets.create({ title, description:desc, priority:pri });
+      const t = await PULSE.api.tickets.create({ title, description: desc, priority: pri });
       PULSE.ui.toast(`✅ Ticket #${t.id} created`, 'success');
-      document.getElementById('new-ticket-form').style.display='none';
-      document.getElementById('ticket-title').value='';
-      document.getElementById('ticket-desc').value='';
+      document.getElementById('new-ticket-form').style.display = 'none';
+      document.getElementById('ticket-title').value = '';
+      document.getElementById('ticket-desc').value  = '';
       await LOADERS.support();
-    } catch (e) { PULSE.ui.toast(e.message,'error'); }
+    } catch (e) { PULSE.ui.toast(e.message, 'error'); }
   }
 
   // ── Asset filter ──
@@ -146,7 +226,7 @@ PULSE.app = (() => {
       const d = await PULSE.api.assets(cat || undefined);
       S.cache.assets = d;
       PULSE.render.assets(d);
-    } catch (e) { PULSE.ui.toast(e.message,'error'); }
+    } catch (e) { PULSE.ui.toast(e.message, 'error'); }
     finally { PULSE.ui.hideLoader('assets'); }
   }
 
@@ -157,7 +237,7 @@ PULSE.app = (() => {
   }
 
   function _showApp() {
-    document.getElementById('login').style.opacity = '0';
+    document.getElementById('login').style.opacity    = '0';
     document.getElementById('login').style.transition = 'opacity .4s';
     setTimeout(() => {
       document.getElementById('login').style.display = 'none';
@@ -195,21 +275,21 @@ PULSE.app = (() => {
     const dot = document.getElementById('sb-status-dot');
     const txt = document.getElementById('sb-status-text');
     if (!dot || !txt) return;
-    if (score >= 90)     { dot.className='pulse-dot';        txt.textContent='All Systems Healthy'; txt.style.color='var(--green)';  }
-    else if (score >= 75){ dot.className='pulse-dot warn';   txt.textContent='Minor Issues Detected';txt.style.color='var(--yellow)';}
-    else                 { dot.className='pulse-dot danger';  txt.textContent='Attention Required';  txt.style.color='var(--red)';   }
+    if (score >= 90)      { dot.className = 'pulse-dot';        txt.textContent = 'All Systems Healthy';   txt.style.color = 'var(--green)';  }
+    else if (score >= 75) { dot.className = 'pulse-dot warn';   txt.textContent = 'Minor Issues Detected'; txt.style.color = 'var(--yellow)'; }
+    else                  { dot.className = 'pulse-dot danger';  txt.textContent = 'Attention Required';   txt.style.color = 'var(--red)';    }
   }
 
   function _fmtRole(r) {
-    return {super_admin:'ZENYX Super Admin',zenyx_admin:'ZENYX NOC',hospital_admin:'Hospital IT Admin',hospital_viewer:'Hospital Viewer'}[r] || r;
+    return { super_admin:'ZENYX Super Admin', zenyx_admin:'ZENYX NOC', hospital_admin:'Hospital IT Admin', hospital_viewer:'Hospital Viewer' }[r] || r;
   }
 
   function _startClock() {
     function tick() {
       const now = new Date();
       PULSE.ui.set('tb-clock',
-        now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) + ' · ' +
-        now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'})
+        now.toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) + ' · ' +
+        now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'})
       );
     }
     tick(); setInterval(tick, 1000);

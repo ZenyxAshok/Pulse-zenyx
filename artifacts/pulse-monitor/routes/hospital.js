@@ -7,6 +7,14 @@ const { authenticate, resolveTenant, requireRole } = require('../middleware/auth
 // All hospital routes require a valid JWT + tenant resolution
 router.use(authenticate, resolveTenant);
 
+// No-cache on all monitoring endpoints — ensures live Zabbix data is always fresh
+router.use((req, res, next) => {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
 const wrap = fn => (req, res) =>
   fn(req, res).catch(e => res.status(e.status || 500).json({ ok:false, error: e.message }));
 

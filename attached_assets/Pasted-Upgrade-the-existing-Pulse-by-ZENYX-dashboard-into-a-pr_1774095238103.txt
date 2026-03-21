@@ -1,0 +1,353 @@
+Upgrade the existing “Pulse by ZENYX” dashboard into a premium, full-screen, hospital-focused enterprise SaaS product.
+
+OBJECTIVE:
+Do not build this like a normal monitoring dashboard.
+Build it like a hospital IT mission control platform that both IT teams and hospital management can understand immediately.
+
+The UI should feel:
+- enterprise-grade
+- premium
+- elegant
+- minimal
+- high trust
+- full screen
+- easy to understand
+- business-impact focused
+
+TARGET USERS:
+1. Hospital IT heads
+2. Hospital admins / management
+3. Decision makers who are not deeply technical
+
+CORE PRODUCT POSITIONING:
+This is not just a monitoring dashboard.
+This is a business continuity and risk visibility platform for hospitals.
+
+Every metric and every card should answer:
+“What happens to the hospital if this system fails?”
+
+DESIGN DIRECTION:
+Take inspiration from:
+- Apple-level elegance
+- Datadog clarity
+- Palo Alto / CrowdStrike enterprise trust
+- modern SaaS layout
+
+THEME:
+- Full-screen layout, edge-to-edge
+- Dark premium theme
+- Smooth gradients and subtle glow
+- Spacious layout with strong hierarchy
+- Professional and readable typography
+
+BRAND COLORS:
+- Primary Orange: #F0641E
+- Background: #070816 or #0A0A0A
+- Card Background: #101322 / #121212
+- Border: subtle transparent white / muted blue-gray
+- Healthy: #22C55E
+- Warning: #F59E0B
+- Critical: #EF4444
+- Info / accent glow: soft blue-purple if needed very subtly
+
+FONTS:
+- Headings: Sora or Inter
+- Body: Inter or DM Sans
+- Numbers / timestamps / uptime metrics: JetBrains Mono or DM Mono
+
+IMPORTANT UI IMPROVEMENT:
+Current design is decent, but it still feels like a technical dashboard.
+It needs to become a hospital IT mission control system.
+
+MAIN CHANGES REQUIRED:
+
+1) MAKE THE DASHBOARD FULL SCREEN
+- Use full browser width
+- Remove unnecessary empty black area on the right
+- Content should expand properly across the full screen
+- Cards should align in a premium grid system
+- Layout should feel balanced on large desktop monitors
+
+2) MAKE IT LOOK MORE ENTERPRISE AND MORE VALUABLE
+- Increase whitespace and spacing
+- Improve card proportions
+- Improve visual hierarchy
+- Make it feel like a high-value enterprise platform hospitals would pay for
+- Avoid clutter
+- Use subtle shadows and glow, not cheap effects
+
+3) TRANSLATE TECHNICAL DATA INTO BUSINESS IMPACT
+Do not show only raw technical status.
+Convert each issue into hospital impact language.
+
+Examples:
+- Server Down → “Patient records and hospital operations may stop”
+- Billing Server Down → “Revenue collection may stop”
+- Firewall Down → “Hospital exposed to cyber attack risk”
+- Backup Failed → “Critical recovery risk — data may not be restorable”
+- Internet Down → “Billing, lab, and cloud systems may be impacted”
+- High CPU on critical server → “Slow system response may affect operations”
+
+This is one of the most important requirements.
+
+4) ADD A NEW TOP SECTION: “HOSPITAL RISK STATUS”
+At the top of the dashboard, create a very strong hero section showing business risk.
+
+This section should immediately communicate:
+- whether the hospital is safe
+- what risks exist
+- what business impact those risks can cause
+
+If no issues:
+Show something like:
+- “No active risks — hospital IT stable”
+- “All critical systems are operating normally”
+- “ZENYX NOC is actively monitoring 24×7”
+
+If issues exist:
+Show risk cards with clear business impact.
+
+Each risk card should include:
+- issue title
+- status color
+- business impact sentence
+- time since issue started
+- action button like “View details”
+
+Example cards:
+- CRITICAL: Server Down
+  Patient records and core operations may stop
+- CRITICAL: Firewall Offline
+  Hospital network exposed to cyber threats
+- WARNING: Backup Failed
+  Recovery risk if data loss occurs
+- WARNING: Internet Instability
+  Billing and cloud systems may slow or disconnect
+
+5) IMPROVE THE MAIN HEALTH CARD
+Replace generic wording like “Healthy 100” with more meaningful language.
+
+Use wording like:
+- “Hospital IT Fully Operational”
+- “All monitored critical systems are stable”
+- “No active business risks detected”
+- “ZENYX NOC monitoring active 24×7”
+
+Also show:
+- Health score
+- Last updated time
+- Live status indicator
+- Total monitored assets
+- Active risk count
+- Uptime percentage
+
+The health area should feel important and premium.
+
+6) MAKE THE DASHBOARD FEEL LIVE
+Right now it feels static.
+It should feel like real-time enterprise software.
+
+Add:
+- live blinking indicator
+- “Last updated 5 sec ago”
+- auto-refresh indicator
+- smooth number transitions
+- subtle card pulse/glow for active systems
+- real-time status refresh
+
+The interface should clearly communicate that this is a live monitoring environment.
+
+7) IMPROVE ALL LABELS TO BUSINESS-FRIENDLY WORDING
+Change overly technical labels into simple enterprise wording.
+
+Examples:
+- Servers → Critical Systems
+- Firewalls → Security Layer
+- Internet Links → Connectivity
+- Last Backup → Recovery Readiness
+- Alerts → Active Risks
+- Service Status → Infrastructure Status
+- Recent Alerts → Recent Risk Events
+
+Use labels that hospital admins can understand instantly.
+
+8) ADD “ZENYX NOC ACTIVITY” SECTION
+Create a clean section showing what ZENYX is actively doing for the hospital.
+
+Suggested items:
+- Monitoring infrastructure 24×7
+- Detecting risks in real time
+- Preventing downtime
+- Watching firewall and internet health
+- Tracking server availability
+- Protecting backup and recovery readiness
+
+This section should make the dashboard feel service-led, not tool-only.
+
+9) IMPROVE ALERTS / INCIDENT SECTION
+The current alerts section is too flat.
+Make it feel more valuable.
+
+If no issues:
+- “No active risks — system stable”
+- “No business-impacting events detected”
+- “All monitored services normal”
+
+If issues exist:
+Show:
+- issue
+- severity
+- affected business area
+- started at
+- current status
+
+10) IMPROVE METRICS AND SMALL CARDS
+The summary cards should feel more premium and more useful.
+
+Instead of just:
+- 1 firewall
+- 0 servers
+
+Use better summary language like:
+- Critical Systems Protected
+- Security Layer Active
+- Connectivity Healthy
+- Recovery Readiness
+- Monitoring Coverage
+- Active Risks
+
+Each card should show:
+- icon
+- status
+- label
+- short explanation
+- value
+- optional micro trend or status line
+
+11) MAKE THE INTERFACE BETTER FOR HOSPITAL SALES
+This dashboard is also a selling tool.
+When a hospital sees it, they should feel:
+- this is premium
+- this is serious
+- this helps us understand our IT risk
+- this is not an ordinary AMC service
+- this is worth paying for monthly
+
+So the design should create trust, urgency, and clarity.
+
+12) BACKEND / LIVE DATA FIX
+There is an important issue:
+When the client firewall was restarted, Zabbix showed the status change, but the frontend did not update.
+This must be fixed properly.
+
+Implement the correct backend flow:
+
+Frontend:
+- poll backend every 5 seconds
+- show loading / refreshing state
+- update UI immediately when status changes
+
+Backend:
+- fetch fresh data from Zabbix on every polling cycle
+- disable caching for monitoring endpoints
+- map Zabbix triggers / hosts / problems into frontend-friendly JSON
+- ensure latest status is always returned
+- include last_updated timestamp
+- include business impact mapping
+
+Possible cause right now:
+- stale cache
+- frontend not polling
+- middleware not re-fetching
+- wrong trigger mapping
+- frontend state not re-rendering after API response
+
+Fix this properly.
+
+13) REQUIRED DATA TRANSFORMATION
+Do not send raw Zabbix response directly to frontend.
+Create a clean middleware layer.
+
+Example output structure:
+
+{
+  "hospital_name": "UBC Hospital",
+  "health_score": 78,
+  "status": "warning",
+  "last_updated": "2026-03-21T17:45:00Z",
+  "active_risks": [
+    {
+      "title": "Firewall Offline",
+      "severity": "critical",
+      "impact": "Hospital network exposed to cyber attack risk",
+      "started_at": "2026-03-21T17:39:00Z"
+    }
+  ],
+  "summary": {
+    "critical_systems": 5,
+    "healthy_systems": 4,
+    "warning_systems": 1,
+    "critical_alerts": 1,
+    "uptime_percent": 99.2
+  }
+}
+
+14) MAP TECHNICAL EVENTS TO HOSPITAL IMPACT
+Create a mapping layer from infrastructure issue to hospital business risk.
+
+Examples:
+- firewall offline → “Cyber attack exposure”
+- internet down → “Billing, lab, and cloud systems impacted”
+- server down → “Hospital operations may stop”
+- backup failed → “Recovery risk — data may be lost”
+- storage critical → “Application performance and records access may be affected”
+- high latency → “Slow user experience in critical systems”
+
+15) ADD BETTER EMPTY STATES
+When systems are healthy, do not leave blank sections.
+Use strong enterprise-style healthy states.
+
+Examples:
+- “All monitored systems stable”
+- “No active business risks”
+- “ZENYX NOC is actively monitoring your hospital”
+- “Recovery and connectivity systems normal”
+
+16) INTERACTIONS
+Add premium but subtle interactions:
+- hover states on cards
+- smooth transitions
+- click into details
+- severity filters
+- tooltips for explanations
+- crisp animations only, no flashy consumer-style movement
+
+17) RESPONSIVENESS
+The dashboard should work beautifully on:
+- large desktop screens
+- laptops
+- tablets if possible
+
+But desktop should be the priority.
+
+18) FINAL DESIGN GOAL
+The final product should look like a real enterprise hospital IT platform.
+It should feel expensive, reliable, and globally buildable.
+It should not look like a local admin panel.
+
+FINAL INSTRUCTION:
+Build this like a top 1% SaaS product.
+Not like a normal monitoring page.
+Not like a basic IT dashboard.
+Build it like a premium mission control layer for hospital IT continuity.
+
+The final interface should make hospital IT people respect it and hospital management understand it.
+
+Also fix the live sync issue between Zabbix and frontend so that when status changes in Zabbix, the frontend updates automatically within a few seconds.
+
+Priority order:
+1. full-screen premium enterprise UI
+2. business impact / hospital risk messaging
+3. live data sync from Zabbix to frontend
+4. better information hierarchy
+5. stronger service-led positioning for ZENYX NOC

@@ -99,6 +99,70 @@ To regenerate: `PORT=3000 BASE_PATH="/" pnpm --filter @workspace/zenyx-audit bui
 
 ---
 
+## Pulse by ZENYX — Hospital IT Monitoring Dashboard (`artifacts/pulse-monitor`)
+
+**Tool name:** Pulse by ZENYX
+**Preview path:** `/pulse-monitor`
+**Port:** 23483
+**Mode:** Live (Zabbix connected via `ZABBIX_URL`, `ZABBIX_USER`, `ZABBIX_PASS` secrets)
+
+### What it is
+A premium hospital client portal where hospital IT teams see their live infrastructure health — firewalls, servers, internet, backups, Wi-Fi — in real time. ZENYX MSP customers log in to view their dedicated dashboard.
+
+### Design System v3 (current)
+- Dark enterprise aesthetic (`#070816` background, orange `#F0641E` accent)
+- Fonts: Sora (headings), Inter (body), JetBrains Mono (data)
+- Full-screen layout: sidebar (220px) + main area (full remaining width)
+- Live polling every 5 seconds on the dashboard page
+- "Last updated X sec ago" live counter in the status bar
+
+### Dashboard Layout (top → bottom)
+1. **Live Status Bar** — blinking green dot + "LIVE" + "Last updated Xs ago" + Live/Mock badge
+2. **Hospital Risk Status Hero** — 2-column: left = Health Score ring card, right = risk panel (active alerts as risk cards, or "All Clear" shield when no risks)
+3. **Business Metrics Strip** — 5 cards: Connectivity, Security Layer, Critical Systems, Wireless Coverage, Recovery Readiness
+4. **Infrastructure Status + Recent Risk Events** — 2-column grid
+5. **ZENYX NOC Activity** — 4-cell grid showing what ZENYX is actively doing
+6. **Support Strip** — quick escalation bar with emergency phone number
+
+### Demo Login Credentials
+| Email | Password | Role |
+|---|---|---|
+| `it@ubc.in` | `demo1234` | UBC Hospital Admin (Live Zabbix) |
+| `it.admin@apollo.com` | `demo1234` | Apollo Hospital Admin (Mock) |
+| `it.admin@care.com` | `demo1234` | CARE Hospital Admin (Mock) |
+| `it.admin@yashoda.com` | `demo1234` | Yashoda Hospital Admin (Mock) |
+| `ashok@zenyx.in` | `demo1234` | Super Admin |
+| `noc@zenyx.in` | `demo1234` | ZENYX NOC |
+
+### Tenants + Zabbix Group IDs
+- `tenant_ubc` → groupId: 22 (live Zabbix, 1 device: UBC_TZ470 SonicWall)
+- `tenant_apollo` → groupId: 12 (mock fallback)
+- `tenant_care` → groupId: 15 (mock fallback)
+- `tenant_yashoda` → groupId: 18 (mock fallback)
+
+### Key Files
+- `artifacts/pulse-monitor/public/css/style.css` — complete design system v3
+- `artifacts/pulse-monitor/public/index.html` — full SPA shell (login + all pages)
+- `artifacts/pulse-monitor/public/js/app.js` — navigation, auth, live polling
+- `artifacts/pulse-monitor/public/js/render.js` — all render functions (business-impact language)
+- `artifacts/pulse-monitor/public/js/api.js` — frontend API client
+- `artifacts/pulse-monitor/public/js/ui.js` — shared UI helpers (toast, loader, ring SVG)
+- `artifacts/pulse-monitor/public/js/constants.js` — roles, permissions, labels
+- `artifacts/pulse-monitor/routes/hospital.js` — Express routes (no-cache headers applied)
+- `artifacts/pulse-monitor/services/hospitalService.js` — data layer (Zabbix live + mock fallback)
+- `artifacts/pulse-monitor/services/dashboardTransformer.js` — raw Zabbix → business JSON
+- `artifacts/pulse-monitor/services/zabbixAdapter.js` — Zabbix API integration
+- `artifacts/pulse-monitor/config/mockData.js` — all demo data (tenants, users, assets, alerts, dashboard)
+- `artifacts/pulse-monitor/server.js` — Express app entry + routing
+
+### Backend Architecture
+- `/pulse-monitor/` → serves `index.html` (SPA)
+- `/pulse-monitor/svc/*` → hospital API routes (require JWT auth)
+- All `/svc/*` routes have `Cache-Control: no-cache, no-store` headers
+- JWT issued on login; tenant resolved via middleware for every request
+
+---
+
 ## Other Packages
 
 ### `artifacts/api-server` (`@workspace/api-server`)

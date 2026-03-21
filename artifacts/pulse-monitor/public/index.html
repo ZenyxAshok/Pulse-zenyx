@@ -207,125 +207,173 @@
 ══════════════════════════════════════════════ -->
 <div class="page active" id="page-dashboard">
 
-  <!-- NOC Banner -->
-  <div class="noc-banner">
-    <div class="noc-banner-icon">🛰️</div>
-    <div class="noc-banner-body">
-      <div class="noc-banner-title">ZENYX NOC is actively monitoring your hospital 24 × 7</div>
-      <div class="noc-banner-desc" id="noc-desc">Loading monitoring status…</div>
+  <!-- Live Status Bar -->
+  <div class="live-status-bar">
+    <div class="live-indicator">
+      <div class="live-blink"></div>
+      LIVE
     </div>
-    <div class="noc-banner-action" onclick="navTo('support')">Contact NOC →</div>
+    <div class="live-sep"></div>
+    <span class="last-updated-label">Last updated</span>
+    <span class="last-updated-val" id="last-updated">—</span>
+    <div class="refresh-icon" id="refresh-spinner"></div>
+    <div class="live-mode-badge" id="live-mode-badge">Mock Data</div>
   </div>
 
-  <!-- Health Hero -->
-  <div class="health-hero">
-    <div class="score-ring">
-      <svg viewBox="0 0 96 96">
-        <circle class="track" cx="48" cy="48" r="42"/>
-        <circle class="fill"  cx="48" cy="48" r="42" id="score-fill"/>
-      </svg>
-      <div class="score-center">
-        <div class="score-num"   id="score-num">—</div>
-        <div class="score-denom">/100</div>
+  <!-- Hospital Risk Status + Health Score -->
+  <div class="risk-hero-grid">
+
+    <!-- Health Score Card -->
+    <div class="health-score-card">
+      <div class="hsc-ring-wrap">
+        <div class="score-ring">
+          <svg viewBox="0 0 90 90">
+            <circle class="track" cx="45" cy="45" r="38"/>
+            <circle class="fill"  cx="45" cy="45" r="38" id="score-fill"/>
+          </svg>
+          <div class="score-center">
+            <div class="score-num" id="score-num">—</div>
+            <div class="score-denom">/100</div>
+          </div>
+        </div>
+        <div>
+          <div class="hsc-label" id="health-title">Loading…</div>
+          <div class="hsc-msg"   id="health-msg"></div>
+        </div>
+      </div>
+      <div class="hsc-pills" id="health-pills"></div>
+      <div class="hsc-stats">
+        <div class="hsc-stat">
+          <div class="hsc-stat-val" id="meta-uptime">—</div>
+          <div class="hsc-stat-label">Month Uptime</div>
+        </div>
+        <div class="hsc-stat">
+          <div class="hsc-stat-val" id="meta-devices">—</div>
+          <div class="hsc-stat-label">Monitored</div>
+        </div>
+        <div class="hsc-stat">
+          <div class="hsc-stat-val" id="meta-alerts">—</div>
+          <div class="hsc-stat-label">Active Risks</div>
+        </div>
       </div>
     </div>
 
+    <!-- Risk Panel -->
     <div>
-      <div class="health-status-title" id="health-title">Loading…</div>
-      <div class="health-status-msg"   id="health-msg"></div>
-      <div class="health-pills"        id="health-pills"></div>
+      <div class="risk-panel-header">
+        <span>Hospital Risk Status</span>
+        <span class="risk-count-badge" id="risk-count-badge">0 Risks</span>
+      </div>
+      <div class="risk-panel" id="risk-panel">
+        <div class="all-clear-card">
+          <div class="ac-icon">🛡️</div>
+          <div class="ac-title">All Systems Stable</div>
+          <div class="ac-msg">No active business risks detected. All critical hospital IT systems are operating normally.</div>
+          <div class="ac-sub">ZENYX NOC is actively monitoring your infrastructure 24×7</div>
+        </div>
+      </div>
     </div>
 
-    <div class="health-meta">
-      <div class="hm-item">
-        <div class="hm-val" id="meta-uptime">—</div>
-        <div class="hm-label">Month Uptime</div>
-      </div>
-      <div class="hm-item">
-        <div class="hm-val" id="meta-devices">—</div>
-        <div class="hm-label">Monitored</div>
-      </div>
-      <div class="hm-item">
-        <div class="hm-val" id="meta-alerts">—</div>
-        <div class="hm-label">Active Alerts</div>
-      </div>
+  </div><!-- /risk-hero-grid -->
+
+  <!-- Business Metrics Strip -->
+  <div class="biz-metrics">
+    <div class="biz-card" id="mc-internet">
+      <div class="biz-card-glow" style="background:radial-gradient(circle,var(--green-glow),transparent)"></div>
+      <div class="biz-icon bi-green">🌐</div>
+      <div class="biz-val" id="bmc-internet-val">—</div>
+      <div class="biz-title">Connectivity</div>
+      <div class="biz-sub">Internet Links</div>
+      <div class="biz-status bs-ok" id="bmc-internet-st">—</div>
+    </div>
+    <div class="biz-card" id="mc-firewall">
+      <div class="biz-card-glow" style="background:radial-gradient(circle,var(--orange-glow),transparent)"></div>
+      <div class="biz-icon bi-orange">🔥</div>
+      <div class="biz-val" id="bmc-firewall-val">—</div>
+      <div class="biz-title">Security Layer</div>
+      <div class="biz-sub">Firewalls</div>
+      <div class="biz-status bs-ok" id="bmc-firewall-st">—</div>
+    </div>
+    <div class="biz-card" id="mc-servers">
+      <div class="biz-card-glow" style="background:radial-gradient(circle,var(--blue-soft),transparent)"></div>
+      <div class="biz-icon bi-blue">🗄️</div>
+      <div class="biz-val" id="bmc-servers-val">—</div>
+      <div class="biz-title">Critical Systems</div>
+      <div class="biz-sub">Servers &amp; Applications</div>
+      <div class="biz-status bs-ok" id="bmc-servers-st">—</div>
+    </div>
+    <div class="biz-card" id="mc-wifi">
+      <div class="biz-card-glow" style="background:radial-gradient(circle,var(--yellow-soft),transparent)"></div>
+      <div class="biz-icon bi-yellow">📡</div>
+      <div class="biz-val" id="bmc-wifi-val">—</div>
+      <div class="biz-title">Wireless Coverage</div>
+      <div class="biz-sub">Wi-Fi Access Points</div>
+      <div class="biz-status bs-ok" id="bmc-wifi-st">—</div>
+    </div>
+    <div class="biz-card" id="mc-backup">
+      <div class="biz-card-glow" style="background:radial-gradient(circle,var(--red-soft),transparent)"></div>
+      <div class="biz-icon bi-red">💾</div>
+      <div class="biz-val" id="bmc-backup-val">—</div>
+      <div class="biz-title">Recovery Readiness</div>
+      <div class="biz-sub">Last Backup</div>
+      <div class="biz-status bs-ok" id="bmc-backup-st">—</div>
     </div>
   </div>
 
-  <!-- Metric Strip -->
-  <div class="g5" style="margin-bottom:18px;">
-    <div class="metric-card" id="mc-internet">
-      <div class="mc-icon mc-g">🌐</div>
-      <div class="mc-val">—</div>
-      <div class="mc-label">Internet Links</div>
-      <div class="mc-trend">—</div>
-    </div>
-    <div class="metric-card" id="mc-firewall">
-      <div class="mc-icon mc-o">🔥</div>
-      <div class="mc-val">—</div>
-      <div class="mc-label">Firewalls</div>
-      <div class="mc-trend">—</div>
-    </div>
-    <div class="metric-card" id="mc-servers">
-      <div class="mc-icon mc-b">🗄️</div>
-      <div class="mc-val">—</div>
-      <div class="mc-label">Servers</div>
-      <div class="mc-trend">—</div>
-    </div>
-    <div class="metric-card" id="mc-wifi">
-      <div class="mc-icon mc-y">📡</div>
-      <div class="mc-val">—</div>
-      <div class="mc-label">Wi-Fi APs</div>
-      <div class="mc-trend">—</div>
-    </div>
-    <div class="metric-card" id="mc-backup">
-      <div class="mc-icon mc-r">💾</div>
-      <div class="mc-val">—</div>
-      <div class="mc-label">Last Backup</div>
-      <div class="mc-trend">—</div>
-    </div>
-  </div>
-
-  <!-- Service Status + Recent Alerts -->
-  <div class="g2" style="margin-bottom:18px;">
+  <!-- Infrastructure Status + Recent Risk Events -->
+  <div class="infra-grid">
 
     <div class="card card-pad">
       <div class="card-title">
-        Service Status
-        <span class="ct-action" onclick="navTo('assets')">View All →</span>
+        Infrastructure Status
+        <span class="ct-action" onclick="navTo('assets')">View All Devices →</span>
       </div>
       <div class="svc-list" id="svc-list">
-        <div style="color:var(--t3);font-size:13px;">Loading…</div>
+        <div style="color:var(--t3);font-size:13px;padding:16px 0;">Loading infrastructure status…</div>
       </div>
     </div>
 
     <div class="card card-pad">
       <div class="card-title">
-        Recent Alerts
+        Recent Risk Events
         <span class="ct-action" onclick="navTo('alerts')">View All →</span>
       </div>
-      <div class="alert-list" id="dash-alerts">
-        <div style="color:var(--t3);font-size:13px;">Loading…</div>
+      <div class="risk-event-list" id="dash-alerts">
+        <div style="color:var(--t3);font-size:13px;padding:16px 0;">Loading risk events…</div>
       </div>
     </div>
 
+  </div>
+
+  <!-- ZENYX NOC Activity -->
+  <div class="noc-activity">
+    <div class="noc-act-header">
+      <div class="noc-act-icon">🛰️</div>
+      <div>
+        <div class="noc-act-title">ZENYX NOC — Active Monitoring Services</div>
+        <div class="noc-act-sub" id="noc-desc">ZENYX NOC is actively monitoring your hospital 24×7</div>
+      </div>
+      <div class="noc-act-cta" onclick="navTo('support')">Contact NOC →</div>
+    </div>
+    <div class="noc-act-grid">
+      <div class="noc-act-item"><div class="nac-dot"></div><div class="nac-text">Monitoring all infrastructure devices in real time — firewall, servers, internet, and network</div></div>
+      <div class="noc-act-item"><div class="nac-dot"></div><div class="nac-text">Detecting anomalies and performance degradation before they impact hospital operations</div></div>
+      <div class="noc-act-item"><div class="nac-dot"></div><div class="nac-text">Tracking backup completion, internet stability, and security layer health 24×7</div></div>
+      <div class="noc-act-item"><div class="nac-dot"></div><div class="nac-text">Raising alerts, dispatching engineers, and maintaining SLA response commitments</div></div>
+    </div>
   </div>
 
   <!-- Support Strip -->
-  <div class="card card-pad" style="display:flex;align-items:center;gap:20px;">
-    <div style="font-size:28px;">🎧</div>
-    <div style="flex:1;">
-      <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px;">
-        Need to escalate? ZENYX NOC is standing by.
-      </div>
-      <div style="font-size:12px;color:var(--t2);">
-        Available 24 × 7 for all hospital IT emergencies. Call or raise a support ticket.
-      </div>
+  <div class="support-strip">
+    <div class="support-strip-icon">🎧</div>
+    <div class="support-strip-body">
+      <div class="support-strip-title">Need to escalate? ZENYX NOC is standing by.</div>
+      <div class="support-strip-sub">Available 24×7 for all hospital IT emergencies. Call or raise a support ticket and get a response within your SLA window.</div>
     </div>
     <button class="btn btn-ghost" onclick="navTo('support')">Open Support</button>
-    <div style="padding-left:16px;border-left:1px solid var(--gb);text-align:center;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--t1);">+91 89771 00000</div>
-      <div style="font-size:10px;color:var(--t3);margin-top:2px;">Emergency NOC Line</div>
+    <div class="support-strip-phone">
+      <div class="support-phone-num">+91 89771 00000</div>
+      <div class="support-phone-sub">Emergency NOC Line</div>
     </div>
   </div>
 

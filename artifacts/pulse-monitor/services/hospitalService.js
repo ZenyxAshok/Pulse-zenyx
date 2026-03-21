@@ -74,8 +74,10 @@ async function getDashboard(tenantId) {
         const hostIds   = hosts.map(h => h.zabbixHostId);
         const uptimeMap = await zabbix.getBatchHostUptime(hostIds, 30).catch(() => ({}));
 
+        const activeAlerts = triggers.filter(t => !t.resolvedAt);
         return {
           ...transform.buildDashboard(tenant, hosts, triggers, uptimeMap),
+          active:      activeAlerts.slice(0, 5),
           dataSource:  'live',
           generatedAt: new Date().toISOString(),
         };
@@ -85,9 +87,11 @@ async function getDashboard(tenantId) {
     }
   }
 
-  // Mock fallback
+  // Mock fallback — include active alerts from ALERTS mock data
+  const mockActiveAlerts = (ALERTS[tenantId] || []).filter(a => !a.resolvedAt);
   return {
     ...(DASHBOARD[tenantId] || _emptyDashboard(tenant)),
+    active:      mockActiveAlerts.slice(0, 5),
     dataSource:  'mock',
     generatedAt: new Date().toISOString(),
   };
