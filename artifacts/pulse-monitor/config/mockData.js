@@ -28,6 +28,12 @@ const TENANTS = {
     sla: '2-hour standard · 15-min critical', zabbixGroupId: 18, active: true,
     nocPhone: '+91 89771 00000',
   },
+  tenant_ubc: {
+    id: 'tenant_ubc', name: 'UBC', location: 'Hyderabad',
+    plan: 'MSP Monitoring Tier', planPrice: '₹6,999/mo', renewalDate: '2026-12-31',
+    sla: '4-hour standard · 30-min critical', zabbixGroupId: 22, active: true,
+    nocPhone: '+91 89771 00000',
+  },
 };
 
 // ── USERS ────────────────────────────────────────────────────────────────────
@@ -40,6 +46,7 @@ const USERS = [
   { id:'usr_y01', tenantId:'tenant_yashoda', name:'Vikram Reddy',       email:'it.admin@yashoda.com',  role:ROLES.HOSPITAL_ADMIN,  initials:'VR', pwHash:'demo1234', active:true },
   { id:'usr_z01', tenantId:null,             name:'Ashok Chappidi',     email:'ashok@zenyx.in',        role:ROLES.SUPER_ADMIN,     initials:'AC', pwHash:'demo1234', active:true },
   { id:'usr_z02', tenantId:null,             name:'ZENYX NOC Engineer', email:'noc@zenyx.in',          role:ROLES.ZENYX_ADMIN,     initials:'ZN', pwHash:'demo1234', active:true },
+  { id:'usr_ubc01', tenantId:'tenant_ubc',   name:'UBC IT Admin',       email:'it@ubc.in',             role:ROLES.HOSPITAL_ADMIN,  initials:'UA', pwHash:'demo1234', active:true },
 ];
 
 // ── ASSETS ───────────────────────────────────────────────────────────────────
@@ -69,6 +76,9 @@ const ASSETS = {
     { id:'ast_c04', name:'Core Switch — HP ProCurve', ip:'10.0.1.10',      cat:ASSET_CAT.SWITCH,   loc:'Server Room',     status:'online',  avail:100.0, seen:'Just now',   zabbixHostId:2004 },
     { id:'ast_c05', name:'AP-OPD-01',                 ip:'10.0.50.1',      cat:ASSET_CAT.WIFI,     loc:'OPD Block',       status:'online',  avail:99.5,  seen:'2 min ago',  zabbixHostId:2005 },
     { id:'ast_c06', name:'NAS Backup',                ip:'10.0.10.50',     cat:ASSET_CAT.STORAGE,  loc:'Server Room',     status:'online',  avail:99.8,  seen:'2 min ago',  zabbixHostId:2006 },
+  ],
+  tenant_ubc: [
+    { id:'ast_ubc01', name:'UBC_TZ470 SonicWall Firewall', ip:'192.168.1.1', cat:ASSET_CAT.FIREWALL, loc:'Server Room', status:'online', avail:100.0, seen:'Just now', zabbixHostId:4001 },
   ],
   tenant_yashoda: [
     { id:'ast_y01', name:'Palo Alto PA-220',          ip:'172.16.1.1',     cat:ASSET_CAT.FIREWALL, loc:'DC Room',         status:'online',  avail:100.0, seen:'Just now',   zabbixHostId:3001 },
@@ -130,6 +140,7 @@ const ALERTS = {
       since:'2026-03-18T08:00:00Z', resolvedAt:null, ticketId:'ZX-2870', zabbixTriggerId:6001,
     },
   ],
+  tenant_ubc: [],
   tenant_yashoda: [
     {
       id:'alr_y01', sev:ALERT_SEV.WARNING,
@@ -194,6 +205,26 @@ const DASHBOARD = {
     monthUptime:99.8, devicesMonitored:67, activeAlerts:1,
     nocMsg:'67 devices tracked · Last heartbeat 38 sec ago · 1 advisory item',
   },
+  tenant_ubc: {
+    healthScore:100, healthLabel:'Healthy',
+    healthMsg:'All monitored systems are operating normally. ZENYX NOC is actively monitoring your infrastructure.',
+    pills:[
+      { label:'Firewall Online', s:'ok' },
+      { label:'Internet Active', s:'ok' },
+    ],
+    metrics:{
+      internet:{ count:1, trend:'Active', ts:'ok' },
+      firewall:{ count:1, trend:'Secure', ts:'ok' },
+      servers: { count:0, trend:'—',      ts:'ok' },
+      wifi:    { count:0, trend:'—',      ts:'ok' },
+      backup:  { val:'—', trend:'—',      ts:'ok' },
+    },
+    services:[
+      { name:'UBC_TZ470 SonicWall Firewall', meta:'ICMP Active · Monitoring ON', uptime:100.0, sc:'ok' },
+    ],
+    monthUptime:100.0, devicesMonitored:1, activeAlerts:0,
+    nocMsg:'1 device tracked · ZENYX NOC monitoring active 24×7',
+  },
   tenant_yashoda: {
     healthScore:79, healthLabel:'Attention Required',
     healthMsg:'HIS Cluster Node 2 is under heavy load. Failover is active but the situation needs resolution before it impacts patient care.',
@@ -245,6 +276,12 @@ const UPTIME = {
     ],
     calendar:[...Array(20).fill('ok'), ...Array(10).fill('future')],
   },
+  tenant_ubc: {
+    services:[
+      { name:'Firewall', uptime:100.0, color:'green' },
+    ],
+    calendar:[...Array(20).fill('ok'), ...Array(10).fill('future')],
+  },
   tenant_yashoda: {
     services:[
       { name:'Internet',   uptime:99.9, color:'green'  },
@@ -274,6 +311,9 @@ const RECOMMENDATIONS = {
     { id:'rec_c01', level:RISK_LVL.MEDIUM, icon:'🔐', title:'SSL Certificate Expiring April 3 — EMR Staff Portal', desc:'EMR portal SSL certificate expires in 14 days. Renewal before expiry prevents browser security warnings that would disrupt staff login to the patient records system.', action:'ZENYX will handle renewal — please confirm authorization via email' },
     { id:'rec_c02', level:RISK_LVL.OPPORTUNITY, icon:'🚀', title:'Upgrade Opportunity: Add Wi-Fi Monitoring', desc:'Your current plan does not include wireless infrastructure monitoring. Adding it would give you real-time AP health, rogue device detection, and coverage gap alerts.', action:'Contact your ZENYX account manager for pricing' },
   ],
+  tenant_ubc: [
+    { id:'rec_ubc01', level:'opportunity', icon:'🚀', title:'Add More Devices to Monitoring', desc:'Currently only the SonicWall firewall is being monitored. Adding servers, switches, and Wi-Fi access points will give UBC full infrastructure visibility.', action:'Contact ZENYX to onboard additional devices' },
+  ],
   tenant_yashoda: [
     { id:'rec_y01', level:RISK_LVL.HIGH,   icon:'🔴', title:'HIS Cluster Node 2 CPU at 91% — Immediate Action Required', desc:'Node 2 has been at 91% CPU for over 2 hours with Node 1 carrying the full load. If Node 1 encounters any failure the entire HIS system will go down, disrupting all hospital operations.', action:'Call ZENYX NOC immediately — +91 89771 00000' },
     { id:'rec_y02', level:RISK_LVL.MEDIUM, icon:'📊', title:'HIS Database Query Optimization Recommended',              desc:'Slow database queries are contributing to the Node 2 CPU spike. A query optimization pass can reduce CPU load by an estimated 30–40%.', action:'ZENYX can schedule a database performance review — contact account manager' },
@@ -294,6 +334,7 @@ const TICKETS = {
   tenant_care: [
     { id:'ZX-2870', title:'SSL certificate renewal — EMR portal',                 status:TICKET_ST.OPEN,        createdAt:'2026-03-18T09:00:00Z', priority:'medium' },
   ],
+  tenant_ubc: [],
   tenant_yashoda: [
     { id:'ZX-2895', title:'HIS Cluster Node 2 high CPU — urgent investigation',  status:TICKET_ST.OPEN,        createdAt:'2026-03-20T07:35:00Z', priority:'high'   },
     { id:'ZX-2888', title:'Quarterly security scan — schedule request',           status:TICKET_ST.IN_PROGRESS, createdAt:'2026-03-16T09:00:00Z', priority:'low'    },

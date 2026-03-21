@@ -73,6 +73,7 @@ Demo credentials:
   it.admin@yashoda.com  / demo1234  (Hospital Admin)
   ashok@zenyx.in        / demo1234  (Super Admin)
   noc@zenyx.in          / demo1234  (ZENYX NOC)
+  it@ubc.in             / demo1234  (UBC - Hospital Admin)
 `);
 });
 
