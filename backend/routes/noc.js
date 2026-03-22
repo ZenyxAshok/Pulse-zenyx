@@ -2,7 +2,7 @@
 const express = require('express');
 const { verifyToken, requireRole, noCache } = require('../middleware/auth');
 const { getDashboardData } = require('../services/hospitalService');
-const { TENANTS, TICKETS } = require('../config/data');
+const { TENANTS, TICKETS } = require('./data');
 
 const router = express.Router();
 router.use(noCache, verifyToken, requireRole('admin','noc'));
