@@ -1,19 +1,22 @@
 {
   "name": "pulse-by-zenyx",
-  "version": "2.0.0",
-  "description": "Hospital IT Monitoring Portal — Pulse by ZENYX",
+  "version": "3.0.0",
+  "description": "Hospital IT Monitoring Platform — Pulse by ZENYX",
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "node backend/server.js"
+    "dev":   "node backend/server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.0",
-    "dotenv": "^16.3.1",
-    "helmet": "^7.1.0",
-    "express-rate-limit": "^7.1.0"
+    "express":           "^4.18.2",
+    "cors":              "^2.8.5",
+    "bcryptjs":          "^2.4.3",
+    "jsonwebtoken":      "^9.0.0",
+    "dotenv":            "^16.3.1",
+    "helmet":            "^7.1.0",
+    "express-rate-limit":"^7.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
