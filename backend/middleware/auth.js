@@ -1,5 +1,5 @@
 'use strict';
-const express = require('express');
+const { USERS } = require('./data');
 const jwt = require('jsonwebtoken');
 const { USERS, TENANTS } = require('../config/data');
 const { JWT_SECRET, verifyToken, noCache } = require('../middleware/auth');
