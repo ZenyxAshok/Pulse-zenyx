@@ -1,1153 +1,602 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pulse by ZENYX — Hospital IT Command Center</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
-<style>
-/* ── THEME VARIABLES ─────────────────────────────────────────── */
-:root {
-  --orange: #FF6B2C;
-  --orange-soft: rgba(255,107,44,.12);
-  --green:  #1ED97B;
-  --green-soft: rgba(30,217,123,.1);
-  --yellow: #F5C842;
-  --yellow-soft: rgba(245,200,66,.1);
-  --red:    #FF4060;
-  --red-soft: rgba(255,64,96,.1);
-  --blue:   #4B9EFF;
-  --blue-soft: rgba(75,158,255,.1);
-  --transition: all .25s cubic-bezier(.4,0,.2,1);
-}
-
-[data-theme="dark"] {
-  --bg:   #0D0E11;
-  --bg2:  #13151A;
-  --bg3:  #1A1D24;
-  --card: #16181F;
-  --gb:   rgba(255,255,255,.07);
-  --gb2:  rgba(255,255,255,.04);
-  --t1:   #F0F2F8;
-  --t2:   #9DA3B4;
-  --t3:   #5A6175;
-  --s1:   #2A2D38;
-  --s2:   #222530;
-  --s3:   #1E2028;
-  --sidebar-bg: #0F1116;
-  --sidebar-border: rgba(255,255,255,.06);
-  --topbar-bg: rgba(13,14,17,.95);
-  --input-bg: rgba(255,255,255,.05);
-  --input-border: rgba(255,255,255,.1);
-}
-
-[data-theme="light"] {
-  --bg:   #F0F2F7;
-  --bg2:  #E8EAF0;
-  --bg3:  #DDE0EA;
-  --card: #FFFFFF;
-  --gb:   rgba(0,0,0,.08);
-  --gb2:  rgba(0,0,0,.04);
-  --t1:   #0D0E11;
-  --t2:   #4A5068;
-  --t3:   #8A90A8;
-  --s1:   #D8DBE8;
-  --s2:   #E4E7F0;
-  --s3:   #EDF0F7;
-  --sidebar-bg: #FFFFFF;
-  --sidebar-border: rgba(0,0,0,.08);
-  --topbar-bg: rgba(240,242,247,.95);
-  --input-bg: rgba(0,0,0,.04);
-  --input-border: rgba(0,0,0,.12);
-}
-
-/* ── RESET & BASE ─────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-html { height:100%; }
-body {
-  height:100%; font-family:'Instrument Sans',system-ui,sans-serif;
-  background:var(--bg); color:var(--t1);
-  line-height:1.5; font-size:14px;
-  transition: background .3s, color .3s;
-  overflow:hidden;
-}
-
-/* ── LOGIN ────────────────────────────────────────────────────── */
-#login {
-  display:grid; grid-template-columns:1fr 1fr;
-  height:100vh; overflow:hidden;
-}
-.login-left {
-  background: linear-gradient(135deg, #0D0E11 0%, #1A1D24 50%, #0F1520 100%);
-  padding:56px 64px; display:flex; flex-direction:column; justify-content:center;
-  position:relative; overflow:hidden;
-}
-.login-left::before {
-  content:''; position:absolute; top:-200px; right:-200px;
-  width:600px; height:600px; border-radius:50%;
-  background: radial-gradient(circle, rgba(255,107,44,.15) 0%, transparent 70%);
-  pointer-events:none;
-}
-.login-left::after {
-  content:''; position:absolute; bottom:-100px; left:-100px;
-  width:400px; height:400px; border-radius:50%;
-  background: radial-gradient(circle, rgba(75,158,255,.1) 0%, transparent 70%);
-  pointer-events:none;
-}
-.login-brand { display:flex; align-items:center; gap:12px; margin-bottom:56px; }
-.login-logo {
-  width:44px; height:44px; border-radius:12px;
-  background:var(--orange); display:flex; align-items:center; justify-content:center;
-  font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:#fff;
-}
-.product-name { font-family:'Syne',sans-serif; font-weight:700; font-size:18px; color:#fff; }
-.product-by { font-size:11px; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:1.5px; }
-.login-headline {
-  font-family:'Syne',sans-serif; font-weight:800; font-size:48px; line-height:1.1;
-  color:#fff; margin-bottom:24px;
-}
-.login-headline em { color:var(--orange); font-style:normal; }
-.login-sub { font-size:15px; color:rgba(255,255,255,.55); line-height:1.7; max-width:420px; margin-bottom:48px; }
-.login-metrics { display:flex; gap:40px; }
-.lm-val { font-family:'Syne',sans-serif; font-weight:700; font-size:28px; color:var(--orange); }
-.lm-label { font-size:11px; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
-
-.login-right {
-  background:var(--bg); display:flex; align-items:center; justify-content:center;
-  padding:40px; transition:background .3s;
-}
-.login-form-wrap { width:100%; max-width:400px; }
-.lf-heading { font-family:'Syne',sans-serif; font-weight:700; font-size:28px; color:var(--t1); margin-bottom:8px; }
-.lf-sub { font-size:13px; color:var(--t2); margin-bottom:32px; }
-.login-error { background:var(--red-soft); border:1px solid rgba(255,64,96,.3); color:var(--red); padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:16px; display:none; }
-.lf-field { margin-bottom:18px; }
-.lf-label { display:block; font-size:11px; font-weight:600; color:var(--t3); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-.lf-input {
-  width:100%; background:var(--input-bg); border:1px solid var(--input-border);
-  border-radius:10px; padding:12px 16px; font-size:14px; color:var(--t1);
-  font-family:inherit; outline:none; transition:var(--transition);
-}
-.lf-input:focus { border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-soft); }
-.lf-input::placeholder { color:var(--t3); }
-.login-btn {
-  width:100%; background:var(--orange); border:none; border-radius:10px;
-  padding:14px; font-size:15px; font-weight:600; color:#fff; cursor:pointer;
-  font-family:inherit; transition:var(--transition); margin-bottom:20px;
-}
-.login-btn:hover { background:#ff7d40; transform:translateY(-1px); box-shadow:0 8px 24px rgba(255,107,44,.3); }
-.login-btn:disabled { opacity:.6; transform:none; }
-.lf-note { font-size:12px; color:var(--t3); text-align:center; line-height:1.9; margin-bottom:20px; }
-.lf-trust { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-.trust-pill { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--t3); background:var(--gb2); border:1px solid var(--gb); border-radius:20px; padding:5px 12px; }
-.trust-dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
-
-/* ── APP SHELL ────────────────────────────────────────────────── */
-#app { display:none; height:100vh; flex-direction:row; overflow:hidden; }
-
-/* ── SIDEBAR ──────────────────────────────────────────────────── */
-.sidebar {
-  width:240px; min-width:240px; background:var(--sidebar-bg);
-  border-right:1px solid var(--sidebar-border);
-  display:flex; flex-direction:column; height:100vh;
-  overflow:hidden; transition:background .3s, border-color .3s;
-}
-.sb-header {
-  display:flex; align-items:center; gap:10px;
-  padding:20px 18px; border-bottom:1px solid var(--sidebar-border);
-}
-.sb-logo {
-  width:32px; height:32px; border-radius:8px; background:var(--orange);
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:#fff;
-}
-.sb-product-name { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--t1); }
-.sb-product-by { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; }
-
-.sb-hosp-pill {
-  margin:12px; background:var(--orange-soft); border:1px solid rgba(255,107,44,.2);
-  border-radius:10px; padding:12px 14px;
-}
-.sbhp-label { font-size:9px; color:var(--orange); text-transform:uppercase; letter-spacing:1.5px; font-weight:600; margin-bottom:3px; }
-.sbhp-name { font-size:13px; font-weight:600; color:var(--t1); margin-bottom:5px; }
-.sbhp-status { display:flex; align-items:center; gap:6px; }
-.sbhp-status-text { font-size:11px; color:var(--green); }
-
-.sb-nav { flex:1; overflow-y:auto; padding:8px 8px; }
-.sb-nav-section { font-size:9px; font-weight:700; color:var(--t3); text-transform:uppercase; letter-spacing:1.5px; padding:14px 10px 6px; }
-.nav-link {
-  display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px;
-  font-size:13px; color:var(--t2); cursor:pointer; transition:var(--transition);
-  margin-bottom:2px; position:relative;
-}
-.nav-link:hover { background:var(--gb); color:var(--t1); }
-.nav-link.active { background:var(--orange-soft); color:var(--orange); font-weight:600; }
-.nav-icon { font-size:14px; width:18px; text-align:center; }
-.nav-badge {
-  margin-left:auto; background:var(--red); color:#fff; font-size:10px;
-  font-weight:700; padding:2px 6px; border-radius:10px; display:none;
-}
-
-.sb-footer {
-  padding:12px; border-top:1px solid var(--sidebar-border);
-}
-.sb-user { display:flex; align-items:center; gap:10px; }
-.avatar {
-  width:32px; height:32px; border-radius:8px; background:var(--orange);
-  display:flex; align-items:center; justify-content:center;
-  font-size:12px; font-weight:700; color:#fff; flex-shrink:0;
-}
-.sb-user-name { font-size:12px; font-weight:600; color:var(--t1); }
-.sb-user-role { font-size:10px; color:var(--t3); }
-.logout-btn { color:var(--t3); cursor:pointer; font-size:16px; margin-left:auto; padding:4px; border-radius:6px; transition:var(--transition); }
-.logout-btn:hover { color:var(--red); background:var(--red-soft); }
-
-/* ── MAIN ─────────────────────────────────────────────────────── */
-.main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
-
-/* ── TOPBAR ───────────────────────────────────────────────────── */
-.topbar {
-  display:flex; align-items:center; gap:16px;
-  padding:0 28px; height:58px; min-height:58px;
-  background:var(--topbar-bg); border-bottom:1px solid var(--gb);
-  backdrop-filter:blur(12px); transition:background .3s;
-}
-.tb-title { font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--t1); }
-.tb-sub { font-size:11px; color:var(--t3); margin-top:1px; }
-.tb-actions { display:flex; align-items:center; gap:10px; margin-left:auto; }
-.tb-clock { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t3); }
-.noc-pill {
-  display:flex; align-items:center; gap:7px; background:var(--green-soft);
-  border:1px solid rgba(30,217,123,.2); border-radius:20px;
-  padding:5px 12px; font-size:11px; font-weight:600; color:var(--green);
-}
-.tb-bell { position:relative; cursor:pointer; font-size:18px; padding:4px; border-radius:8px; transition:var(--transition); }
-.tb-bell:hover { background:var(--gb); }
-.bell-dot { position:absolute; top:4px; right:4px; width:7px; height:7px; border-radius:50%; background:var(--red); }
-
-/* ── THEME TOGGLE ─────────────────────────────────────────────── */
-.theme-toggle {
-  display:flex; align-items:center; gap:0; background:var(--gb2);
-  border:1px solid var(--gb); border-radius:20px; overflow:hidden;
-}
-.theme-btn {
-  padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer;
-  border:none; background:transparent; color:var(--t3); font-family:inherit;
-  transition:var(--transition);
-}
-.theme-btn.active { background:var(--orange); color:#fff; }
-
-/* ── LAST UPDATED STRIP ───────────────────────────────────────── */
-.last-updated-bar {
-  display:flex; align-items:center; gap:8px;
-  padding:6px 28px; background:var(--gb2); border-bottom:1px solid var(--gb);
-  font-size:11px; color:var(--t3);
-}
-.live-dot {
-  width:7px; height:7px; border-radius:50%; background:var(--green);
-  animation: pulse-anim 2s infinite;
-}
-@keyframes pulse-anim {
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.5;transform:scale(1.3)}
-}
-
-/* ── PAGE WRAP ────────────────────────────────────────────────── */
-.page-wrap { flex:1; overflow-y:auto; padding:24px 28px; }
-.page { display:none; animation:fadeIn .2s ease; }
-.page.active { display:block; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
-
-/* ── PAGE HEADER ──────────────────────────────────────────────── */
-.page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; }
-.ph-title { font-family:'Syne',sans-serif; font-weight:700; font-size:22px; color:var(--t1); }
-.ph-sub { font-size:12px; color:var(--t3); margin-top:3px; }
-.ph-actions { display:flex; gap:10px; }
-
-/* ── PLAN BANNER ──────────────────────────────────────────────── */
-.plan-banner {
-  background: linear-gradient(135deg, rgba(255,107,44,.1), rgba(75,158,255,.08));
-  border:1px solid rgba(255,107,44,.25); border-radius:14px;
-  padding:16px 20px; margin-bottom:22px;
-  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
-}
-.plan-banner-left { flex:1; min-width:200px; }
-.plan-banner-name { font-size:11px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; font-weight:600; margin-bottom:3px; }
-.plan-banner-tier { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:var(--orange); }
-.plan-banner-price { font-size:12px; color:var(--t2); margin-top:2px; }
-.plan-banner-missing { font-size:12px; color:var(--yellow); margin-top:6px; }
-.plan-banner-missing strong { color:var(--yellow); }
-.plan-banner-actions { display:flex; gap:8px; flex-wrap:wrap; }
-
-/* ── RISK STATUS BAR ──────────────────────────────────────────── */
-.risk-bar {
-  border-radius:12px; padding:14px 20px; margin-bottom:20px;
-  display:flex; align-items:center; gap:14px;
-  border:1px solid;
-}
-.risk-bar.safe { background:var(--green-soft); border-color:rgba(30,217,123,.2); }
-.risk-bar.warn { background:var(--yellow-soft); border-color:rgba(245,200,66,.2); }
-.risk-bar.danger { background:var(--red-soft); border-color:rgba(255,64,96,.2); }
-.risk-icon { font-size:22px; }
-.risk-text-main { font-size:13px; font-weight:600; color:var(--t1); }
-.risk-text-sub { font-size:11px; color:var(--t2); margin-top:2px; }
-.risk-updated { margin-left:auto; font-size:11px; color:var(--t3); font-family:'JetBrains Mono',monospace; white-space:nowrap; }
-
-/* ── NOC BANNER ───────────────────────────────────────────────── */
-.noc-banner {
-  background:var(--bg3); border:1px solid var(--gb);
-  border-radius:14px; padding:16px 20px; margin-bottom:20px;
-  display:flex; align-items:center; gap:16px;
-  transition:background .3s;
-}
-.noc-banner-icon { font-size:24px; flex-shrink:0; }
-.noc-banner-body { flex:1; }
-.noc-banner-title { font-size:13px; font-weight:600; color:var(--t1); margin-bottom:3px; }
-.noc-banner-desc { font-size:12px; color:var(--t2); }
-.noc-banner-action { color:var(--orange); font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; }
-.noc-banner-action:hover { text-decoration:underline; }
-
-/* ── HEALTH HERO ──────────────────────────────────────────────── */
-.health-hero {
-  background:var(--card); border:1px solid var(--gb); border-radius:16px;
-  padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:28px;
-  flex-wrap:wrap; transition:background .3s;
-}
-.score-ring { width:88px; height:88px; position:relative; flex-shrink:0; }
-.score-ring svg { transform:rotate(-90deg); width:100%; height:100%; }
-.score-ring .track { fill:none; stroke:var(--gb); stroke-width:7; }
-.score-ring .fill { fill:none; stroke:var(--green); stroke-width:7; stroke-linecap:round; stroke-dasharray:264; transition:stroke-dashoffset 1s ease,stroke .5s; }
-.score-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.score-num { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--t1); line-height:1; }
-.score-denom { font-size:10px; color:var(--t3); }
-.health-status-title { font-family:'Syne',sans-serif; font-weight:700; font-size:18px; color:var(--t1); margin-bottom:6px; }
-.health-status-msg { font-size:13px; color:var(--t2); margin-bottom:12px; max-width:500px; line-height:1.6; }
-.health-pills { display:flex; gap:7px; flex-wrap:wrap; }
-.hpill { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; }
-.hpill.ok     { background:var(--green-soft);  color:var(--green);  border:1px solid rgba(30,217,123,.2); }
-.hpill.warn   { background:var(--yellow-soft); color:var(--yellow); border:1px solid rgba(245,200,66,.2); }
-.hpill.bad    { background:var(--red-soft);    color:var(--red);    border:1px solid rgba(255,64,96,.2); }
-.health-meta { margin-left:auto; display:flex; flex-direction:column; gap:14px; text-align:right; flex-shrink:0; }
-.hm-val { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; color:var(--t1); }
-.hm-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; }
-
-/* ── GRID HELPERS ─────────────────────────────────────────────── */
-.g2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
-.g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-.g5 { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
-@media(max-width:1200px){ .g5{grid-template-columns:repeat(3,1fr)} }
-
-/* ── CARDS ────────────────────────────────────────────────────── */
-.card { background:var(--card); border:1px solid var(--gb); border-radius:14px; overflow:hidden; transition:background .3s; }
-.card-pad { padding:18px 20px; }
-.card-title { font-size:12px; font-weight:600; color:var(--t2); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
-.ct-action { color:var(--orange); font-size:11px; cursor:pointer; text-transform:none; letter-spacing:0; }
-.ct-action:hover { text-decoration:underline; }
-
-/* ── METRIC CARDS ─────────────────────────────────────────────── */
-.metric-card {
-  background:var(--card); border:1px solid var(--gb); border-radius:12px;
-  padding:16px; text-align:center; transition:var(--transition);
-}
-.metric-card:hover { border-color:var(--orange); transform:translateY(-2px); }
-.mc-icon { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; margin:0 auto 10px; }
-.mc-g { background:var(--green-soft); }
-.mc-o { background:var(--orange-soft); }
-.mc-b { background:var(--blue-soft); }
-.mc-y { background:var(--yellow-soft); }
-.mc-r { background:var(--red-soft); }
-.mc-val { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; color:var(--t1); }
-.mc-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:.8px; margin-top:3px; }
-.mc-trend { font-size:11px; color:var(--t2); margin-top:4px; }
-
-/* ── FINANCIAL IMPACT ─────────────────────────────────────────── */
-.impact-badge {
-  display:inline-flex; align-items:center; gap:5px;
-  background:rgba(255,64,96,.12); border:1px solid rgba(255,64,96,.25);
-  color:var(--red); border-radius:6px; padding:3px 8px; font-size:11px; font-weight:600;
-}
-
-/* ── SERVICE STATUS LIST ──────────────────────────────────────── */
-.svc-list { display:flex; flex-direction:column; gap:10px; }
-.svc-row { display:flex; align-items:center; gap:12px; padding:10px 12px; background:var(--gb2); border-radius:9px; }
-.svc-icon { font-size:16px; flex-shrink:0; }
-.svc-name { font-size:13px; font-weight:600; color:var(--t1); flex:1; }
-.svc-meta { font-size:11px; color:var(--t3); }
-.svc-bar { flex:0 0 80px; height:5px; border-radius:3px; background:var(--gb); overflow:hidden; }
-.svc-bar-fill { height:100%; border-radius:3px; transition:width 1s ease; }
-.svc-pct { font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--t2); min-width:38px; text-align:right; }
-
-/* ── ALERT LIST ───────────────────────────────────────────────── */
-.alert-list { display:flex; flex-direction:column; gap:10px; }
-.alert-row {
-  display:flex; align-items:flex-start; gap:12px; padding:12px 14px;
-  border-radius:10px; border:1px solid; cursor:pointer; transition:var(--transition);
-}
-.alert-row:hover { transform:translateX(3px); }
-.alert-row.critical { background:var(--red-soft); border-color:rgba(255,64,96,.2); }
-.alert-row.warning  { background:var(--yellow-soft); border-color:rgba(245,200,66,.2); }
-.alert-row.info     { background:var(--blue-soft); border-color:rgba(75,158,255,.2); }
-.alert-row.resolved { background:var(--green-soft); border-color:rgba(30,217,123,.1); opacity:.75; }
-.ar-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
-.ar-body { flex:1; min-width:0; }
-.ar-title { font-size:13px; font-weight:600; color:var(--t1); margin-bottom:3px; }
-.ar-desc { font-size:11px; color:var(--t2); line-height:1.5; }
-.ar-time { font-size:10px; color:var(--t3); margin-top:5px; font-family:'JetBrains Mono',monospace; }
-.badge { flex-shrink:0; font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.5px; }
-.badge-critical { background:var(--red); color:#fff; }
-.badge-warning  { background:var(--yellow); color:#000; }
-.badge-info     { background:var(--blue); color:#fff; }
-.badge-resolved { background:var(--green); color:#000; }
-
-/* ── ASSET TABLE ──────────────────────────────────────────────── */
-.asset-counts { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
-.ac-item { background:var(--card); border:1px solid var(--gb); border-radius:10px; padding:14px; text-align:center; transition:background .3s; }
-.ac-val { font-family:'Syne',sans-serif; font-weight:700; font-size:24px; color:var(--t1); }
-.ac-lbl { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; margin-top:3px; }
-.filter-strip { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
-.fchip { background:var(--gb2); border:1px solid var(--gb); border-radius:20px; padding:6px 14px; font-size:12px; font-weight:500; color:var(--t2); cursor:pointer; transition:var(--transition); font-family:inherit; }
-.fchip:hover, .fchip.active { background:var(--orange); border-color:var(--orange); color:#fff; }
-.table-wrap { background:var(--card); border:1px solid var(--gb); border-radius:12px; overflow:hidden; transition:background .3s; }
-table { width:100%; border-collapse:collapse; }
-thead { background:var(--gb2); }
-th { padding:11px 14px; text-align:left; font-size:10px; font-weight:600; color:var(--t3); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid var(--gb); }
-td { padding:12px 14px; font-size:13px; color:var(--t1); border-bottom:1px solid var(--gb); }
-tr:last-child td { border-bottom:none; }
-tr:hover td { background:var(--gb2); }
-.td-empty { text-align:center; color:var(--t3); padding:32px !important; }
-.status-dot { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; }
-.sd-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.sd-online  { background:var(--green); box-shadow:0 0 6px var(--green); }
-.sd-offline { background:var(--red); }
-.sd-warning { background:var(--yellow); }
-.avail-bar { width:60px; height:4px; background:var(--gb); border-radius:2px; overflow:hidden; display:inline-block; vertical-align:middle; margin-right:6px; }
-.avail-fill { height:100%; border-radius:2px; }
-
-/* ── UPTIME ───────────────────────────────────────────────────── */
-.uptime-rings { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; margin-bottom:20px; }
-.ring-card { background:var(--card); border:1px solid var(--gb); border-radius:12px; padding:16px; text-align:center; transition:background .3s; }
-.ring-name { font-size:11px; color:var(--t2); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
-.ring-pct { font-family:'Syne',sans-serif; font-weight:700; font-size:22px; }
-.ring-status { font-size:11px; color:var(--t3); margin-top:4px; }
-.cal-grid { display:grid; grid-template-columns:repeat(30,1fr); gap:3px; margin-bottom:8px; }
-.cal-day { aspect-ratio:1; border-radius:3px; }
-.cal-ok      { background:var(--green); }
-.cal-partial { background:var(--yellow); }
-.cal-down    { background:var(--red); }
-.cal-future  { background:var(--gb); }
-.cal-legend  { display:flex; gap:16px; font-size:11px; color:var(--t3); }
-.leg-dot { display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:4px; vertical-align:middle; }
-.report-row { display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--gb); border-radius:12px; padding:16px 18px; margin-bottom:10px; cursor:pointer; transition:var(--transition); }
-.report-row:hover { border-color:var(--orange); }
-.report-icon { font-size:24px; flex-shrink:0; }
-.report-name { font-size:13px; font-weight:600; color:var(--t1); margin-bottom:3px; }
-.report-desc { font-size:11px; color:var(--t3); }
-
-/* ── RECOMMENDATIONS ──────────────────────────────────────────── */
-.rec-card { background:var(--card); border:1px solid var(--gb); border-radius:12px; padding:18px 20px; margin-bottom:12px; transition:var(--transition); }
-.rec-card:hover { border-color:var(--orange); }
-.rec-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.rec-icon { font-size:20px; flex-shrink:0; }
-.rec-level { font-size:10px; font-weight:700; padding:2px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.5px; }
-.rec-level.high   { background:var(--red-soft); color:var(--red); }
-.rec-level.medium { background:var(--yellow-soft); color:var(--yellow); }
-.rec-level.opportunity { background:var(--blue-soft); color:var(--blue); }
-.rec-title { font-size:13px; font-weight:600; color:var(--t1); flex:1; }
-.rec-desc { font-size:12px; color:var(--t2); line-height:1.6; margin-bottom:10px; }
-.rec-action { font-size:12px; color:var(--orange); font-weight:600; }
-
-/* ── SUPPORT ──────────────────────────────────────────────────── */
-.support-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
-.support-card { background:var(--card); border:1px solid var(--gb); border-radius:14px; padding:20px; cursor:pointer; transition:var(--transition); }
-.support-card:hover { border-color:var(--orange); transform:translateY(-2px); }
-.support-card.emergency { border-color:rgba(255,64,96,.3); }
-.support-icon { font-size:28px; margin-bottom:12px; }
-.support-card-title { font-size:14px; font-weight:600; color:var(--t1); margin-bottom:8px; }
-.support-card-desc { font-size:12px; color:var(--t2); line-height:1.6; }
-.support-phone { font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--orange); margin-top:12px; font-weight:600; }
-.new-ticket-form { background:var(--card); border:1px solid var(--gb); border-radius:14px; padding:20px; margin-bottom:20px; }
-.ntf-title { font-size:14px; font-weight:600; color:var(--t1); margin-bottom:16px; }
-.ntf-field { width:100%; background:var(--input-bg); border:1px solid var(--input-border); border-radius:9px; padding:10px 14px; font-size:13px; color:var(--t1); font-family:inherit; outline:none; margin-bottom:12px; transition:var(--transition); }
-.ntf-field:focus { border-color:var(--orange); }
-.ntf-actions { display:flex; gap:10px; }
-.acct-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-.acct-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.acct-val { font-size:15px; font-weight:600; color:var(--t1); margin-bottom:3px; }
-.acct-sub { font-size:11px; color:var(--t2); margin-bottom:6px; }
-.acct-tag { font-size:11px; color:var(--green); }
-
-/* ── PRICING PAGE ─────────────────────────────────────────────── */
-.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
-.pricing-card {
-  background:var(--card); border:1px solid var(--gb); border-radius:16px;
-  padding:24px; position:relative; transition:var(--transition);
-}
-.pricing-card:hover { transform:translateY(-4px); border-color:var(--orange); }
-.pricing-card.popular {
-  border-color:var(--orange); background:linear-gradient(135deg,var(--card),rgba(255,107,44,.05));
-}
-.popular-badge {
-  position:absolute; top:-12px; left:50%; transform:translateX(-50%);
-  background:var(--orange); color:#fff; font-size:10px; font-weight:700;
-  padding:4px 14px; border-radius:20px; text-transform:uppercase; letter-spacing:1px; white-space:nowrap;
-}
-.plan-icon { font-size:28px; margin-bottom:12px; }
-.plan-name { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:var(--t1); margin-bottom:4px; }
-.plan-tagline { font-size:11px; color:var(--t3); margin-bottom:16px; }
-.plan-price { font-family:'Syne',sans-serif; font-weight:800; font-size:28px; color:var(--orange); margin-bottom:4px; }
-.plan-price-sub { font-size:11px; color:var(--t3); margin-bottom:20px; }
-.plan-features { list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
-.plan-features li { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--t2); }
-.plan-features li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
-.plan-cta { width:100%; padding:11px; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; transition:var(--transition); }
-.plan-cta-primary { background:var(--orange); color:#fff; border:none; }
-.plan-cta-primary:hover { background:#ff7d40; }
-.plan-cta-ghost { background:transparent; color:var(--t2); border:1px solid var(--gb); }
-.plan-cta-ghost:hover { border-color:var(--orange); color:var(--orange); }
-
-/* ── BUTTONS ──────────────────────────────────────────────────── */
-.btn { padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; transition:var(--transition); border:none; }
-.btn-primary { background:var(--orange); color:#fff; }
-.btn-primary:hover { background:#ff7d40; }
-.btn-ghost { background:transparent; color:var(--t2); border:1px solid var(--gb); }
-.btn-ghost:hover { border-color:var(--orange); color:var(--orange); }
-.btn-sm { padding:5px 12px; font-size:12px; }
-
-/* ── PULSE DOT ────────────────────────────────────────────────── */
-.pulse-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse-anim 2s infinite; }
-.pulse-dot.warn { background:var(--yellow); }
-.pulse-dot.danger { background:var(--red); }
-
-/* ── TOAST ────────────────────────────────────────────────────── */
-.toast {
-  position:fixed; bottom:24px; right:24px; background:var(--bg3);
-  border:1px solid var(--gb); border-radius:12px; padding:12px 18px;
-  display:flex; align-items:center; gap:10px; font-size:13px; color:var(--t1);
-  transform:translateY(80px); opacity:0; transition:all .3s ease;
-  z-index:9999; max-width:360px; box-shadow:0 8px 32px rgba(0,0,0,.3);
-}
-.toast.show { transform:none; opacity:1; }
-
-/* ── ALERT DELIVERY BADGES ────────────────────────────────────── */
-.alert-delivery { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-.ad-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:600; }
-.ad-email { background:var(--blue-soft); color:var(--blue); border:1px solid rgba(75,158,255,.2); }
-.ad-whatsapp { background:var(--green-soft); color:var(--green); border:1px solid rgba(30,217,123,.2); }
-.ad-locked { background:var(--gb2); color:var(--t3); border:1px solid var(--gb); }
-
-/* ── SCROLLBAR ────────────────────────────────────────────────── */
-::-webkit-scrollbar { width:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--gb); border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background:var(--s1); }
-
-/* ── EMPTY / LOADER ───────────────────────────────────────────── */
-.empty-msg { text-align:center; color:var(--t3); padding:24px; font-size:13px; }
-.tickets-list { }
-.ticket-row { display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--gb); }
-.ticket-row:last-child { border-bottom:none; }
-.ticket-id { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t3); min-width:70px; }
-.ticket-title { flex:1; font-size:13px; color:var(--t1); }
-.ticket-status { font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; text-transform:uppercase; }
-.ts-open { background:var(--red-soft); color:var(--red); }
-.ts-in_progress { background:var(--yellow-soft); color:var(--yellow); }
-.ts-resolved { background:var(--green-soft); color:var(--green); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse by ZENYX — Hospital IT Monitoring Platform</title>
+  <meta name="description" content="Pulse by ZENYX: 24/7 hospital IT monitoring, support and security. Who monitors hospital IT when lives depend on it?">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23F0641E'/><text y='22' x='5' font-size='20'>🫀</text></svg>">
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════ -->
-<div id="login">
-  <div class="login-left">
-    <div class="login-brand">
-      <div class="login-logo">P</div>
-      <div class="login-brand-text">
-        <div class="product-name">Pulse</div>
-        <div class="product-by">by ZENYX</div>
-      </div>
+<!-- ═══════════════════════════════════════════
+     TOAST CONTAINER
+════════════════════════════════════════════ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: LANDING
+════════════════════════════════════════════ -->
+<div id="page-landing" class="page">
+  <nav class="landing-nav">
+    <div class="nav-logo">
+      <span>🫀</span>
+      <span>pulse <span style="color:var(--text-secondary);font-weight:400">by</span> <span>ZENYX</span></span>
     </div>
-    <h1 class="login-headline">Your hospital IT,<br><em>always visible.</em></h1>
-    <p class="login-sub">Pulse gives hospital administrators a real-time command center for their IT infrastructure — no complexity, no clutter. Know the status before it becomes a crisis.</p>
-    <div class="login-metrics">
-      <div><div class="lm-val">99.7%</div><div class="lm-label">Avg Uptime</div></div>
-      <div><div class="lm-val">&lt;4 min</div><div class="lm-label">Alert Response</div></div>
-      <div><div class="lm-val">24×7</div><div class="lm-label">NOC Monitoring</div></div>
+    <div class="nav-actions">
+      <a href="tel:+917589689182" class="btn btn-ghost btn-sm">📞 +91 75896 891 82</a>
+      <button class="btn btn-ghost btn-sm" onclick="Router.go('/audit')">Free IT Audit</button>
+      <button class="btn btn-primary btn-sm" onclick="Router.go('/login')">Client Login →</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="landing-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-eyebrow">Hospital IT Infrastructure Protection</div>
+    <h1 class="hero-h1">
+      Who is protecting<br>hospital IT when<br><em>lives depend on it?</em>
+    </h1>
+    <p class="hero-sub">
+      Hospitals monitor patients 24/7. But who monitors hospital IT?
+      One server crash, one ransomware attack, one network failure —
+      and patient care stops.
+    </p>
+    <div class="hero-pills">
+      <span class="hero-pill">Monitoring</span>
+      <span class="hero-pill">Support</span>
+      <span class="hero-pill">Security</span>
+      <span class="hero-pill">24×7 NOC</span>
+      <span class="hero-pill">Hyderabad</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-lg" onclick="Router.go('/login')">
+        🔐 Login to Pulse
+      </button>
+      <button class="btn btn-secondary btn-lg" onclick="Router.go('/audit')">
+        📋 Book Free IT Audit
+      </button>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+    <div class="stats-strip">
+      <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime Guaranteed</div></div>
+      <div class="stat-item"><div class="stat-num">24×7</div><div class="stat-label">NOC Monitoring</div></div>
+      <div class="stat-item"><div class="stat-num">&lt;4h</div><div class="stat-label">Critical Response SLA</div></div>
+      <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Data Breaches on Watch</div></div>
     </div>
   </div>
-  <div class="login-right">
-    <div class="login-form-wrap">
-      <div class="lf-heading">Welcome back</div>
-      <div class="lf-sub">Sign in to your hospital IT monitoring portal</div>
-      <div id="login-error" class="login-error"></div>
-      <div class="lf-field">
-        <label class="lf-label" for="lf-email">Email Address</label>
-        <input id="lf-email" class="lf-input" type="email" placeholder="it.admin@hospital.com" autocomplete="email" onkeydown="if(event.key==='Enter') document.getElementById('lf-password').focus()">
+
+  <!-- PROBLEM -->
+  <section class="landing-section">
+    <div class="section-eyebrow">The Reality</div>
+    <h2 class="section-h2">Most hospitals are running on <em>unmanaged IT</em></h2>
+    <p class="section-sub">Critical infrastructure is often left to chance until it's too late.</p>
+    <div class="feature-grid">
+      <div class="feature-card" style="border-color:rgba(239,68,68,0.2)">
+        <div class="feature-icon">🚫</div>
+        <div class="feature-title">No 24/7 Monitoring</div>
+        <div class="feature-desc">Problems escalate silently overnight when no one is watching.</div>
       </div>
-      <div class="lf-field">
-        <label class="lf-label" for="lf-password">Password</label>
-        <input id="lf-password" class="lf-input" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') handleLogin()">
+      <div class="feature-card" style="border-color:rgba(239,68,68,0.2)">
+        <div class="feature-icon">⚠️</div>
+        <div class="feature-title">Systems Fail Without Warning</div>
+        <div class="feature-desc">Servers crash and networks drop unexpectedly during critical hours.</div>
       </div>
-      <button id="login-btn" class="login-btn" onclick="handleLogin()">Access Portal →</button>
-      <p class="lf-note">
-        Demo credentials:<br>
-        <strong style="color:var(--orange)">it@ubc.in</strong> &nbsp;/&nbsp; <strong style="color:var(--orange)">demo1234</strong> (UBC)<br>
-        <strong style="color:var(--orange)">ashok@zenyx.in</strong> &nbsp;/&nbsp; <strong style="color:var(--orange)">demo1234</strong> (Super Admin)
+      <div class="feature-card" style="border-color:rgba(239,68,68,0.2)">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">No Cybersecurity Readiness</div>
+        <div class="feature-desc">Vulnerable to attacks with outdated firewalls and unpatched systems.</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top:32px">
+      <div class="quote-text">"IT failure doesn't just stop systems... <em>it delays patient care.</em>"</div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="landing-section">
+    <div class="section-eyebrow">The Transformation</div>
+    <h2 class="section-h2">Reactive Chaos → <em>Proactive Control</em></h2>
+    <div class="compare-grid">
+      <div class="compare-col before">
+        <div class="compare-label">Without ZENYX Pulse</div>
+        <div class="compare-h3">The Old Way</div>
+        <div class="compare-item">
+          <div class="compare-icon">✕</div>
+          <div class="compare-text"><strong>Unplanned Downtime</strong><span>Systems crash, care stops</span></div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">✕</div>
+          <div class="compare-text"><strong>Operational Panic</strong><span>Staff stressed with reactive fixes</span></div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">✕</div>
+          <div class="compare-text"><strong>High Data Risk</strong><span>Vulnerable to ransomware</span></div>
+        </div>
+        <div class="compare-verdict">Reactive Chaos</div>
+      </div>
+      <div class="compare-col after">
+        <div class="compare-label">With ZENYX Pulse</div>
+        <div class="compare-h3">The New Standard</div>
+        <div class="compare-item">
+          <div class="compare-icon">✓</div>
+          <div class="compare-text"><strong>Stable Systems</strong><span>99.9% uptime guaranteed</span></div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">✓</div>
+          <div class="compare-text"><strong>Peace of Mind</strong><span>Doctors focus only on patients</span></div>
+        </div>
+        <div class="compare-item">
+          <div class="compare-icon">✓</div>
+          <div class="compare-text"><strong>Protected Data</strong><span>Secure, backed up, compliant</span></div>
+        </div>
+        <div class="compare-verdict">Proactive Control</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 PILLARS -->
+  <section class="landing-section">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-eyebrow" style="justify-content:center">Our Core Services</div>
+      <h2 class="section-h2" style="text-align:center">Total Protection in <em>3 Pillars</em></h2>
+      <p style="color:var(--text-secondary);max-width:520px;margin:0 auto">
+        A comprehensive approach to ensure your hospital's digital heart never skips a beat.
       </p>
-      <div class="lf-trust">
-        <div class="trust-pill"><div class="trust-dot"></div> TLS Encrypted</div>
-        <div class="trust-pill"><div class="trust-dot"></div> DPDP Ready</div>
-        <div class="trust-pill"><div class="trust-dot"></div> CERT-In Compliant</div>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🫀</div>
+        <div class="feature-title">Monitoring</div>
+        <ul class="feature-list">
+          <li>24/7 tracking of all critical IT systems</li>
+          <li>Early alerts — identify issues before failure</li>
+          <li>Servers, firewalls, switches, Wi-Fi, NAS</li>
+          <li>Real-time dashboard for your IT team</li>
+        </ul>
       </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎧</div>
+        <div class="feature-title">Support</div>
+        <ul class="feature-list">
+          <li>Fast resolution — minimize operational downtime</li>
+          <li>Hybrid care: remote + onsite expert support</li>
+          <li>SLA-backed response times</li>
+          <li>Dedicated NOC engineer per hospital</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Security</div>
+        <ul class="feature-list">
+          <li>Full defense: firewall, endpoint & data protection</li>
+          <li>Ransomware prevention — proactive threat blocking</li>
+          <li>Access monitoring and audit logs</li>
+          <li>Incident response support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <div class="landing-cta-section">
+    <div class="section-eyebrow" style="justify-content:center">Get Started</div>
+    <h2 class="section-h2" style="text-align:center">Your hospital's IT command center<br>is <em>one click away</em></h2>
+    <p style="color:var(--text-secondary);max-width:480px;margin:12px auto 32px;line-height:1.7">
+      Already a ZENYX Pulse client? Log in to see your live dashboard.
+      New to Pulse? Book a free 30-minute IT health audit — no commitment.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" onclick="Router.go('/login')">🔐 Login to Pulse Dashboard</button>
+      <button class="btn btn-secondary btn-lg" onclick="Router.go('/audit')">📋 Book Free IT Audit</button>
+    </div>
+    <div style="margin-top:24px;color:var(--text-muted);font-size:13px">
+      Questions? Call us: <a href="tel:+917589689182" style="color:var(--orange)">+91 75896 891 82</a> ·
+      <a href="mailto:hello@zenyx.in" style="color:var(--orange)">hello@zenyx.in</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="landing-footer">
+    <div class="footer-logo">pulse <span>by ZENYX</span></div>
+    <div class="footer-links">
+      <a onclick="Router.go('/login')">Client Login</a>
+      <a onclick="Router.go('/audit')">IT Audit</a>
+      <a href="tel:+917589689182">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 ZENYX IT Infra Solutions, Hyderabad</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: LOGIN
+════════════════════════════════════════════ -->
+<div id="page-login" class="page">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">🫀</div>
+      <div>
+        <div class="login-logo-name">pulse <span>by ZENYX</span></div>
+        <div class="login-logo-sub">HOSPITAL IT MONITORING</div>
+      </div>
+    </div>
+    <div class="login-title">Welcome back</div>
+    <div class="login-sub">Sign in to your hospital dashboard</div>
+    <div class="login-error" id="loginError"></div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input class="form-input" type="email" id="loginEmail" placeholder="it@hospital.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" id="loginBtn" onclick="Auth.login()">
+      Sign In →
+    </button>
+    <div class="login-footer-note">
+      Secured by ZENYX IT Infra Solutions<br>
+      <span style="color:var(--text-muted);font-size:11px">All sessions are encrypted and monitored</span>
+    </div>
+    <div class="login-back" onclick="Router.go('/')">← Back to Pulse homepage</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     APP SHELL: CLIENT DASHBOARD
+════════════════════════════════════════════ -->
+<div id="app-client" class="app-shell">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" onclick="App.clientNav('dashboard')">
+      <div class="sidebar-logo-icon">🫀</div>
+      <div class="sidebar-logo-text">pulse <span>by ZENYX</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Overview</div>
+      <div class="nav-item active" data-section="dashboard" onclick="App.clientNav('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" data-section="alerts" onclick="App.clientNav('alerts')">
+        <span class="nav-icon">🔔</span> Alerts
+        <span class="nav-badge" id="clientAlertBadge" style="display:none"></span>
+      </div>
+      <div class="sidebar-section-label">Infrastructure</div>
+      <div class="nav-item" data-section="devices" onclick="App.clientNav('devices')">
+        <span class="nav-icon">🖥️</span> Devices
+      </div>
+      <div class="sidebar-section-label">Support</div>
+      <div class="nav-item" data-section="tickets" onclick="App.clientNav('tickets')">
+        <span class="nav-icon">🎫</span> My Tickets
+        <span class="nav-badge" id="clientTicketBadge" style="display:none"></span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="clientAvatar">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="clientName">—</div>
+          <div class="sidebar-user-role" id="clientHospital">—</div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="Auth.logout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-area">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="clientTopbarTitle">Dashboard</div>
+        <span class="badge badge-mock" id="clientDataBadge">MOCK</span>
+      </div>
+      <div class="topbar-right">
+        <div class="live-badge"><div class="live-dot"></div> LIVE</div>
+        <div class="last-updated" id="clientLastUpdated">—</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- Dashboard Section -->
+      <div class="content-section active" id="section-dashboard">
+        <div class="page-header">
+          <h1 id="dashHospitalName">Hospital Dashboard</h1>
+          <p id="dashSubtitle">Live infrastructure health monitoring</p>
+        </div>
+        <!-- Metrics row -->
+        <div class="metrics-row" id="metricsRow"></div>
+        <!-- Risk hero -->
+        <div class="risk-hero">
+          <div class="risk-score-card">
+            <div class="card-title">IT Health Score</div>
+            <div class="risk-ring-wrap">
+              <svg class="risk-ring-svg" viewBox="0 0 120 120">
+                <circle class="risk-ring-bg" cx="60" cy="60" r="50"/>
+                <circle class="risk-ring-fg" id="riskRingFg" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"/>
+              </svg>
+              <div class="risk-ring-center">
+                <div class="risk-score-num" id="riskScoreNum">—</div>
+                <div class="risk-score-label">RISK SCORE</div>
+              </div>
+            </div>
+            <div class="risk-grade" id="riskGrade">—</div>
+            <div class="risk-grade-sub" id="riskGradeLabel">Loading...</div>
+          </div>
+          <div class="risk-alerts-card">
+            <div class="card-title">Active Risk Events</div>
+            <div class="alerts-list" id="dashAlertsList"></div>
+          </div>
+        </div>
+        <!-- 2 col -->
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Infrastructure Status</div>
+            <table class="device-table" id="dashDeviceTable"><thead><tr><th>Device</th><th>Type</th><th>Status</th><th>Last Seen</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div class="card">
+            <div class="card-title">ZENYX NOC Activity</div>
+            <div id="nocActivity" style="display:flex;flex-direction:column;gap:10px;padding-top:4px">
+              <div class="stream-item info" style="cursor:default"><span>🔍</span><span class="stream-msg">Continuous monitoring active — all systems being watched</span></div>
+              <div class="stream-item info" style="cursor:default"><span>🛡️</span><span class="stream-msg">Firewall rule review completed — no anomalies found</span></div>
+              <div class="stream-item info" style="cursor:default"><span>📦</span><span class="stream-msg">Backup verification in progress</span></div>
+              <div class="stream-item info" style="cursor:default"><span>📞</span><span class="stream-msg">NOC on-call: <a href="tel:+917589689182" style="color:var(--orange)">+91 75896 891 82</a></span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Support strip -->
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-weight:600;font-size:14px">Need immediate support?</div>
+            <div class="text-secondary text-sm">ZENYX NOC is available 24×7 for critical issues</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="App.openRaiseTicket()">🎫 Raise Support Ticket</button>
+            <a href="tel:+917589689182" class="btn btn-secondary">📞 Emergency: +91 75896 891 82</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts Section -->
+      <div class="content-section" id="section-alerts">
+        <div class="page-header flex justify-between items-center">
+          <div><h1>Alerts</h1><p>All active and recent alerts for your infrastructure</p></div>
+          <div style="display:flex;gap:8px">
+            <select class="form-input" id="alertFilter" onchange="App.filterAlerts()" style="width:auto;padding:6px 12px">
+              <option value="">All Severities</option>
+              <option value="critical">Critical</option>
+              <option value="warning">Warning</option>
+              <option value="info">Info</option>
+            </select>
+            <select class="form-input" id="alertAckFilter" onchange="App.filterAlerts()" style="width:auto;padding:6px 12px">
+              <option value="">All Status</option>
+              <option value="false">Unacknowledged</option>
+              <option value="true">Acknowledged</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <div class="alerts-list" id="alertsPageList"></div>
+        </div>
+      </div>
+
+      <!-- Devices Section -->
+      <div class="content-section" id="section-devices">
+        <div class="page-header"><h1>Devices</h1><p>All monitored infrastructure assets</p></div>
+        <div class="card">
+          <table class="device-table" id="devicesTable">
+            <thead><tr><th>Device</th><th>Type</th><th>IP Address</th><th>Status</th><th>Uptime</th><th>Last Seen</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tickets Section -->
+      <div class="content-section" id="section-tickets">
+        <div class="page-header flex justify-between items-center">
+          <div><h1>Support Tickets</h1><p>Raise and track issues with ZENYX NOC</p></div>
+          <button class="btn btn-primary" onclick="App.openRaiseTicket()">+ Raise Ticket</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px" id="ticketStats"></div>
+        <div class="card">
+          <div class="ticket-list" id="ticketsList"></div>
+        </div>
+      </div>
+
+      <!-- Device Detail Section -->
+      <div class="content-section" id="section-device-detail">
+        <div class="page-header flex items-center gap-8">
+          <button class="btn btn-ghost btn-sm" onclick="App.clientNav('devices')">← Back</button>
+          <h1 id="deviceDetailTitle">Device Detail</h1>
+        </div>
+        <div id="deviceDetailContent"></div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ APP SHELL ═══════════════ -->
-<div id="app">
-
-  <!-- SIDEBAR -->
+<!-- ═══════════════════════════════════════════
+     APP SHELL: NOC COMMAND CENTER
+════════════════════════════════════════════ -->
+<div id="app-noc" class="app-shell">
   <aside class="sidebar">
-    <div class="sb-header">
-      <div class="sb-logo">P</div>
-      <div><div class="sb-product-name">Pulse</div><div class="sb-product-by">by ZENYX</div></div>
+    <div class="sidebar-logo" onclick="App.nocNav('noc-overview')">
+      <div class="sidebar-logo-icon">🎯</div>
+      <div class="sidebar-logo-text">NOC <span>Command</span></div>
     </div>
-    <div class="sb-hosp-pill">
-      <div class="sbhp-label">Monitoring</div>
-      <div class="sbhp-name" id="sb-hosp-name">—</div>
-      <div class="sbhp-status">
-        <div class="pulse-dot" id="sb-status-dot"></div>
-        <span class="sbhp-status-text" id="sb-status-text">Loading…</span>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Command Center</div>
+      <div class="nav-item active" data-section="noc-overview" onclick="App.nocNav('noc-overview')">
+        <span class="nav-icon">🗺️</span> All Hospitals
       </div>
-    </div>
-    <nav class="sb-nav">
-      <div class="sb-nav-section">Overview</div>
-      <div class="nav-link active" data-page="dashboard" onclick="navTo('dashboard')"><span class="nav-icon">⚡</span> Dashboard</div>
-      <div class="sb-nav-section">Monitoring</div>
-      <div class="nav-link" data-page="assets" onclick="navTo('assets')"><span class="nav-icon">🖥️</span> Assets</div>
-      <div class="nav-link" data-page="alerts" onclick="navTo('alerts')"><span class="nav-icon">🔔</span> Alerts<span class="nav-badge" id="alerts-badge"></span></div>
-      <div class="nav-link" data-page="uptime" onclick="navTo('uptime')"><span class="nav-icon">📊</span> Uptime & Reports</div>
-      <div class="sb-nav-section">Intelligence</div>
-      <div class="nav-link" data-page="recommendations" onclick="navTo('recommendations')"><span class="nav-icon">🛡️</span> Recommendations</div>
-      <div class="sb-nav-section">Business</div>
-      <div class="nav-link" data-page="pricing" onclick="navTo('pricing')"><span class="nav-icon">💎</span> Plans & Pricing</div>
-      <div class="sb-nav-section">Support</div>
-      <div class="nav-link" data-page="support" onclick="navTo('support')"><span class="nav-icon">🎧</span> Support</div>
-      <div id="admin-section" style="display:none;">
-        <div class="sb-nav-section">ZENYX Admin</div>
-        <div class="nav-link" onclick="PULSE.ui.toast('Admin panel — Sprint 2')"><span class="nav-icon">🏥</span> All Hospitals</div>
-        <div class="nav-link" onclick="PULSE.ui.toast('Zabbix status — Sprint 2')"><span class="nav-icon">🔧</span> Zabbix Status</div>
+      <div class="nav-item" data-section="noc-alerts" onclick="App.nocNav('noc-alerts')">
+        <span class="nav-icon">⚡</span> Alert Stream
+        <span class="nav-badge" id="nocAlertBadge" style="display:none"></span>
+      </div>
+      <div class="nav-item" data-section="noc-tickets" onclick="App.nocNav('noc-tickets')">
+        <span class="nav-icon">🎫</span> All Tickets
+      </div>
+      <div class="sidebar-section-label">Hospitals</div>
+      <div class="nav-item" data-section="noc-hospital-ubc" onclick="App.nocDrillDown('ubc')">
+        <span class="nav-icon">🏥</span> UBC Hospital
+      </div>
+      <div class="nav-item" data-section="noc-hospital-apollo" onclick="App.nocDrillDown('apollo')">
+        <span class="nav-icon">🏥</span> Apollo Hospital
+      </div>
+      <div class="nav-item" data-section="noc-hospital-care" onclick="App.nocDrillDown('care')">
+        <span class="nav-icon">🏥</span> CARE Hospital
+      </div>
+      <div class="nav-item" data-section="noc-hospital-yashoda" onclick="App.nocDrillDown('yashoda')">
+        <span class="nav-icon">🏥</span> Yashoda Hospitals
       </div>
     </nav>
-    <div class="sb-footer">
-      <div class="sb-user">
-        <div class="avatar" id="sb-user-avatar">—</div>
-        <div style="flex:1;min-width:0;">
-          <div class="sb-user-name" id="sb-user-name">Loading…</div>
-          <div class="sb-user-role" id="sb-user-role">—</div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="nocAvatar">Z</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="nocName">—</div>
+          <div class="sidebar-user-role">ZENYX NOC</div>
         </div>
-        <div class="logout-btn" title="Sign out" onclick="handleLogout()">↩</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="sound-control" id="soundBtn" onclick="Sound.toggle()">🔔 Sound On</button>
+        <button class="btn btn-ghost btn-sm" onclick="Auth.logout()">Out</button>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN -->
-  <div class="main">
-
-    <!-- Topbar -->
+  <div class="main-area">
     <div class="topbar">
-      <div style="flex:1;">
-        <div class="tb-title" id="tb-title">Loading…</div>
-        <div class="tb-sub" id="tb-sub">Pulse by ZENYX</div>
+      <div class="topbar-left">
+        <div class="topbar-title" id="nocTopbarTitle">NOC Command Center</div>
       </div>
-      <div class="tb-actions">
-        <div class="tb-clock" id="tb-clock">—</div>
-        <div class="theme-toggle">
-          <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')">🌙 Dark</button>
-          <button class="theme-btn active" id="btn-light" onclick="setTheme('light')">☀️ Light</button>
+      <div class="topbar-right">
+        <div class="live-badge"><div class="live-dot"></div> LIVE NOC</div>
+        <div class="last-updated" id="nocLastUpdated">—</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- NOC Overview -->
+      <div class="content-section active" id="section-noc-overview">
+        <div class="page-header">
+          <h1>All Hospitals — Live Status</h1>
+          <p>ZENYX NOC mission control — <span id="nocTimestamp">—</span></p>
         </div>
-        <div class="noc-pill"><div class="pulse-dot"></div> ZENYX NOC Active</div>
-        <div class="tb-bell" onclick="navTo('alerts')">🔔<div class="bell-dot"></div></div>
+        <div class="noc-summary" id="nocSummaryRow"></div>
+        <div class="hospital-grid" id="hospitalGrid"></div>
+        <div class="card">
+          <div class="card-title">Recent Alerts — All Hospitals</div>
+          <div class="alert-stream" id="nocAlertStream"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- Last updated bar -->
-    <div class="last-updated-bar">
-      <div class="live-dot"></div>
-      <span>Live monitoring active</span>
-      <span style="margin-left:auto;">Last updated: <span id="last-updated-time">—</span></span>
-      <span style="margin-left:12px;color:var(--t3);">Auto-refreshes every 30 seconds</span>
-    </div>
-
-    <!-- Page area -->
-    <div class="page-wrap">
-
-<!-- ══════════ DASHBOARD ══════════ -->
-<div class="page active" id="page-dashboard">
-
-  <!-- Plan Banner -->
-  <div class="plan-banner" id="plan-banner">
-    <div class="plan-banner-left">
-      <div class="plan-banner-name">Current Plan</div>
-      <div class="plan-banner-tier" id="plan-tier">MSP Monitoring Tier</div>
-      <div class="plan-banner-price" id="plan-price">—</div>
-      <div class="plan-banner-missing" id="plan-missing"></div>
-    </div>
-    <div class="plan-banner-actions">
-      <button class="btn btn-primary btn-sm" onclick="navTo('pricing')">⬆ Upgrade Plan</button>
-      <button class="btn btn-ghost btn-sm" onclick="navTo('pricing')">View Features</button>
-    </div>
-  </div>
-
-  <!-- Risk Status -->
-  <div class="risk-bar safe" id="risk-bar">
-    <div class="risk-icon" id="risk-icon">✅</div>
-    <div>
-      <div class="risk-text-main" id="risk-text-main">No active risks — system stable</div>
-      <div class="risk-text-sub" id="risk-text-sub">All monitored systems operating normally</div>
-    </div>
-    <div class="risk-updated" id="risk-updated">—</div>
-  </div>
-
-  <!-- NOC Banner -->
-  <div class="noc-banner">
-    <div class="noc-banner-icon">🛰️</div>
-    <div class="noc-banner-body">
-      <div class="noc-banner-title">ZENYX NOC is actively monitoring your hospital 24 × 7</div>
-      <div class="noc-banner-desc" id="noc-desc">Loading monitoring status…</div>
-    </div>
-    <div class="noc-banner-action" onclick="navTo('support')">Contact NOC →</div>
-  </div>
-
-  <!-- Health Hero -->
-  <div class="health-hero">
-    <div class="score-ring">
-      <svg viewBox="0 0 96 96"><circle class="track" cx="48" cy="48" r="42"/><circle class="fill" cx="48" cy="48" r="42" id="score-fill"/></svg>
-      <div class="score-center"><div class="score-num" id="score-num">—</div><div class="score-denom">/100</div></div>
-    </div>
-    <div>
-      <div class="health-status-title" id="health-title">Loading…</div>
-      <div class="health-status-msg" id="health-msg"></div>
-      <div class="health-pills" id="health-pills"></div>
-    </div>
-    <div class="health-meta">
-      <div class="hm-item"><div class="hm-val" id="meta-uptime">—</div><div class="hm-label">Month Uptime</div></div>
-      <div class="hm-item"><div class="hm-val" id="meta-devices">—</div><div class="hm-label">Monitored</div></div>
-      <div class="hm-item"><div class="hm-val" id="meta-alerts">—</div><div class="hm-label">Active Alerts</div></div>
-    </div>
-  </div>
-
-  <!-- Metric Strip -->
-  <div class="g5" style="margin-bottom:18px;">
-    <div class="metric-card" id="mc-internet"><div class="mc-icon mc-g">🌐</div><div class="mc-val">—</div><div class="mc-label">Internet Links</div><div class="mc-trend">—</div></div>
-    <div class="metric-card" id="mc-firewall"><div class="mc-icon mc-o">🔥</div><div class="mc-val">—</div><div class="mc-label">Firewalls</div><div class="mc-trend">—</div></div>
-    <div class="metric-card" id="mc-servers"><div class="mc-icon mc-b">🗄️</div><div class="mc-val">—</div><div class="mc-label">Servers</div><div class="mc-trend">—</div></div>
-    <div class="metric-card" id="mc-wifi"><div class="mc-icon mc-y">📡</div><div class="mc-val">—</div><div class="mc-label">Wi-Fi APs</div><div class="mc-trend">—</div></div>
-    <div class="metric-card" id="mc-backup"><div class="mc-icon mc-r">💾</div><div class="mc-val">—</div><div class="mc-label">Last Backup</div><div class="mc-trend">—</div></div>
-  </div>
-
-  <!-- Service Status + Recent Alerts -->
-  <div class="g2" style="margin-bottom:18px;">
-    <div class="card card-pad">
-      <div class="card-title">Service Status <span class="ct-action" onclick="navTo('assets')">View All →</span></div>
-      <div class="svc-list" id="svc-list"><div style="color:var(--t3);font-size:13px;">Loading…</div></div>
-    </div>
-    <div class="card card-pad">
-      <div class="card-title">Recent Alerts <span class="ct-action" onclick="navTo('alerts')">View All →</span></div>
-      <div class="alert-list" id="dash-alerts"><div style="color:var(--t3);font-size:13px;">Loading…</div></div>
-    </div>
-  </div>
-
-  <!-- Alert Delivery Options -->
-  <div class="card card-pad" style="margin-bottom:18px;">
-    <div class="card-title">Alert Delivery</div>
-    <div style="font-size:13px;color:var(--t2);margin-bottom:10px;">How ZENYX notifies you when issues are detected:</div>
-    <div class="alert-delivery">
-      <div class="ad-badge ad-email">📧 Email Alerts — Active</div>
-      <div class="ad-badge ad-locked" id="whatsapp-badge" onclick="navTo('pricing')" style="cursor:pointer;">💬 WhatsApp Alerts — Upgrade to Plus</div>
-    </div>
-  </div>
-
-  <!-- Support Strip -->
-  <div class="card card-pad" style="display:flex;align-items:center;gap:20px;">
-    <div style="font-size:28px;">🎧</div>
-    <div style="flex:1;">
-      <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px;">Need to escalate? ZENYX NOC is standing by.</div>
-      <div style="font-size:12px;color:var(--t2);">Available 24 × 7 for all hospital IT emergencies. Call or raise a support ticket.</div>
-    </div>
-    <button class="btn btn-ghost" onclick="navTo('support')">Open Support</button>
-    <div style="padding-left:16px;border-left:1px solid var(--gb);text-align:center;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--t1);">+91 89771 00000</div>
-      <div style="font-size:10px;color:var(--t3);margin-top:2px;">Emergency NOC Line</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ══════════ ASSETS ══════════ -->
-<div class="page" id="page-assets">
-  <div class="page-header">
-    <div><div class="ph-title">Monitored Assets</div><div class="ph-sub">All departments · Firewall, Servers, Wi-Fi, Storage, Computers</div></div>
-    <div class="ph-actions"><button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Export coming soon')">↓ Export</button></div>
-  </div>
-  <div class="asset-counts">
-    <div class="ac-item"><div class="ac-val" id="asset-total">—</div><div class="ac-lbl">Total Devices</div></div>
-    <div class="ac-item" style="border-color:rgba(30,217,123,.2);"><div class="ac-val" id="asset-online" style="color:var(--green);">—</div><div class="ac-lbl">Online</div></div>
-    <div class="ac-item" style="border-color:rgba(255,64,96,.2);"><div class="ac-val" id="asset-offline" style="color:var(--red);">—</div><div class="ac-lbl">Offline</div></div>
-    <div class="ac-item" style="border-color:rgba(245,200,66,.2);"><div class="ac-val" id="asset-warning" style="color:var(--yellow);">—</div><div class="ac-lbl">Degraded</div></div>
-  </div>
-  <div class="filter-strip">
-    <button class="fchip active" data-group="assets" data-filter="" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('')">All</button>
-    <button class="fchip" data-group="assets" data-filter="Firewall" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Firewall')">Firewalls</button>
-    <button class="fchip" data-group="assets" data-filter="Server" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Server')">Servers</button>
-    <button class="fchip" data-group="assets" data-filter="Switch" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Switch')">Switches</button>
-    <button class="fchip" data-group="assets" data-filter="Wi-Fi AP" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Wi-Fi AP')">Wi-Fi APs</button>
-    <button class="fchip" data-group="assets" data-filter="Computer" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Computer')">Computers</button>
-    <button class="fchip" data-group="assets" data-filter="Storage" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('Storage')">Storage</button>
-    <button class="fchip" data-group="assets" data-filter="CCTV" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('CCTV')">CCTV</button>
-    <button class="fchip" data-group="assets" data-filter="UPS" onclick="PULSE.ui.activateChip(this,'assets'); filterAssets('UPS')">UPS</button>
-  </div>
-  <div class="table-wrap">
-    <table><thead><tr><th>Device</th><th>Category</th><th>Location</th><th>IP Address</th><th>Status</th><th>Availability</th><th>Last Seen</th></tr></thead>
-    <tbody id="assets-tbody"><tr><td colspan="7" class="td-empty">Loading assets…</td></tr></tbody></table>
-  </div>
-</div>
-
-<!-- ══════════ ALERTS ══════════ -->
-<div class="page" id="page-alerts">
-  <div class="page-header">
-    <div><div class="ph-title">Alerts & Incidents</div><div class="ph-sub">Active and resolved — last 30 days</div></div>
-    <div class="ph-actions"><button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Export coming soon')">↓ Export</button></div>
-  </div>
-  <div class="g4" style="margin-bottom:20px;">
-    <div class="metric-card"><div class="mc-icon mc-r">🔴</div><div class="mc-val" id="alert-critical" style="color:var(--red);">—</div><div class="mc-label">Critical Active</div></div>
-    <div class="metric-card"><div class="mc-icon mc-y">🟡</div><div class="mc-val" id="alert-warning" style="color:var(--yellow);">—</div><div class="mc-label">Warnings Active</div></div>
-    <div class="metric-card"><div class="mc-icon" style="background:var(--green-soft);">✅</div><div class="mc-val" id="alert-resolved" style="color:var(--green);">—</div><div class="mc-label">Resolved (30d)</div></div>
-    <div class="metric-card"><div class="mc-icon mc-b">⏱️</div><div class="mc-val">18m</div><div class="mc-label">Avg Resolution</div></div>
-  </div>
-  <div class="card card-pad" style="margin-bottom:18px;">
-    <div class="card-title">Active Alerts</div>
-    <div class="alert-list" id="alerts-active"><div style="color:var(--t3);font-size:13px;">Loading…</div></div>
-  </div>
-  <div class="card card-pad">
-    <div class="card-title">Resolved Incidents — Last 30 Days</div>
-    <div class="alert-list" id="alerts-resolved"><div style="color:var(--t3);font-size:13px;">Loading…</div></div>
-  </div>
-</div>
-
-<!-- ══════════ UPTIME ══════════ -->
-<div class="page" id="page-uptime">
-  <div class="page-header">
-    <div><div class="ph-title">Uptime & Reports</div><div class="ph-sub">30-day service availability</div></div>
-    <div class="ph-actions"><button class="btn btn-ghost" onclick="PULSE.ui.toast('📄 Generating report…')">↓ Download Report</button></div>
-  </div>
-  <div class="uptime-rings" id="uptime-rings"><div style="grid-column:1/-1;color:var(--t3);font-size:13px;">Loading uptime…</div></div>
-  <div class="card card-pad" style="margin-bottom:20px;">
-    <div class="card-title">30-Day Availability Calendar</div>
-    <div class="cal-grid" id="cal-grid"></div>
-    <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);margin:6px 0 10px;"><span>Day 1</span><span>Day 10</span><span>Day 20</span><span>Today</span></div>
-    <div class="cal-legend">
-      <span><span class="leg-dot" style="background:var(--green)"></span>100% Online</span>
-      <span><span class="leg-dot" style="background:var(--yellow)"></span>Partial Outage</span>
-      <span><span class="leg-dot" style="background:var(--red)"></span>Major Outage</span>
-      <span><span class="leg-dot" style="background:var(--s3)"></span>Future</span>
-    </div>
-  </div>
-  <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Available Reports</div>
-  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating Monthly IT Health Report…')"><div class="report-icon">📋</div><div style="flex:1;"><div class="report-name">Monthly IT Health Report</div><div class="report-desc">Full uptime, incidents, resolutions, SLA performance — ready for hospital management</div></div><button class="btn btn-ghost">Download PDF</button></div>
-  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating Quarterly Performance Report…')"><div class="report-icon">📊</div><div style="flex:1;"><div class="report-name">Quarterly IT Performance Report</div><div class="report-desc">Uptime trends, NOC response times, SLA achievement, incident analysis</div></div><button class="btn btn-ghost">Download PDF</button></div>
-  <div class="report-row" onclick="PULSE.ui.toast('📄 Generating CERT-In / DPDP Compliance Report…')"><div class="report-icon">🔐</div><div style="flex:1;"><div class="report-name">Security & Compliance — CERT-In / DPDP Act</div><div class="report-desc">Firewall threat logs, security events, compliance posture for hospital audit purposes</div></div><button class="btn btn-ghost">Download PDF</button></div>
-</div>
-
-<!-- ══════════ RECOMMENDATIONS ══════════ -->
-<div class="page" id="page-recommendations">
-  <div class="page-header"><div><div class="ph-title">Recommendations</div><div class="ph-sub">Reviewed and approved by your ZENYX account engineer</div></div></div>
-  <div class="noc-banner" style="margin-bottom:22px;">
-    <div class="noc-banner-icon">🧠</div>
-    <div class="noc-banner-body">
-      <div class="noc-banner-title">ZENYX Intelligence — Proactive Risk Review</div>
-      <div class="noc-banner-desc">Our engineers review your IT environment weekly. Every item below is verified by your assigned ZENYX account engineer before being surfaced to you.</div>
-    </div>
-  </div>
-  <div id="recs-list"><div style="color:var(--t3);font-size:13px;">Loading recommendations…</div></div>
-</div>
-
-<!-- ══════════ PRICING ══════════ -->
-<div class="page" id="page-pricing">
-  <div class="page-header">
-    <div><div class="ph-title">Plans & Pricing</div><div class="ph-sub">Choose the right protection level for your hospital</div></div>
-  </div>
-
-  <div class="pricing-grid">
-    <!-- BASIC -->
-    <div class="pricing-card">
-      <div class="plan-icon">📡</div>
-      <div class="plan-name">Basic</div>
-      <div class="plan-tagline">Monitoring Layer</div>
-      <div class="plan-price">₹25,000<span style="font-size:14px;font-weight:400;color:var(--t3)">/month</span></div>
-      <div class="plan-price-sub">Per hospital · Billed monthly</div>
-      <ul class="plan-features">
-        <li>24×7 infrastructure monitoring</li>
-        <li>Real-time dashboard access</li>
-        <li>Email alerts for all incidents</li>
-        <li>Monthly uptime reports</li>
-        <li>ZENYX NOC response</li>
-      </ul>
-      <div style="margin-bottom:12px;">
-        <div style="font-size:11px;color:var(--t3);margin-bottom:6px;">Alert Delivery:</div>
-        <div class="alert-delivery"><div class="ad-badge ad-email">📧 Email</div><div class="ad-badge ad-locked">💬 WhatsApp — Plus only</div></div>
+      <!-- NOC Alert Stream -->
+      <div class="content-section" id="section-noc-alerts">
+        <div class="page-header flex justify-between items-center">
+          <div><h1>Alert Stream</h1><p>Live alerts across all hospitals</p></div>
+          <select class="form-input" id="nocAlertFilterSev" onchange="App.filterNocAlerts()" style="width:auto;padding:6px 12px">
+            <option value="">All Severities</option>
+            <option value="critical">Critical Only</option>
+            <option value="warning">Warning+</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="alert-stream" id="nocFullAlertStream" style="max-height:none"></div>
+        </div>
       </div>
-      <button class="plan-cta plan-cta-ghost" onclick="navTo('support')">Contact ZENYX</button>
-    </div>
 
-    <!-- PLUS (POPULAR) -->
-    <div class="pricing-card popular">
-      <div class="popular-badge">⭐ Most Popular</div>
-      <div class="plan-icon">🛡️</div>
-      <div class="plan-name">Plus</div>
-      <div class="plan-tagline">Protection Layer</div>
-      <div class="plan-price">₹50,000<span style="font-size:14px;font-weight:400;color:var(--t3)">/month</span></div>
-      <div class="plan-price-sub">Per hospital · Billed monthly</div>
-      <ul class="plan-features">
-        <li>Everything in Basic</li>
-        <li>Business risk dashboard</li>
-        <li>WhatsApp alerts (instant)</li>
-        <li>Backup monitoring & alerts</li>
-        <li>Firewall deep monitoring</li>
-        <li>4-hour SLA response</li>
-        <li>Monthly review call</li>
-      </ul>
-      <div style="margin-bottom:12px;">
-        <div style="font-size:11px;color:var(--t3);margin-bottom:6px;">Alert Delivery:</div>
-        <div class="alert-delivery"><div class="ad-badge ad-email">📧 Email</div><div class="ad-badge ad-whatsapp">💬 WhatsApp</div></div>
+      <!-- NOC Tickets -->
+      <div class="content-section" id="section-noc-tickets">
+        <div class="page-header"><h1>All Support Tickets</h1><p>Manage tickets across all hospitals</p></div>
+        <div class="card">
+          <div class="ticket-list" id="nocTicketsList"></div>
+        </div>
       </div>
-      <button class="plan-cta plan-cta-primary" onclick="PULSE.ui.toast('📞 ZENYX will contact you about upgrading to Plus!','success')">Upgrade to Plus →</button>
-    </div>
 
-    <!-- PREMIUM -->
-    <div class="pricing-card">
-      <div class="plan-icon">🏆</div>
-      <div class="plan-name">Premium</div>
-      <div class="plan-tagline">Business Continuity Layer</div>
-      <div class="plan-price">₹90,000+<span style="font-size:14px;font-weight:400;color:var(--t3)">/month</span></div>
-      <div class="plan-price-sub">Multi-branch · Custom pricing</div>
-      <ul class="plan-features">
-        <li>Everything in Plus</li>
-        <li>Multi-branch monitoring</li>
-        <li>Cyber attack visibility</li>
-        <li>CERT-In compliance score</li>
-        <li>AI prediction insights</li>
-        <li>Dedicated account manager</li>
-        <li>On-site support included</li>
-        <li>2-hour SLA · 15-min critical</li>
-      </ul>
-      <div style="margin-bottom:12px;">
-        <div style="font-size:11px;color:var(--t3);margin-bottom:6px;">Alert Delivery:</div>
-        <div class="alert-delivery"><div class="ad-badge ad-email">📧 Email</div><div class="ad-badge ad-whatsapp">💬 WhatsApp</div></div>
+      <!-- NOC Hospital Drilldown -->
+      <div class="content-section" id="section-noc-hospital">
+        <div class="page-header flex items-center gap-8">
+          <button class="btn btn-ghost btn-sm" onclick="App.nocNav('noc-overview')">← Back</button>
+          <h1 id="nocHospitalTitle">Hospital Detail</h1>
+        </div>
+        <div id="nocHospitalContent"></div>
       </div>
-      <button class="plan-cta plan-cta-ghost" onclick="PULSE.ui.toast('📞 ZENYX will reach out for Premium pricing!','success')">Request Pricing →</button>
-    </div>
-  </div>
 
-  <!-- Comparison Note -->
-  <div class="card card-pad" style="margin-bottom:20px;">
-    <div class="card-title">Why Upgrade?</div>
-    <div class="g3">
-      <div>
-        <div style="font-size:20px;margin-bottom:8px;">💬</div>
-        <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:4px;">WhatsApp Alerts</div>
-        <div style="font-size:12px;color:var(--t2);line-height:1.6;">Get instant WhatsApp notifications when any device goes down — before your staff calls you.</div>
-      </div>
-      <div>
-        <div style="font-size:20px;margin-bottom:8px;">🔥</div>
-        <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:4px;">Firewall Deep Monitoring</div>
-        <div style="font-size:12px;color:var(--t2);line-height:1.6;">Know if someone is trying to breach your network. See threat attempts in real time.</div>
-      </div>
-      <div>
-        <div style="font-size:20px;margin-bottom:8px;">🤖</div>
-        <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:4px;">AI Prediction</div>
-        <div style="font-size:12px;color:var(--t2);line-height:1.6;">AI detects patterns that predict failures before they happen — saving you from downtime.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card card-pad" style="text-align:center;">
-    <div style="font-size:18px;margin-bottom:8px;">🤝</div>
-    <div style="font-size:15px;font-weight:600;color:var(--t1);margin-bottom:6px;">Talk to ZENYX about your hospital's needs</div>
-    <div style="font-size:13px;color:var(--t2);margin-bottom:16px;">Our team will recommend the right plan based on your hospital size, number of devices, and risk profile.</div>
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <button class="btn btn-primary" onclick="navTo('support')">Contact Account Manager</button>
-      <button class="btn btn-ghost" onclick="PULSE.ui.toast('💬 Opening WhatsApp…')">WhatsApp ZENYX</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ SUPPORT ══════════ -->
-<div class="page" id="page-support">
-  <div class="page-header"><div><div class="ph-title">Support</div><div class="ph-sub">ZENYX NOC · 24 × 7 · SLA-backed response</div></div></div>
-  <div class="support-actions">
-    <div class="support-card emergency" onclick="PULSE.ui.toast('📞 Calling ZENYX Emergency NOC: +91 89771 00000','warn')">
-      <div class="support-icon">🚨</div>
-      <div class="support-card-title">Emergency NOC Call</div>
-      <div class="support-card-desc">System down, ransomware, server failure, internet outage. Call immediately.</div>
-      <div class="support-phone">+91 89771 00000</div>
+<!-- ═══════════════════════════════════════════
+     MODALS
+════════════════════════════════════════════ -->
+
+<!-- Alert Detail Modal -->
+<div class="modal-overlay" id="alertModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Alert Detail</div>
+      <div class="modal-close" onclick="Modal.close('alertModal')">✕</div>
     </div>
-    <div class="support-card" onclick="document.getElementById('new-ticket-form').style.display='block';document.getElementById('ticket-title').focus();">
-      <div class="support-icon">🎫</div>
-      <div class="support-card-title">Raise a Ticket</div>
-      <div class="support-card-desc">Non-critical issues, planned changes, new device requests, configuration queries.</div>
-      <button class="btn btn-primary" style="margin-top:16px;width:100%;">New Support Ticket</button>
-    </div>
-    <div class="support-card" onclick="PULSE.ui.toast('💬 Opening ZENYX NOC WhatsApp…')">
-      <div class="support-icon">💬</div>
-      <div class="support-card-title">WhatsApp NOC</div>
-      <div class="support-card-desc">Quick messages, status updates, non-critical queries to the ZENYX NOC team.</div>
-      <button class="btn btn-ghost" style="margin-top:16px;width:100%;">Open WhatsApp</button>
-    </div>
+    <div id="alertModalContent"></div>
   </div>
-  <div id="new-ticket-form" class="new-ticket-form" style="display:none;">
-    <div class="ntf-title">Raise a New Support Ticket</div>
-    <input id="ticket-title" class="ntf-field" placeholder="Issue title — e.g. Internet slow in OPD block">
-    <select id="ticket-priority" class="ntf-field">
-      <option value="low">Low Priority — General request</option>
-      <option value="medium" selected>Medium Priority — Service impacted</option>
-      <option value="high">High Priority — Affecting patient care</option>
-    </select>
-    <textarea id="ticket-desc" class="ntf-field" rows="3" placeholder="Describe the issue in detail…"></textarea>
-    <div class="ntf-actions">
-      <button class="btn btn-primary" onclick="submitTicket()">Submit Ticket</button>
-      <button class="btn btn-ghost" onclick="document.getElementById('new-ticket-form').style.display='none'">Cancel</button>
+</div>
+
+<!-- Raise Ticket Modal -->
+<div class="modal-overlay" id="raiseTicketModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">🎫 Raise Support Ticket</div>
+      <div class="modal-close" onclick="Modal.close('raiseTicketModal')">✕</div>
     </div>
-  </div>
-  <div class="card" style="margin-bottom:18px;">
-    <div class="card-pad" style="padding-bottom:0;"><div class="card-title">Your Support Tickets <span class="ct-action" onclick="PULSE.ui.toast('Full ticket portal — Sprint 2')">View All →</span></div></div>
-    <div id="tickets-list"><div style="color:var(--t3);font-size:13px;padding:20px;">Loading tickets…</div></div>
-  </div>
-  <div class="card card-pad">
-    <div class="card-title" style="margin-bottom:20px;">Your ZENYX Account</div>
-    <div class="acct-grid">
-      <div><div class="acct-label">Account Manager</div><div class="acct-val">Ashok Chappidi</div><div class="acct-sub">Founder, ZENYX IT Infra Solutions</div><div class="acct-tag" style="color:var(--orange);">ashok@zenyx.in</div></div>
-      <div><div class="acct-label">Current Plan</div><div class="acct-val" id="acct-plan">—</div><div class="acct-sub" id="acct-price">—</div><div class="acct-tag">✓ Renews <span id="acct-renewal">—</span></div></div>
-      <div><div class="acct-label">SLA Commitment</div><div class="acct-val" id="acct-sla">—</div><div class="acct-sub">ZENYX NOC — 24 × 7</div><div class="acct-tag">✓ SLA Met this month: 100%</div></div>
+    <div class="raise-ticket-form">
+      <div class="form-group">
+        <label class="form-label">Issue Title *</label>
+        <input class="form-input" id="ticketTitle" placeholder="e.g. Server running slow">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Severity</label>
+        <select class="form-input" id="ticketSeverity">
+          <option value="info">Low — General issue</option>
+          <option value="warning" selected>Medium — Affecting operations</option>
+          <option value="critical">Critical — Operations stopped</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" id="ticketDescription" placeholder="Describe the issue and when it started..."></textarea>
+      </div>
+      <input type="hidden" id="ticketDeviceId">
+      <input type="hidden" id="ticketDeviceName">
+      <div id="ticketDeviceContext" style="display:none;margin-bottom:14px">
+        <div class="impact-box">
+          <div class="impact-box-label">Related Device</div>
+          <span id="ticketDeviceDisplay"></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-ghost" onclick="Modal.close('raiseTicketModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="App.submitTicket()">Submit Ticket →</button>
+      </div>
     </div>
   </div>
 </div>
 
-    </div><!-- /page-wrap -->
-  </div><!-- /main -->
-</div><!-- /app -->
+<!-- NOC Ticket Update Modal -->
+<div class="modal-overlay" id="nocTicketModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Update Ticket</div>
+      <div class="modal-close" onclick="Modal.close('nocTicketModal')">✕</div>
+    </div>
+    <div id="nocTicketModalContent"></div>
+  </div>
+</div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-icon" id="toast-icon">ℹ️</div><div id="toast-msg">—</div></div>
-
-<!-- SCRIPTS -->
-<script src="/js/constants.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/ui.js"></script>
-<script src="/js/render.js"></script>
 <script src="/js/app.js"></script>
-
-<script>
-// ── THEME TOGGLE ──────────────────────────────────────────────
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  document.getElementById('btn-dark').classList.toggle('active', theme === 'dark');
-  document.getElementById('btn-light').classList.toggle('active', theme === 'light');
-  localStorage.setItem('pulse-theme', theme);
-}
-// Apply saved theme
-(function() {
-  const saved = localStorage.getItem('pulse-theme') || 'dark';
-  setTheme(saved);
-})();
-
-// ── LAST UPDATED ──────────────────────────────────────────────
-function updateLastUpdated() {
-  const el = document.getElementById('last-updated-time');
-  if (el) el.textContent = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-setInterval(updateLastUpdated, 1000);
-updateLastUpdated();
-
-// ── RISK BAR UPDATER ──────────────────────────────────────────
-function updateRiskBar(activeAlerts, healthScore) {
-  const bar = document.getElementById('risk-bar');
-  const icon = document.getElementById('risk-icon');
-  const main = document.getElementById('risk-text-main');
-  const sub  = document.getElementById('risk-text-sub');
-  const upd  = document.getElementById('risk-updated');
-  if (!bar) return;
-  if (activeAlerts === 0 && healthScore >= 90) {
-    bar.className = 'risk-bar safe';
-    icon.textContent = '✅';
-    main.textContent = 'No active risks — system stable';
-    sub.textContent  = 'All monitored systems operating normally';
-  } else if (activeAlerts > 0 && healthScore >= 75) {
-    bar.className = 'risk-bar warn';
-    icon.textContent = '⚠️';
-    main.textContent = activeAlerts + ' active alert' + (activeAlerts > 1 ? 's' : '') + ' — monitoring closely';
-    sub.textContent  = 'ZENYX NOC is investigating. No critical risk to operations.';
-  } else {
-    bar.className = 'risk-bar danger';
-    icon.textContent = '🚨';
-    main.textContent = 'Attention required — ' + activeAlerts + ' critical issue' + (activeAlerts > 1 ? 's' : '');
-    sub.textContent  = 'Contact ZENYX NOC immediately: +91 89771 00000';
-  }
-  upd.textContent = 'Updated ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-
-// ── PLAN BANNER UPDATER ───────────────────────────────────────
-function updatePlanBanner(tenant) {
-  if (!tenant) return;
-  const tierEl   = document.getElementById('plan-tier');
-  const priceEl  = document.getElementById('plan-price');
-  const missEl   = document.getElementById('plan-missing');
-  if (tierEl)  tierEl.textContent  = tenant.plan || '—';
-  if (priceEl) priceEl.textContent = tenant.planPrice || '—';
-  // Show missing features based on plan
-  const plan = (tenant.plan || '').toLowerCase();
-  if (plan.includes('monitoring') && !plan.includes('plus') && !plan.includes('security')) {
-    if (missEl) missEl.innerHTML = '⚠️ You are not protected against: <strong>WhatsApp alerts, Firewall deep monitoring, Backup monitoring</strong> — <span style="cursor:pointer;text-decoration:underline;" onclick="navTo(\'pricing\')">Upgrade to Plus</span>';
-    const wb = document.getElementById('whatsapp-badge');
-    if (wb) { wb.className='ad-badge ad-locked'; wb.innerHTML='💬 WhatsApp Alerts — <span style="text-decoration:underline;">Upgrade to Plus</span>'; }
-  } else {
-    if (missEl) missEl.innerHTML = '';
-    const wb = document.getElementById('whatsapp-badge');
-    if (wb) { wb.className='ad-badge ad-whatsapp'; wb.innerHTML='💬 WhatsApp Alerts — Active'; wb.onclick=null; }
-  }
-}
-
-// ── PATCH DASHBOARD RENDER ────────────────────────────────────
-(function() {
-  const _origDash = PULSE.render.dashboard;
-  PULSE.render.dashboard = function(d) {
-    _origDash(d);
-    const nd = document.getElementById('noc-desc');
-    if (nd) nd.textContent = d.nocMsg || '';
-    updateRiskBar(d.activeAlerts || 0, d.healthScore || 100);
-    // Fetch alert preview
-    PULSE.api.alerts().then(function(a) {
-      const rows = [...(a.active || []), ...(a.resolved || [])].slice(0, 4);
-      PULSE.ui.html('dash-alerts', rows.length
-        ? rows.map(function(r) {
-            var s = PULSE.SEV[r.sev] || PULSE.SEV.info;
-            var since = r.since ? new Date(r.since).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
-            var tkt = r.ticketId ? ' · #' + r.ticketId : '';
-            return '<div class="alert-row ' + s.cls + '" onclick="navTo(\'alerts\')">' +
-              '<div class="ar-icon">' + s.icon + '</div>' +
-              '<div class="ar-body"><div class="ar-title">' + PULSE.ui.esc(r.title) + '</div>' +
-              '<div class="ar-desc">' + PULSE.ui.esc(r.desc) + '</div>' +
-              '<div class="ar-time">' + since + tkt + '</div></div>' +
-              '<span class="badge ' + s.badgeCls + '">' + s.label + '</span></div>';
-          }).join('')
-        : '<p class="empty-msg">No recent alerts — all clear ✓</p>'
-      );
-    }).catch(function(){});
-    // Update plan banner from tenant data
-    PULSE.api.tenant().then(function(t) { updatePlanBanner(t); }).catch(function(){});
-  };
-})();
-</script>
 </body>
 </html>
