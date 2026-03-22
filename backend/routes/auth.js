@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { USERS, TENANTS } = require('../config/data');
+const { USERS, TENANTS } = require('./data');
 const { JWT_SECRET, verifyToken, noCache } = require('../middleware/auth');
 
 const router = express.Router();
