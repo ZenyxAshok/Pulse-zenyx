@@ -1,32 +1,52 @@
 'use strict';
 const express = require('express');
-const router  = express.Router();
-const svc     = require('../services/authService');
-const { authenticate } = require('../middleware/auth');
+const jwt = require('jsonwebtoken');
+const { USERS, TENANTS } = require('../config/data');
+const { JWT_SECRET, verifyToken, noCache } = require('../middleware/auth');
 
-// POST /api/auth/login
-router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body || {};
-    if (!email || !password) return res.status(400).json({ ok:false, error:'Email and password required.' });
-    const result = await svc.login(email.trim(), password);
-    res.json({ ok:true, token:result.token, user:result.user });
-  } catch (e) {
-    res.status(e.status||500).json({ ok:false, error:e.message });
-  }
+const router = express.Router();
+router.use(noCache);
+
+// POST /svc/auth/login
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+
+  const user = USERS.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+  const tenant = user.tenantId ? TENANTS[user.tenantId] : null;
+
+  const payload = {
+    userId: user.id,
+    email: user.email,
+    role: user.role,
+    name: user.name,
+    tenantId: user.tenantId,
+    hospitalName: tenant?.name || null,
+    plan: tenant?.plan || null,
+  };
+
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '12h' });
+
+  // Redirect target based on role
+  const redirect = ['admin','noc'].includes(user.role) ? '/noc' : '/dashboard';
+
+  res.json({
+    token,
+    user: { ...payload },
+    redirect,
+  });
 });
 
-// GET /api/auth/me
-router.get('/me', authenticate, (req, res) => {
-  const user = svc.getUserById(req.user.sub);
-  if (!user) return res.status(404).json({ ok:false, error:'User not found.' });
-  res.json({ ok:true, user });
+// GET /svc/auth/me — verify token + return user
+router.get('/me', verifyToken, (req, res) => {
+  res.json({ user: req.user });
 });
 
-// POST /api/auth/logout  (client drops token; server-side is a no-op in JWT mode)
-// ZABBIX_IMPL: add token to a Redis revocation list here for real logout
-router.post('/logout', authenticate, (req, res) => {
-  res.json({ ok:true, message:'Signed out.' });
+// POST /svc/auth/logout
+router.post('/logout', (req, res) => {
+  res.json({ message: 'Logged out' });
 });
 
 module.exports = router;
