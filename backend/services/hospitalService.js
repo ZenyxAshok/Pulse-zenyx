@@ -1,7 +1,7 @@
 'use strict';
 const zabbix = require('./zabbixAdapter');
 const { transformHosts, transformProblems, buildDashboard } = require('./transformer');
-const { TENANTS, MOCK_ASSETS, MOCK_ALERTS } = require('../config/data');
+const { TENANTS, MOCK_ASSETS, MOCK_ALERTS } = require('./data');
 
 async function getDashboardData(tenantId) {
   const tenant = TENANTS[tenantId];
