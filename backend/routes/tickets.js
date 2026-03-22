@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const { verifyToken, requireRole, noCache } = require('../middleware/auth');
-const { TICKETS, nextTicketId } = require('../config/data');
+const { TICKETS, nextTicketId } = require('./data');
 
 const router = express.Router();
 router.use(noCache, verifyToken, requireRole('client'));
